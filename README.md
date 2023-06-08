@@ -1,29 +1,31 @@
 # PBN (Private Blog Network) Project
 
-🌐 **Overview**
-This project aims to create PBNs (Private Blog Networks) with the following objectives:
-
-### 📈 Traffic/Metrics Options
+## 🌐 Overview
+This project aims to create PBNs (Private Blog Networks) 
+<details>
+  <summary>objectives can be</summary>
+**📈 Traffic/Metrics Options**
 - 🔝 Boost metrics of the main website.
 - 🚀 Drive traffic to the main site.
 - 📈 Improve metrics of the PBN websites.
 - 🚗 Drive traffic to the PBN websites.
 
-### 💰 Monetization Options can include
+**💰 Monetization Options can include**
 - 📊 Traffic monetization through Adwords.
 - 💲 Traffic monetization through CPA.
 - 🔗 Selling links and articles on the PBN.
 - 🌐 Selling the entire PBN network.
+</details>
 
-✨ **Preliminary Requirements**
-
+<details>
+  <summary>✨ Preliminary Requirements</summary>
 Before diving into the project workflow, ensure you have the following preliminary requirements:
 
 1. 📋 List of Our Website Domains
 2. 📋 Lists of Competitors' Website Domains
 3. 📋 Keyword Lists
+</details>
 
-These requirements will serve as a foundation for the subsequent steps in the project.
 
 ## 📋 Domain
 Domains can be classified as either "new" or "drop."
