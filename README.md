@@ -3,6 +3,16 @@
 🌐 **Overview**
 This project aims to create PBNs (Private Blog Networks) for SEO purposes, focusing on the selection and acquisition of domains and content. The PBNs can be categorized based on domain history and content source.
 
+✨ **Preliminary Requirements**
+
+Before diving into the project workflow, ensure you have the following preliminary requirements:
+
+1. 📋 List of Our Website Domains
+2. 📋 Lists of Competitors' Website Domains
+3. 📋 Keyword Lists
+
+These requirements will serve as a foundation for the subsequent steps in the project.
+
 ## 📋 Domain
 Domains can be classified as either "new" or "drop."
 
@@ -75,4 +85,37 @@ After buying a domain, upload the old information to WordPress.
 6. WordPress Integration:
    - After domain acquisition, upload the old information to WordPress.
 
-Please note that this README.txt is a draft and may require further modifications.
+✨ **Scripts and Folders**
+
+## ./content
+
+This folder contains scripts related to content parsing and restoration.
+
+- `webarchive_parser`:
+  - Description: Parses content from web.archive.org.
+  - File: `webarchive_parser.py`
+
+- `webarchive_scrapper`:
+  - Description: Scrapes content from web.archive.org.
+  - File: `webarchive_scrapper.py`
+
+## ./domains
+
+This folder contains scripts related to domain management.
+
+- `check_domains`:
+  - Description: Contains various scripts for checking domain information.
+  - Files:
+    - `check_domain_connection`: Checks domain connection status.
+    - `check_domain_whois`: Retrieves WHOIS information for a domain.
+    - `check_if_dropped_domain`: Checks if a domain has been dropped.
+    - `check_if_expired_domain`: Checks if a domain has expired.
+    - `domains_csv_to_txt`: Converts domain information from CSV to TXT format.
+
+- `make_domains_lists`:
+  - Description: Contains scripts for generating domain lists.
+  - File: `scrap_site_for_outgoing_domains`: Scrapes websites for outgoing domains.
+
+Feel free to explore the scripts
+
+ and folders for more details on their functionality and usage.
