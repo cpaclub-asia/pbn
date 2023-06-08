@@ -2,8 +2,16 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import os
+from urllib.parse import urlparse
 from file_downloader import create_folder_structure
 
+def is_root_path(original_url):
+    parsed_url = urlparse(original_url)
+    path = parsed_url.path
+    port = parsed_url.port
+    return (path == '/' or path == '') and (not port or port == 80)
+    
+    
 def download_archive_data(domain, save_folder=None):
     # Create a folder to save data for the domain
     domain_folder = os.path.join(save_folder, domain) if save_folder else domain
@@ -45,14 +53,14 @@ def download_archive_data(domain, save_folder=None):
         file_extension = os.path.splitext(clean_url)[1].lower()
 
         # Add the file to the appropriate list
-        if file_extension == '.html':
+        if is_root_path(original_url):
+            index_files.append(download_url)
+        elif file_extension == '.html':
             html_files.append(download_url)
         elif file_extension == '.jpg' or file_extension == '.jpeg' or file_extension == '.png' or file_extension == '.gif':
             image_files.append(download_url)
-        elif clean_url.endswith('sitemap.xml') or file_extension.endswith('robots.txt'):
+        elif original_url.endswith('sitemap.xml') or original_url.endswith('robots.txt'):
             system_files.append(download_url)
-        elif file_extension == '':
-            index_files.append(download_url)
         else:
             other_files.append(download_url)
 
