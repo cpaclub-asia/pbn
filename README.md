@@ -3,7 +3,7 @@
 ## 🌐 Overview
 This project aims to create PBNs (Private Blog Networks) 
 <details>
-  <summary>objectives can be</summary>
+<summary>✨ Objectives can be</summary>
 **📈 Traffic/Metrics Options**
 - 🔝 Boost metrics of the main website.
 - 🚀 Drive traffic to the main site.
@@ -18,13 +18,22 @@ This project aims to create PBNs (Private Blog Networks)
 </details>
 
 <details>
-  <summary>✨ Preliminary Requirements</summary>
-Before diving into the project workflow, ensure you have the following preliminary requirements:
-
+<summary>✨ Preliminary Requirements</summary>
 1. 📋 List of Our Website Domains
 2. 📋 Lists of Competitors' Website Domains
 3. 📋 Keyword Lists
 </details>
+
+<details>
+<summary>🤝 Agreements</summary>
+1. This project exclusively focuses on utilizing domains with a history, specifically drop domains.
+2. We only consider domains that allow us to retrieve website content 
+* From public archives (web.archive.org or commoncrawl.org)
+* Alternatively, we may preserve the content ourselves when the domain is in the expired state but remains accessible.
+We don't work with domains without history or without content
+</details>
+
+
 
 
 ## 📋 Domain
