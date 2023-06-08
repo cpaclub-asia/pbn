@@ -1,1 +1,0 @@
-python3 parser.py giaydabonghana.com/last giaydabonghana.com/parsed
