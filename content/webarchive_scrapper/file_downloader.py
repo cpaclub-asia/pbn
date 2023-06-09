@@ -43,5 +43,5 @@ def create_folder_structure(save_folder, file_list):
             with open(file_path_all, 'w', encoding='utf-8') as file:
                 file.write(download_response.text)
         except Exception as e:
-            print(f"An error occurred while processing file: {file_name}")
+            print(f"An error occurred while processing file: {download_url}")
             print(str(e))
