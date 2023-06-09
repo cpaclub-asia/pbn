@@ -1,14 +1,7 @@
-import requests
-import os
-
 def create_folder_structure(save_folder, file_list):
     for download_url in file_list:
         # Get the file name from the URL
-        file_name = download_url.split('/')[-1]
-        file_name = file_name[:255]
-        if (file_name==""):
-            file_name="index.html"
-
+        file_name=file_name_slash_index(download_url)
 
 
         # Get the timestamp from the URL
@@ -16,12 +9,18 @@ def create_folder_structure(save_folder, file_list):
 
         # Determine the file path and create folder structure
         path_segments = download_url.split('/')[8:-1]
-        file_path = os.path.join(save_folder, timestamp, *path_segments)
+
+        path_segments2 = file_name.split('/')[:-1]
+
+        file_path = os.path.join(save_folder, timestamp, *path_segments,*path_segments2)
         os.makedirs(file_path, exist_ok=True)
 
-        path_segments_all = download_url.split('/')[8:-1]
-        file_path_all = os.path.join(save_folder,"all", *path_segments)
+        print(file_name)
+        print(file_path)
+
+        file_path_all = os.path.join(save_folder,"all", *path_segments,*path_segments2)
         os.makedirs(file_path_all, exist_ok=True)
+        print(file_path_all)
 
 
         # Form the path to save the file

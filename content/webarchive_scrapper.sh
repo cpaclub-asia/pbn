@@ -17,12 +17,3 @@ while IFS= read -r line; do
     echo $CMD
     $CMD
 done < "$file"
-
-
-#python3 webarchive_scrapper -f webarchive cheparev.com
-
-python3 webarchive_scrapper -f webarchive thaipats.com
-python3 webarchive_scrapper -f webarchive ahcichittagong.org
-python3 webarchive_scrapper -f webarchive cryptooupdates.com
-python3 webarchive_scrapper -f webarchive giaydabonghana.com
-python3 webarchive_scrapper -f webarchive worldsocceranalytics.com

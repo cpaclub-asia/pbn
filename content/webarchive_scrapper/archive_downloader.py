@@ -2,14 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import os
+from funcs import file_name_slash_index, is_root_path
 from urllib.parse import urlparse
 from file_downloader import create_folder_structure
-
-def is_root_path(original_url):
-    parsed_url = urlparse(original_url)
-    path = parsed_url.path
-    port = parsed_url.port
-    return (path == '/' or path == '') and (not port or port == 80)
     
     
 def download_archive_data(domain, save_folder=None):
