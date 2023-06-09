@@ -13,16 +13,7 @@ fi
 while IFS= read -r line; do
     # Извлечение имени домена до первого пробела или точки с запятой
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
-    CMD="python3 webarchive_scrapper -f webarchive $DOMAIN"
+    CMD="python3 webarchive_compare webarchive/$DOMAIN/parsed/text webarchive/$DOMAIN/parsed/compare"
     echo $CMD
     $CMD
 done < "$file"
-
-
-#python3 webarchive_scrapper -f webarchive cheparev.com
-
-python3 webarchive_scrapper -f webarchive thaipats.com
-python3 webarchive_scrapper -f webarchive ahcichittagong.org
-python3 webarchive_scrapper -f webarchive cryptooupdates.com
-python3 webarchive_scrapper -f webarchive giaydabonghana.com
-python3 webarchive_scrapper -f webarchive worldsocceranalytics.com

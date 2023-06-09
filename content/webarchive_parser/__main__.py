@@ -101,7 +101,7 @@ def extract_text_from_body(body_file, output_dir):
 
     soup = BeautifulSoup(body_content, 'html.parser')
 
-    tags = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'ul', 'i', 'b', 'strong', 'u', 'hr'])
+    tags = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'ul', 'i', 'b', 'strong', 'u', 'hr','div'])
 
     text = ''
     for tag in tags:
