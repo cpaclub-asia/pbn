@@ -13,7 +13,7 @@ fi
 while IFS= read -r line; do
     # Извлечение имени домена до первого пробела или точки с запятой
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
-    CMD="python3 webarchive_parser webarchive/$DOMAIN/all webarchive/$DOMAIN/parsed"
+    CMD="python3 webarchive_parser webarchive/$DOMAIN/all webarchive.parsed/$DOMAIN"
     echo $CMD
     $CMD
 done < "$file"

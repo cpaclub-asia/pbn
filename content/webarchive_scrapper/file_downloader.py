@@ -1,3 +1,7 @@
+import os
+import requests
+from funcs import file_name_slash_index, is_root_path
+
 def create_folder_structure(save_folder, file_list):
     for download_url in file_list:
         try:
