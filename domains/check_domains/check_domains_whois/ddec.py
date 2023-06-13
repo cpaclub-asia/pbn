@@ -727,13 +727,15 @@ def make_report_for_telegram() -> Optional[Any]:
             if len(txt) > 350:
                 dt: str = value.get('dt')
                 str_domain_item: str = (
-                    f'{i}. {dn}{dt}\n'
+                    f'{dn}{dt}\n'
+                    #f'{i}. {dn}{dt}\n'
                     f'{txt[:350]}...\n\n'
                 )
             else:
                 dt: str = value.get('dt')
                 str_domain_item: str = (
-                    f'{i}. {dn}{dt}\n'
+                    f'{dn}{dt}\n'
+                    #f'{i}. {dn}{dt}\n'
                     f'{txt}\n\n'
                 )
             message += str_domain_item
@@ -875,7 +877,8 @@ def make_report_for_email() -> None:
             for domain, day_left in EXPIRES_DOMAIN.items():
                 i += 1
                 dn: str = f'{domain:<42}'
-                str_domain_item: str = f'{i}. {dn} {day_left}\n'
+                str_domain_item: str = f'{dn} {day_left}\n'
+                #str_domain_item: str = f'{i}. {dn} {day_left}\n'
                 domain_list_txt += str_domain_item
 
         if len(SOON_DOMAIN) > 0:
@@ -886,6 +889,7 @@ def make_report_for_email() -> None:
             for domain, day_left in SOON_DOMAIN.items():
                 i += 1
                 dn: str = f'{domain:<42}'
+                #str_domain_item: str = f'{dn} {day_left}\n'
                 str_domain_item: str = f'{i}. {dn} {day_left}\n'
                 domain_list_txt += str_domain_item
 
@@ -895,7 +899,8 @@ def make_report_for_email() -> None:
             domain_list_txt += f'{hl}\n'
             for i, domain in enumerate(ERRORS_DOMAIN, 1):
                 dn: str = f'{domain:<42}'
-                str_domain_item: str = f'{i}. {dn}\n'
+                #str_domain_item: str = f'{i}. {dn}\n'
+                str_domain_item: str = f'{dn}\n'
                 domain_list_txt += str_domain_item
 
         if len(ERRORS2_DOMAIN) > 0:
@@ -904,7 +909,8 @@ def make_report_for_email() -> None:
             domain_list_txt += f'{hl}\n'
             for i, domain in enumerate(ERRORS2_DOMAIN, 1):
                 dn: str = f'{domain:<42}'
-                str_domain_item: str = f'{i}. {dn}\n'
+                str_domain_item: str = f'{dn}\n'
+                #str_domain_item: str = f'{i}. {dn}\n'
                 domain_list_txt += str_domain_item
 
         if len(FREE_DOMAINS) > 0:
@@ -913,7 +919,8 @@ def make_report_for_email() -> None:
             domain_list_txt += f'{hl}\n'
             for i, domain in enumerate(FREE_DOMAINS, 1):
                 dn: str = f'{domain:<42}'
-                str_domain_item: str = f'{i}. {dn}\n'
+                #str_domain_item: str = f'{i}. {dn}\n'
+                str_domain_item: str = f'{dn}\n'
                 domain_list_txt += str_domain_item
 
         if len(WHOIS_TEXT_CHANGED_DOMAIN) > 0:
@@ -927,6 +934,7 @@ def make_report_for_email() -> None:
                 txt: str = value.get('txt')
                 dt: str = value.get('dt')
                 str_domain_item: str = (
+                    #f'{dn}{dt}\n'
                     f'{i}. {dn}{dt}\n'
                     f'{txt}\n\n'
                 )
@@ -968,7 +976,8 @@ def make_report_for_email() -> None:
             for domain, day_left in EXPIRES_DOMAIN.items():
                 i += 1
                 dn: str = f'{domain:<42}'
-                str_domain_item: str = f'{i}. {dn} {day_left}\n'
+                #str_domain_item: str = f'{i}. {dn} {day_left}\n'
+                str_domain_item: str = f'{dn} {day_left}\n'
                 domain_list += str_domain_item
             domain_list += '</pre>'
 
@@ -980,7 +989,8 @@ def make_report_for_email() -> None:
             for domain, day_left in SOON_DOMAIN.items():
                 i += 1
                 dn: str = f'{domain:<42}'
-                str_domain_item: str = f'{i}. {dn} {day_left}\n'
+                #str_domain_item: str = f'{i}. {dn} {day_left}\n'
+                str_domain_item: str = f'{dn} {day_left}\n'
                 domain_list += str_domain_item
             domain_list += '</pre>'
 
@@ -990,7 +1000,8 @@ def make_report_for_email() -> None:
             domain_list += f'{hl}\n'
             for i, domain in enumerate(ERRORS_DOMAIN, 1):
                 dn: str = f'{domain:<42}'
-                str_domain_item: str = f'{i}. {dn}\n'
+                #str_domain_item: str = f'{i}. {dn}\n'
+                str_domain_item: str = f'{dn}\n'
                 domain_list += str_domain_item
             domain_list += '</pre>'
 
@@ -1000,7 +1011,8 @@ def make_report_for_email() -> None:
             domain_list += f'{hl}\n'
             for i, domain in enumerate(ERRORS2_DOMAIN, 1):
                 dn: str = f'{domain:<42}'
-                str_domain_item: str = f'{i}. {dn}\n'
+                #str_domain_item: str = f'{i}. {dn}\n'
+                str_domain_item: str = f'{dn}\n'
                 domain_list += str_domain_item
             domain_list += '</pre>'
 
@@ -1010,7 +1022,8 @@ def make_report_for_email() -> None:
             domain_list += f'{hl}\n'
             for i, domain in enumerate(FREE_DOMAINS, 1):
                 dn: str = f'{domain:<42}'
-                str_domain_item: str = f'{i}. {dn}\n'
+                #str_domain_item: str = f'{i}. {dn}\n'
+                str_domain_item: str = f'{dn}\n'
                 domain_list += str_domain_item
             domain_list += '</pre>'
 
@@ -1025,7 +1038,8 @@ def make_report_for_email() -> None:
                 txt: str = value.get('txt')
                 dt: str = value.get('dt')
                 str_domain_item: str = (
-                    f'{i}. {dn}{dt}\n'
+                    f'{dn}{dt}\n'
+                    #f'{i}. {dn}{dt}\n'
                     f'{txt}\n\n'
                 )
                 domain_list += str_domain_item
@@ -1501,7 +1515,8 @@ def print_domain(domain: str,
         current_domain = ''
 
     number_domain: str = f'{current_domain:>5}'
-    dnn = f'{number_domain}. {dnn}'
+    #dnn = f'{number_domain}. {dnn}'
+    dnn = f'{dnn}'
     dnn = f'{dnn:<42}'
 
     if CLI.long_format:
@@ -2061,11 +2076,13 @@ def main() -> None:
                     si: str = f'{i:>4}'
                     if i == 1:
                         if CLI.print_to_console:
-                            print(f'{si}. {FLW}{group}')
+                            #print(f'{si}. {FLW}{group}')
+                            print(f'{FLW}{group}')
                     else:
                         if CLI.print_to_console:
                             print(' ' * 40, end='')
-                            print(f'\n{si}. {FLW}{group}')
+                            #print(f'\n{si}. {FLW}{group}')
+                            print(f'\n{FLW}{group}')
                     continue
 
                 if expire_days > 0:
@@ -2083,6 +2100,7 @@ def main() -> None:
                         dnn: str = f'{FLR}{dn}'
                         number_domain: str = f"{current_domain:>5}"
                         dnn: str = f'{number_domain}. {dnn}'
+                        #dnn: str = f'{dnn}'
                         dnn: str = f'{dnn:<42}'
                         print(f'{dnn} Sorry, this domain is not supported.')
                     else:
