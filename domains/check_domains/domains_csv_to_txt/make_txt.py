@@ -6,7 +6,8 @@ csv_file = 'pbn-data/majestic_million/13062023/majestic_million.csv'  # Replace 
 txt_file = 'pbn-data/majestic_million/13062023/majestic_million.txt'  # Replace with the desired output text file name
 
 
-unique_domains = set()  # Set to store unique values
+unique_domains_a = []
+unique_domains = set()
 
 with open(csv_file, 'r') as file:
     reader = csv.DictReader(file)
@@ -16,7 +17,8 @@ with open(csv_file, 'r') as file:
         domain2 = extracted.domain + '.' + extracted.suffix
         if domain2 not in unique_domains:
             unique_domains.add(domain2)
+            unique_domains_a.append(domain2)
 
 with open(txt_file, 'w') as file:
-    file.write(' 30\n'.join(unique_domains))
+    file.write(' 30\n'.join(unique_domains_a))
 

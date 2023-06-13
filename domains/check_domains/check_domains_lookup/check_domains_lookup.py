@@ -3,8 +3,8 @@ import socket
 import tldextract
 
 NUM_WORKERS = 100
-FILE_SRC="majestic_million/13062023/majestic_million.txt"
-FILE_DST="majestic_million/13062023/majestic_million_nc.txt"
+FILE_SRC="pbn-data/majestic_million/13062023/majestic_million.txt"
+FILE_DST="pbn-data/majestic_million/13062023/majestic_million_nc.txt"
 
 
 def check_domain(line):
@@ -12,6 +12,11 @@ def check_domain(line):
     extracted = tldextract.extract(domain3)
     domain2 = extracted.domain + '.' + extracted.suffix
 
+    if len(domain2.split('.')) >= 3:
+        print(f"Skipping {domain2}: {line}")
+        return
+        
+        
     #print(domain2)
     try:
         ip = socket.gethostbyname(domain2)
