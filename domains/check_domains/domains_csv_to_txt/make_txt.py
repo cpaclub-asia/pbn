@@ -2,8 +2,8 @@
 import tldextract
 import csv
 
-csv_file = 'src/info_2y.csv'  # Replace with your CSV file name
-txt_file = 'src/info_2y.txt'  # Replace with the desired output text file name
+csv_file = 'pbn-data/majestic_million/13062023/majestic_million.csv'  # Replace with your CSV file name
+txt_file = 'pbn-data/majestic_million/13062023/majestic_million.txt'  # Replace with the desired output text file name
 
 
 unique_domains = set()  # Set to store unique values

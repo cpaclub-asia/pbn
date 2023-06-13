@@ -3,6 +3,9 @@ import socket
 import tldextract
 
 NUM_WORKERS = 100
+FILE_SRC="majestic_million/13062023/majestic_million.txt"
+FILE_DST="majestic_million/13062023/majestic_million_nc.txt"
+
 
 def check_domain(line):
     domain3 = line.split()[0].strip(',').strip(':')  # take only the first part before space or comma
@@ -12,13 +15,13 @@ def check_domain(line):
     #print(domain2)
     try:
         ip = socket.gethostbyname(domain2)
-        with open('good.txt', 'a') as good_file:
-            good_file.write(f"{domain2}: {ip}\n")
+        #with open('good.txt', 'a') as good_file:
+        #    good_file.write(f"{domain2}: {ip}\n")
     except Exception as e:
         print(f"{domain2} 30 {line}")
-        with open('2y2_full.txt', 'a') as bad_file:
-            bad_file.write(f"{domain2} 30 {line}\n")
-        with open('2y2.txt', 'a') as bad_file:
+        #with open('2y2_full.txt', 'a') as bad_file:
+        #    bad_file.write(f"{domain2} 30 {line}\n")
+        with open(FILE_DST, 'a') as bad_file:
             bad_file.write(f"{domain2} 30\n")
 
             #bad_file.write(f"{domain}: {str(e)}\n")
@@ -32,5 +35,5 @@ def process_domains(filename):
         executor.map(check_domain, domains)
 
 if __name__ == "__main__":
-    process_domains('info_2y2.txt')
+    process_domains(FILE_SRC)
     #process_domains('bad.txt')
