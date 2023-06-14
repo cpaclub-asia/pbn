@@ -20,12 +20,19 @@ def add_trailing_slash(url):
 def add_index_html(url):
     parsed_url = urlparse(url)
     path = parsed_url.path
-
+    if url=="":
+        return "index.html"
     if path.endswith('/'):
         path += 'index.html'
         return urlunparse(parsed_url._replace(path=path))
 
     return url
+
+def get_path(url):
+    if "/" not in url:
+        return ""
+    return os.path.join(*url.split('/')[:-1])
+
     
 def add_slash_index(url):
     return add_index_html(add_trailing_slash(url))
@@ -47,6 +54,24 @@ def file_name_slash_index(url):
     file_name = url.split('/')[-1]
     file_name = file_name[:255]
     return file_name
+
+def url_slash_index(url):
+    parsed_url = os.path.splitext(url)  # Разбиваем URL на путь и расширение
+    path = parsed_url[0]  # Получаем путь из разбитого URL
+
+    if path.endswith('/'):
+        return url+"index.html"
+
+    if not path.endswith('/') and not parsed_url[1]:    # Без расширения
+        #file_name = url.split('/')[-1]
+        #file_name = file_name[:255]
+        return url+ "/index.html" 
+
+
+    #file_name = url.split('/')[-1]
+    #file_name = file_name[:255]
+    return url
+
 
 
 '''

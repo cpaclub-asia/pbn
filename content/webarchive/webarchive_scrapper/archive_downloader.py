@@ -50,7 +50,7 @@ def download_archive_data(domain, save_folder=None):
         # Add the file to the appropriate list
         if is_root_path(original_url):
             index_files.append(download_url)
-        elif file_extension == '.html' || file_extension == '':
+        elif file_extension == '.html' or file_extension == '.htm' or file_extension == '.asp' or file_extension == '.aspx' or file_extension == '':
             html_files.append(download_url)
         elif original_url.endswith('sitemap.xml') or original_url.endswith('robots.txt') or original_url.endswith('favicon.ico'):
             system_files.append(download_url)
