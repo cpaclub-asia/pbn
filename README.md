@@ -46,9 +46,9 @@ We don't work with domains without history or without content
 #### 📋 Make potential list of domains
 
 📝 Make a list from:
-- Google
-- Wikipedia
-- GitHub
+- Google SERP (our/competitors keywords)
+- Outgoing links from big sites (Wikipedia, GitHub, GitLab, ...), also can take Top-3 from Google
+- Majestic Million
 
 using Semrush or wget+rapser
 
