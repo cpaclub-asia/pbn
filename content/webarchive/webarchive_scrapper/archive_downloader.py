@@ -50,12 +50,12 @@ def download_archive_data(domain, save_folder=None):
         # Add the file to the appropriate list
         if is_root_path(original_url):
             index_files.append(download_url)
-        elif file_extension == '.html':
+        elif file_extension == '.html' || file_extension == '':
             html_files.append(download_url)
+        elif original_url.endswith('sitemap.xml') or original_url.endswith('robots.txt') or original_url.endswith('favicon.ico'):
+            system_files.append(download_url)
         elif file_extension == '.jpg' or file_extension == '.jpeg' or file_extension == '.png' or file_extension == '.gif':
             image_files.append(download_url)
-        elif original_url.endswith('sitemap.xml') or original_url.endswith('robots.txt'):
-            system_files.append(download_url)
         else:
             other_files.append(download_url)
 
@@ -78,16 +78,17 @@ def download_archive_data(domain, save_folder=None):
     print("\n".join(system_files))
     print("\nHTML Files:")
     print("\n".join(html_files))
-    print("\nImage Files:")
-    print("\n".join(image_files))
     print("\nOther Files:")
     print("\n".join(other_files))
+    print("\nImage Files:")
+    print("\n".join(image_files))
+
 
     # Create the folder structure and download files based on priority
     create_folder_structure(domain_folder, index_files)
     create_folder_structure(domain_folder, system_files)
     create_folder_structure(domain_folder, html_files)
-    create_folder_structure(domain_folder, image_files)
     create_folder_structure(domain_folder, other_files)
+    create_folder_structure(domain_folder, image_files)
 
     print("Download completed.")
