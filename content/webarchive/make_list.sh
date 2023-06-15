@@ -1,1 +1,1 @@
-find . -type f > list
+find . -type f > ../list

@@ -102,27 +102,10 @@ After buying a domain, upload the old information to WordPress.
 
 This folder contains scripts related to content parsing and restoration.
 
-- `webarchive_parser`:
-  - Description: Parses content from web.archive.org.
-  - File: `webarchive_parser.py`
-
-- `webarchive_scrapper`:
-  - Description: Scrapes content from web.archive.org.
-  - File: `webarchive_scrapper.py`
+read content/README.md for more details
 
 **./domains**
 
 This folder contains scripts related to domain management.
 
-- `check_domains`:
-  - Description: Contains various scripts for checking domain information.
-  - Files:
-    - `check_domain_connection`: Checks domain connection status.
-    - `check_domain_whois`: Retrieves WHOIS information for a domain.
-    - `check_if_dropped_domain`: Checks if a domain has been dropped.
-    - `check_if_expired_domain`: Checks if a domain has expired.
-    - `domains_csv_to_txt`: Converts domain information from CSV to TXT format.
-
-- `make_domains_lists`:
-  - Description: Contains scripts for generating domain lists.
-  - File: `scrap_site_for_outgoing_domains`: Scrapes websites for outgoing domains.
+read domains/README.md for more details
