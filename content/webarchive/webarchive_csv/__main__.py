@@ -31,8 +31,10 @@ def main():
     pages_csv_path = os.path.join(output_dir, "pages.csv")
     posts_csv_path = os.path.join(output_dir, "posts.csv")
 
-    make_csv(pages_dir,pages_csv_path)
-    make_csv(posts_dir,posts_csv_path)
+    print("MAKING PAGES")
+    make_csv(pages_dir,title_path,pages_csv_path)
+    print("MAKING POSTS")
+    make_csv(posts_dir,title_path,posts_csv_path)
 
 
 
