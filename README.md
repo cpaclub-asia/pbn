@@ -102,10 +102,10 @@ After buying a domain, upload the old information to WordPress.
 
 This folder contains scripts related to content parsing and restoration.
 
-read content/README.md for more details
+read [content/README.md](content/README.md) for more details
 
 **./domains**
 
 This folder contains scripts related to domain management.
 
-read domains/README.md for more details
+read [domains/README.md](content/README.md) for more details
