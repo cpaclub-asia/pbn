@@ -62,7 +62,7 @@ def extract_head_and_body(file_name,input_dir,output_dir,relative_dir):
     cleaned_html = remove_scripts_and_css(soup)
     cleaned_html = remove_web_archive_links(cleaned_html)
 
-       head_tag = cleaned_html.head
+    head_tag = cleaned_html.head
     body_tag = cleaned_html.body
     title_tag = cleaned_html.title
 
