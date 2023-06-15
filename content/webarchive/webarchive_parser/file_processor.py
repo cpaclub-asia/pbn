@@ -9,7 +9,8 @@ def process_files(input_dir, output_dir):
         for file_name in files:
             file_path = os.path.join(root, file_name)
             relative_dir = os.path.dirname(os.path.relpath(file_path,input_dir))
-            if file_name.endswith('.html'):
+            file_extension = os.path.splitext(file_name)[1]
+            if file_extension.lower() in ['.html', '.htm', '.asp', '.aspx', '']:
                 print(f"Processing file_name,input_dir,output_dir,relative_dir: {file_name},{input_dir},{output_dir},{relative_dir}")
                 extract_head_and_body(file_name,input_dir,output_dir,relative_dir)
 
