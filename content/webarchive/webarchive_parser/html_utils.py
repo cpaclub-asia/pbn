@@ -19,16 +19,19 @@ def remove_web_archive_links(soup):
                 href = tag['href']
                 href = re.sub(r'https://web\.archive\.org/web/\d+/', '', href)
                 href = re.sub(r'https://web\.archive\.org/web/\d+im_/', '', href)
+                href = re.sub(r'/web/\d+/(http\S+)/', r'\1', href) # вид <a href="/web/20140317005012/http://
                 tag['href'] = href
             if tag.has_attr('src'):
                 src = tag['src']
                 src = re.sub(r'https://web\.archive\.org/web/\d+/', '', src)
                 src = re.sub(r'https://web\.archive\.org/web/\d+im_/', '', src)
+                src = re.sub(r'/web/\d+/(http\S+)/', r'\1', src) 
                 tag['src'] = src
             if tag.has_attr('action'):
                 action = tag['action']
                 action = re.sub(r'https://web\.archive\.org/web/\d+/', '', action)
                 action = re.sub(r'https://web\.archive\.org/web/\d+im_/', '', action)
+                action = re.sub(r'/web/\d+/(http\S+)/', r'\1', action) 
                 tag['action'] = action
 
     return soup
