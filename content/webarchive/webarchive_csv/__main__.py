@@ -1,6 +1,6 @@
 import os
 import argparse
-import make_csv from file_csv
+from file_csv import make_csv 
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='HTML Parsing')
@@ -16,9 +16,11 @@ def main():
         print("Пример использования: python webarchive_csv путь_к_папке_с_HTML_файлами")
         return
 
-    pages_dir = args.input_dir+"/content/pages/"
-    posts_dir = args.input_dir+"/content/posts/"
-    output_dir = args.input_dir+"/content/csv/"
+    input_dir=args.input_dir
+    pages_dir = input_dir+"/content/pages/"
+    posts_dir = input_dir+"/content/posts/"
+    output_dir = input_dir+"/content/csv/"
+    title_path = input_dir+"/title/"
 
     # Создаем папку для сохранения
     os.makedirs(output_dir, exist_ok=True)

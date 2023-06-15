@@ -62,8 +62,9 @@ def extract_head_and_body(file_name,input_dir,output_dir,relative_dir):
     cleaned_html = remove_scripts_and_css(soup)
     cleaned_html = remove_web_archive_links(cleaned_html)
 
-    head_tag = cleaned_html.head
+       head_tag = cleaned_html.head
     body_tag = cleaned_html.body
+    title_tag = cleaned_html.title
 
     if head_tag is None:
         print(f"Invalid HTML format: <head> tag is missing in {html_file}")
@@ -71,15 +72,26 @@ def extract_head_and_body(file_name,input_dir,output_dir,relative_dir):
     if body_tag is None:
         print(f"Invalid HTML format: <body> tag is missing in {html_file}")
         body_tag=""
+    if title_tag is None:
+        print(f"Invalid HTML format: <title> tag is missing in {html_file}")
+        title_tag=""
 
     head_content = str(head_tag)
     body_content = str(body_tag)
+    title_content = str(title_tag.text)
 
     output_subdir = os.path.join(output_dir, 'head',relative_dir)
     os.makedirs(output_subdir, exist_ok=True)
     head_file = os.path.join(output_subdir, os.path.basename(html_file))
     with open(head_file, 'w') as file:
         file.write(head_content)
+
+
+    output_subdir = os.path.join(output_dir, 'title',relative_dir)
+    os.makedirs(output_subdir, exist_ok=True)
+    title_file = os.path.join(output_subdir, os.path.basename(html_file))
+    with open(title_file, 'w') as file:
+        file.write(title_content)
 
     output_subdir = os.path.join(output_dir, 'body',relative_dir)
     os.makedirs(output_subdir, exist_ok=True)
