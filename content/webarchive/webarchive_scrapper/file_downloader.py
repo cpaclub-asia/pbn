@@ -17,6 +17,7 @@ def create_folder_structure(save_folder, file_list):
 
             domain_url=download_url.split('/')[7]
             path_url_ni=os.path.join(*download_url.split('/')[8:])
+            
             path_url=add_index_html(path_url_ni)
 
             print(f"path_url:{path_url}")

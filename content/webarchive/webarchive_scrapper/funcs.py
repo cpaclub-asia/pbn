@@ -16,17 +16,49 @@ def add_trailing_slash(url):
         url += '/'  # Добавляем слеш в конец URL
 
     return url
-    
+
+'''    
 def add_index_html(url):
     parsed_url = urlparse(url)
     path = parsed_url.path
     if url=="":
         return "index.html"
+    #if not ends with / but have no extension:
+    #    path += '/index.html'
+    #    return path
+
     if path.endswith('/'):
         path += 'index.html'
-        return urlunparse(parsed_url._replace(path=path))
+        return path
+        #return urlunparse(parsed_url._replace(path=path))
 
     return url
+'''
+
+def add_index_html(url):
+    from urllib.parse import urlparse
+    import os
+
+    parsed_url = urlparse(url)
+    path = parsed_url.path
+
+    if url == "":
+        return "index.html"
+
+    if path.endswith('/'):
+        path += 'index.html'
+    elif os.path.splitext(path)[1] == '':
+        path += '/index.html'
+    return path
+
+'''
+print(add_index_html(""))  # ожидаемый результат: "index.html"
+print(add_index_html("path"))  # ожидаемый результат: "path/index.html"
+print(add_index_html("path/"))  # ожидаемый результат: "path/index.html"
+print(add_index_html("path/file"))  # ожидаемый результат: "path/file/index.html"
+print(add_index_html("path/file.ext"))  # ожидаемый результат: "path/file.ext"
+print(add_index_html("path/index.html"))  # ожидаемый результат: "index.html"
+'''
 
 def get_path(url):
     if "/" not in url:
