@@ -23,17 +23,50 @@ The webarchive folder contains a suite of scripts used to interact with web.arch
 
 This directory contains the scripts to download data from web.archive.org. 
 
+```
+All files downloaded as is and puts in folders by months.
+
+Important!
+Only one replacement occured
+domain.com/path/subpath REPLACED TO domain.com/path/subpath/index.html
+```
+
 ### webarchive_parser
 
 This directory contains scripts to parse the downloaded web archives. 
+```
+Remove all web.archive.org links
+```
+
 
 ### webarchive_compare
 
 This directory contains scripts to compare the parsed data. 
 
+```
+Find uniquie and common elements.
+From each page remove common elements
+```
+
+### manula work
+```
+
+manual remove some month with bad content -> make all again
+manual make categories.txt
+manual make pages.txt
+manual make redirects
+
+```
+
+
 ### webarchive_csv
 
 This directory contains scripts to convert the compared web archives data to CSV format.
+
+```
+make csv to load on wordpress
+```
+
 
 ## How to Use
 
