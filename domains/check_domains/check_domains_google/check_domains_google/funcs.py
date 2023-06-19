@@ -64,7 +64,8 @@ def get_google_results(domain):
 
     if result_stats:
         result_stats_text = result_stats.text.replace(',', '').split()[1]
-        
+        if result_stats_text=="results":
+            result_stats_text = result_stats.text.replace(',', '').split()[0]
         # Find all search result titles
         search_results = soup.find_all("h3")
         print(search_results)
@@ -79,7 +80,8 @@ def get_google_results(domain):
         favicon_url = favicon_img["src"] if favicon_img else ""
 
         favicon_file = save_favicon(favicon_url, domain) if favicon_url else ""
-
+        print(domain)
+        print(result_stats_text)
         return int(result_stats_text), titles, favicon_file
 
 
