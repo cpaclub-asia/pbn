@@ -1,5 +1,6 @@
 # PBN (Private Blog Network) Project
 
+Самая главная задача - чтобы файлы, которые были в индексе в гугле и внешние ссылки вели на страницы с контентом, который уже был. ЧТОБЫ НЕ ПОТЕРЯТЬ СТАРЫЙ ТРАФИК И ЛЮДЕЙ
 
 ## 🌐 Overview
 The content folder consists of several directories and scripts dedicated to content parsing and restoration. It is an essential part of the Private Blog Network (PBN) project, which helps in retrieving website content for both ongoing and dropped domains. Let's take a look at the details.
