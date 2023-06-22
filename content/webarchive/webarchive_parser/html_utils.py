@@ -75,10 +75,13 @@ def extract_head_and_body(file_name,input_dir,output_dir,relative_dir):
     if title_tag is None:
         print(f"Invalid HTML format: <title> tag is missing in {html_file}")
         title_tag=""
+        title_content = ""
+    else:
+        title_content = str(title_tag.text)
 
     head_content = str(head_tag)
     body_content = str(body_tag)
-    title_content = str(title_tag.text)
+    
 
     output_subdir = os.path.join(output_dir, 'head',relative_dir)
     os.makedirs(output_subdir, exist_ok=True)
@@ -106,12 +109,14 @@ def extract_head_and_body(file_name,input_dir,output_dir,relative_dir):
     with open(text_file, 'w') as file:
         file.write(text_content)
 
+    '''
     images_content=extract_images_from_body(body_content)
     output_subdir = os.path.join(output_dir, 'images',relative_dir)
     os.makedirs(output_subdir, exist_ok=True)
     images_file = os.path.join(output_subdir, os.path.basename(html_file))
     with open(images_file, 'w') as file:
         file.write(images_content)
+    '''
 
 
 def extract_text_from_body(body_content):

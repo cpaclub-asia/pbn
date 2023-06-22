@@ -33,7 +33,9 @@ def make_csv(files_dir,title_path,csv_path):
 
                 print (f"slug,file_name,file_path,relative_dir,filename_relative:{slug},{file_name},{file_path},{relative_dir},{filename_relative}")
 
-                if file_name.endswith('.html'):
+                file_extension = os.path.splitext(file_name)[1]
+                if file_extension.lower() in ['.html', '.htm', '.asp', '.aspx', '']:
+
                     print(f"csv->:{file_path}")
                     with open(file_path, 'r', encoding='utf-8') as f:
                         with open(title_file, 'r', encoding='utf-8') as f2:
