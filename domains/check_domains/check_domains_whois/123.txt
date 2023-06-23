@@ -1,0 +1,33 @@
+	Python  : 3.10.7 (main, May 29 2023, 13:51:48) [GCC 12.2.0]
+	Node    : anton-MS-7D32
+	Home    : /home/anton
+	OS      : Linux
+	Release : 5.19.0-43-generic
+	Version : #44-Ubuntu SMP PREEMPT_DYNAMIC Tue May 16 14:03:43 UTC 2023
+	Arch    : x86_64
+	CPU     : x86_64
+	Preset options
+	-------------------------
+	File                     : pbn-data/commoncrawl_domains_2015_nc.txt
+	Domain                   : None
+	Print to console         : True
+	Long Format              : False
+	Interval Time            : 0
+	Expire Days              : 60
+	Track whois text change  : False
+	Use Telegram             : False
+	Proxy for Telegram       : None
+	Email to                 : None
+	Email subject            : None
+	Email SSL                : False
+	Email AUTH               : False
+	Email STARTTLS           : False
+	Use internal whois       : False
+	Use only external whois  : True
+	Use extra external whois : False
+	Print banner             : False
+	-------------------------
+	The whois found in: /usr/bin/whois
+------------------------------------------ -------------------- -----------------
+Domain Name                                Expiration Date      Days Left        
+------------------------------------------ -------------------- -----------------

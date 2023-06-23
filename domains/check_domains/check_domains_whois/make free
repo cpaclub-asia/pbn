@@ -1,0 +1,3 @@
+cat file.txt | grep  "Free" > free.txt
+
+cat file.txt | grep  "Exp" | grep "( -" > exp.txt
