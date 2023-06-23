@@ -14,4 +14,4 @@ The content folder consists of several directories and scripts dedicated to cont
 
 The webarchive folder contains a suite of scripts used to interact with web.archive.org. The scripts within the `./webarchive` directory allow us to download, parse, compare, and convert the historical website data into a usable CSV format. Each `.sh` file represents a different phase in this process.
 
-read [content/webarchive/README.md](content/webarchive/README.md) for more details
+read [webarchive/README.md](webarchive/README.md) for more details
