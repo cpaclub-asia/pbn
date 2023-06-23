@@ -1,5 +1,11 @@
 # PBN (Private Blog Network) Project
 
+### check_domains_google
+
+
+Основной полу ручной проверялщик
+
+
 
 ## 🌐 Overview
 This folder contains scripts related to domain management in the PBN project. It includes scripts for making domain lists, checking domains, and processing domain data. 
