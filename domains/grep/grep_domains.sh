@@ -1,4 +1,6 @@
-LIST=pbn-data/commoncrawl_domains_2015_whois_checked.txt
+#LIST=pbn-data/commoncrawl_domains_2015_whois_checked.txt
+LIST=pbn-data/info_domains_nc_whois.txt
+
 
 KEYWORDS=`cat all_keywords.txt`
 ZONES=`cat zones_grep.txt`
