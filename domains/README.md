@@ -22,7 +22,7 @@ The main script to check whois data for a list of domains.
 - ADD(Miron) В четвертом браузере - кеш гугла первой страницы
 
 - ADD(???) Сохранение скриншота каждого окна через driver.save_screenshot('screenshot.png')
-
+- ADD(???) Мультипоточность как в lookup чекерк
 
 ## 🌐 Overview
 This folder contains scripts related to domain management in the PBN project. It includes scripts for making domain lists, checking domains, and processing domain data. 
