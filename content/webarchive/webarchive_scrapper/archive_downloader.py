@@ -39,7 +39,7 @@ def download_archive_data(domain, save_folder=None):
     # Process each URL address
     for row in rows:
         timestamp, original_url = row.split(' ', 1)
-        clean_url = re.sub(r'^https?:\/\/[^\/]+', '', original_url.strip())
+        clean_url = re.sub(r'[\/:*?"<>|]', '_', original_url.strip())
 
         # Form the URL for downloading data
         download_url = f"https://web.archive.org/web/{timestamp}/{original_url}"
@@ -50,7 +50,7 @@ def download_archive_data(domain, save_folder=None):
         # Add the file to the appropriate list
         if is_root_path(original_url):
             index_files.append(download_url)
-        elif file_extension == '.html' or file_extension == '.htm' or file_extension == '.asp' or file_extension == '.aspx' or file_extension == '' or file_extension == '.html/' or file_extension == '.htm/' or file_extension == '.asp/' or file_extension == '.aspx/' or file_extension == '/':
+        elif file_extension == '.html' or file_extension == '.htm' or file_extension == '.asp' or file_extension == '.aspx' or file_extension == '':
             html_files.append(download_url)
         elif original_url.endswith('sitemap.xml') or original_url.endswith('robots.txt') or original_url.endswith('favicon.ico'):
             system_files.append(download_url)

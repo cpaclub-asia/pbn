@@ -1,1 +1,1 @@
-\.com |\.org |\.net |\.info |\.ru |\.pro |\.shop |\.xyz |\.life |\.live |\.today |\.online 
+:com\,|:org\,|:net\,|:info\,|:ru\,|:pro\,|:shop\,|:xyz\,|:life\,|:live\,|:today\,|:online\
