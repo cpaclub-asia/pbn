@@ -1,5 +1,5 @@
 #LIST=pbn-data/commoncrawl_domains_2015_whois_checked.txt
-LIST=pbn-data/info_domains_nc_whois.txt
+LIST=pbn-data/info0_whois.txt
 
 
 KEYWORDS=`cat all_keywords.txt`
