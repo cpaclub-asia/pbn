@@ -6,6 +6,9 @@
     - https://www.google.com/search?q=site%3Acpaclub.asia&oq=site%3Acpaclub.asia&aqs=chrome..69i57j69i58.13513j0j7&sourceid=chrome&ie=UTF-8
     - https://www.google.com/search?q=info%3Acpaclub.asia&sxsrf=APwXEdfK9O-yypa8XGiP7dm_edOsIY82CA%3A1687660933494&ei=hamXZJm2HaOZseMPntauiAw&ved=0ahUKEwjZjMTzst3_AhWjTGwGHR6rC8EQ4dUDCA8&uact=5&oq=info%3Acpaclub.asia&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQA0oECEEYAFAAWLEDYIoFaABwAHgAgAFEiAGLApIBATSYAQCgAQHAAQE&sclient=gws-wiz-serp
     - semrush external links
+- Винод каждый день контролирует
+    - ежедневные изменения залиты в github
+    - В README.md сразу описан функционал внесенных изменений
 
 
 Workflow:
