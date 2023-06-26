@@ -1,19 +1,17 @@
 #!/bin/bash
 
-# Путь к файлу с доменами
-file="webarch-data/domains.txt"
+# Запрашиваем у пользователя путь к целевому каталогу
+read -p "Введите путь к целевому каталогу (относительно ./data/webarch-data/web.archive.org/): " relative_path
 
-# Проверка наличия файла
-if [ ! -f "$file" ]; then
-    echo "Файл $file не найден."
-    exit 1
-fi
+# Получаем абсолютный путь к целевому каталогу, используя относительную ссылку
+target_directory="$(realpath "./data/webarch-data/web.archive.org/$relative_path")"
 
-# Чтение каждой строки из файла и выполнение команды CMD
-while IFS= read -r line; do
-    # Извлечение имени домена до первого пробела или точки с запятой
-    DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
-    CMD="python3 webarchive_parser webarch-data/web.archive.org/$DOMAIN/all sites-data/sites/$DOMAIN"
-    echo $CMD
-    $CMD
-done < "$file"
+# Укажите путь к папке, в которую будут собраны все файлы и папки
+destination_directory="$(realpath "./data/webarch-data/web.archive.org/$relative_path/all")"
+find "$destination_directory" -mindepth 1 -delete
+
+# Используем команду find для поиска всех файлов и папок в целевом каталоге
+# и его подпапках, а затем копируем их в папку назначения
+find "$target_directory" -mindepth 2 -type f -exec cp {} "$destination_directory" \;
+find "$target_directory" -mindepth 2 -type d -exec cp -R {} "$destination_directory" \;
+
