@@ -1,5 +1,13 @@
 # PBN (Private Blog Network) Project
 
+Workflow
+- Собираем базу доменов
+- Автоматом выбираем из них Free, Soon, Pending
+- Полуавтоматом (Денис) получаем по ним статистику Google Index,...
+- Вручную выбираем подходящие домены
+- Покупаем домен
+- Скачиваем сайт из вебархива и заливаем его к себе
+
 ## 🌐 Overview
 This project aims to create PBNs (Private Blog Networks) 
 <details>
@@ -56,8 +64,6 @@ using Semrush or wget+rapser
 look for Domains, that are Expired(Potential New Drops) or Free/Available (old drops)
 
 
-#### Potential New Drops and Bids technology
-📝 To-do
 
 
 
