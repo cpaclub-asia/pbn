@@ -1,4 +1,4 @@
-LIST=data/pbn-data/commoncrawl_domains_2015_whois_checked.txt
+LIST=data/domains-data/commoncrawl_domains_2015_whois_checked.txt
 #LIST=pbn-data/info0_whois.txt
 
 

@@ -3,8 +3,8 @@ import socket
 import tldextract
 
 NUM_WORKERS = 100
-FILE_SRC="pbn-data/commoncrawl_domains_2015.txt"
-FILE_DST="pbn-data/commoncrawl_domains_2015_nc.txt"
+FILE_SRC="data/domains-data/domains/github/github_all.txt"
+FILE_DST="data/domains-data/domains/github/github_all_nc.txt"
 
 
 def check_domain(line):

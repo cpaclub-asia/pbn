@@ -2,8 +2,9 @@
 import tldextract
 import csv
 
-csv_file = 'pbn-data/commoncrawl_domains_2015.csv'  # Replace with your CSV file name
-txt_file = 'pbn-data/commoncrawl_domains_2015.txt'  # Replace with the desired output text file name
+PATH = "data/domains-data/domains/github"
+csv_file = PATH+"/github_all.csv"  # Replace with your CSV file name
+txt_file = PATH+"/github_all.txt"  # Replace with the desired output text file name
 
 #csv_file = 'pbn-data/google/domes_google.csv'  # Replace with your CSV file name
 #txt_file = 'pbn-data/domains/google/domes_google.txt'  # Replace with the desired output text file name
