@@ -22,7 +22,6 @@ The main script to check whois data for a list of domains.
 - ADD(Miron) Параллельно открывать во втором браузере - index web.archive
 - ADD(Miron) количество страниц web.archive - тоже можно в третьем , чтобы видеть.
 - ADD(Miron) В четвертом браузере - кеш гугла первой страницы
-
 - ADD(Miron) Сохранение скриншота каждого окна через driver.save_screenshot('screenshot.png')
 
 
@@ -47,6 +46,7 @@ The main script to check whois data for a list of domains.
 - Посмотреть https://ahrefs.com/ru/backlink-checker внешние страницы, (минимум сайтов 30, минимум рейтинг ?, посмотреть качество и что склеек нет)
 - Посмотреть Semrush
 - https://www.name.com/whois-lookup/cpaclub.asia проверить что домен действительно свободен (даже если показывает Free, бывает ошибка)
+
 
 ## 🌐 Overview
 This folder contains scripts related to domain management in the PBN project. It includes scripts for making domain lists, checking domains, and processing domain data. 

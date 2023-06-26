@@ -1,16 +1,6 @@
 # PBN (Private Blog Network) Project
 
 Самая главная задача - чтобы файлы, которые были в индексе в гугле и внешние ссылки вели на страницы с контентом, который уже был. ЧТОБЫ НЕ ПОТЕРЯТЬ СТАРЫЙ ТРАФИК И ЛЮДЕЙ
-- Винод после выкладывания сайта проверяет, что все исторические внешние ссылки работают используя
-    - Google Search console - indexed/noindexed
-    - https://ahrefs.com/ru/backlink-checker
-    - https://www.google.com/search?q=site%3Acpaclub.asia&oq=site%3Acpaclub.asia&aqs=chrome..69i57j69i58.13513j0j7&sourceid=chrome&ie=UTF-8
-    - https://www.google.com/search?q=info%3Acpaclub.asia&sxsrf=APwXEdfK9O-yypa8XGiP7dm_edOsIY82CA%3A1687660933494&ei=hamXZJm2HaOZseMPntauiAw&ved=0ahUKEwjZjMTzst3_AhWjTGwGHR6rC8EQ4dUDCA8&uact=5&oq=info%3Acpaclub.asia&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQA0oECEEYAFAAWLEDYIoFaABwAHgAgAFEiAGLApIBATSYAQCgAQHAAQE&sclient=gws-wiz-serp
-    - semrush external links
-- Винод каждый день контролирует
-    - ежедневные изменения залиты в github
-    - В README.md сразу описан функционал внесенных изменений
-    - Примечание: ребята, не стесняйтесь делать сразу частые коммиты(даже если частичное решение), это полезная практика, мне будет видно правильно идете или нет и смогу уберечь вас от ошибок и траты времени (на примере меня - вы можете видеть, что я сам закрываю некоторые вещи, которые жду от вас и они становятся не актуальными. Нужно чтобы вы так же параллельно закрывали реальные задачи и мне они тоже становились не актуальными. Иначе ваш труд идет в пустую и не используется, потому что сделано не вовремя)
 
 Workflow:
 
