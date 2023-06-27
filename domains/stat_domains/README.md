@@ -33,6 +33,26 @@
 - Посмотреть Semrush
 - https://www.name.com/whois-lookup/cpaclub.asia проверить что домен действительно свободен (даже если показывает Free, бывает ошибка)
 
+#### Как покупать очень качественные домены из pending
+Только для реально дорогих и качественных
+- Размещать backorder одновременно
+    - https://www.name.com/deleting-domains/
+    - https://www.sav.com/my_backorders/domain_list
+    - godaddy
+    - dropcatch
+Если домен интересный, то если за него идет конкуренция - сначала случайным образом побеждает регистратор. А потом внутри регистратора смотрится, были ли другие заявки. У каждого геристратора одновременно оставляют заявки не многие, поэтому это увеличивает шансы на то, что конкурентов будет меньше.
+
+#### Как покупать Free
+    - .info -> 1$ -> https://www.123-reg.co.uk/
+    - .com и другие -> sav.com(самое дешевое), но в принципе без разницы
+
+#### Где списки pending
+- name.com: https://www.name.com/domain/deleting/download
+- sav.com: https://www.sav.com/domains/auctions https://d2yienn5xwenuj.cloudfront.net/sav_active_auctions_export.csv https://d1zluldjsudbem.cloudfront.net/sav_pending_delete_2023_06_26.csv
+
+#### Где аукционы
+- https://www.sav.com/domains/auctions
+
 
 ## 🌐 Overview
 This folder contains scripts related to domain management in the PBN project. It includes scripts for making domain lists, checking domains, and processing domain data. 
