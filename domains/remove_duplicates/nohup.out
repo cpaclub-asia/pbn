@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/home/anton/proj/cpaclub.asia/pbn/domains/check_domains/domains_csv_to_txt/make_txt.py", line 17, in <module>
-    for row in reader:
-  File "/usr/lib/python3.10/csv.py", line 120, in __next__
-    lf = len(self.fieldnames)
-KeyboardInterrupt
