@@ -10,12 +10,15 @@ check_files() {
             content=$(cat "$file")
             for word in ${words[@]}; do
                 if [[ $content == *"$word"* ]]; then
-                    status="Слова найдены"
-                    folder=$(echo "$file" | cut -d '/' -f 7)
-										trimmed_file=$(echo "$file" | cut -d '/' -f 8-)
-										if [[ "$folder" != "all" ]]; then
-											echo "Папка: $folder | Файл: $trimmed_file | Статус: $status"
-                    	echo "Папка: $folder | Файл: $trimmed_file | Статус: $status" >> "$log_file"
+										lang_check=$(grep -iE 'lang="en-EN"|lang="ru-RU"' "$file")
+                    if [[ ! -z "$lang_check" ]]; then
+											status="Explicit"
+											folder=$(echo "$file" | cut -d '/' -f 7)
+											trimmed_file=$(echo "$file" | cut -d '/' -f 8-)
+											if [[ "$folder" != "all" ]]; then
+												echo "Folder: $folder | File: $trimmed_file | Status: $status"
+												echo "Folder: $folder | File: $trimmed_file | Status: $status" >> "$log_file"
+											fi
 										fi
                     break
                 fi
@@ -26,13 +29,14 @@ check_files() {
     done
 }
 
-# Задайте директорию, которую нужно проверить
+# Choose directory that you need to check
 directory="./data/webarch-data/"
 
-# Задайте список слов для поиска
+# List of words for check
 words=("porn" "casino" "betting")
 
-# Задайте путь к папке для сохранения файла журнала
-log_file="./webarchive_analyze//log.txt"
+# Choose the log file
+log_file="./webarchive_analyze/log.txt"
 
 check_files "$directory" "${words[@]}" "$log_file"
+echo "---------------------------------------------------------" >> "$log_file"
