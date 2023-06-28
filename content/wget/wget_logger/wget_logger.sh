@@ -25,7 +25,9 @@ do
   # Проверяем, содержит ли строка паттерн URL
   if [[ $line =~ $url_pattern ]]; then
     # Получаем URL из строки
-    url="${BASH_REMATCH[0]}"
+    #url="${BASH_REMATCH[0]}"
+    #url=$(echo "$line" | grep -oP '(?<=http[s]?://)[^\s]+')
+    url=$(echo "$line" | awk '{match($0, /http[s]?:\/\/[^[:space:]]+/); print substr($0, RSTART, RLENGTH)}')
 
     # Выводим полученную информацию в нужном формате (URL и путь сохранения)
     

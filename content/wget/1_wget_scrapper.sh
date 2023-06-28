@@ -15,9 +15,9 @@ fi
 while IFS= read -r line; do
     # Извлечение имени домена до первого пробела или точки с запятой
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
-    CMD="./wget_scrapper/wget_scrapper.sh data/wget-data/ $DOMAIN"
-    echo $CMD
-    $CMD
+    #CMD="./wget_scrapper/wget_scrapper.sh data/wget-data/ $DOMAIN"
+    #echo $CMD
+    #$CMD
     
     CMD="./wget_logger/wget_logger.sh data/wget-data/$DOMAIN/wget.log "
     echo $CMD
