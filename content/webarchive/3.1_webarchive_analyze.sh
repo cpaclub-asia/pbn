@@ -2,8 +2,8 @@
 
 check_files() {
     directory=$1
-    words=$2
-    log_file=$3
+    words=("${@:2:$#-2}")
+    log_file=${@:$#}
 
     for file in "$directory"/*; do
         if [ -f "$file" ]; then
@@ -11,8 +11,12 @@ check_files() {
             for word in ${words[@]}; do
                 if [[ $content == *"$word"* ]]; then
                     status="Слова найдены"
-                    echo "Файл: $file | Статус: $status"
-                    echo "Файл: $file | Статус: $status" >> "$log_file"
+                    folder=$(echo "$file" | cut -d '/' -f 7)
+										trimmed_file=$(echo "$file" | cut -d '/' -f 8-)
+										if [[ "$folder" != "all" ]]; then
+											echo "Папка: $folder | Файл: $trimmed_file | Статус: $status"
+                    	echo "Папка: $folder | Файл: $trimmed_file | Статус: $status" >> "$log_file"
+										fi
                     break
                 fi
             done
@@ -29,8 +33,6 @@ directory="./data/webarch-data/"
 words=("porn" "casino" "betting")
 
 # Задайте путь к папке для сохранения файла журнала
-log_directory="./webarchive_analyze/"
-log_file="$log_directory/log.txt"
+log_file="./webarchive_analyze//log.txt"
 
 check_files "$directory" "${words[@]}" "$log_file"
-
