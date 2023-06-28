@@ -48,6 +48,10 @@ from email.mime.multipart import MIMEMultipart
 from pathlib import Path
 import subprocess
 import requests
+import concurrent.futures
+
+NUM_WORKERS = 100
+
 
 try:
     import dateutil.parser
@@ -2164,6 +2168,8 @@ def main() -> None:
                 current_domain=1,
                 checking_whois_text_changes=CLI.track_whois_text_changes
             )
+            with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_WORKERS) as executor:
+              executor.map(check_domain)
 
         if CLI.print_to_console:
             print_hr()
