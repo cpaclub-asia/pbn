@@ -37,17 +37,18 @@ def remove_web_archive_links(soup):
     return soup
 
 
-def remove_scripts_and_css(soup):
+def remove_scripts(soup):
     # Удаление скриптов
     scripts = soup.find_all('script')
     for script in scripts:
         script.extract()
+    return soup
 
+def remove_css(soup):
     # Удаление CSS
     styles = soup.find_all('style')
     for style in styles:
         style.extract()
-
     return soup
 
 
@@ -59,8 +60,9 @@ def extract_head_and_body(file_name,input_dir,output_dir,relative_dir):
 
     soup = BeautifulSoup(html_content, 'html.parser')
 
-    cleaned_html = remove_scripts_and_css(soup)
-    cleaned_html = remove_web_archive_links(cleaned_html)
+    removed_html = remove_web_archive_links(soup)
+    removed_html2 = remove_scripts(removed_html)
+    cleaned_html = remove_css(removed_html2)
 
     head_tag = cleaned_html.head
     body_tag = cleaned_html.body
@@ -81,7 +83,13 @@ def extract_head_and_body(file_name,input_dir,output_dir,relative_dir):
 
     head_content = str(head_tag)
     body_content = str(body_tag)
-    
+
+
+    output_subdir = os.path.join(output_dir, 'removed',relative_dir)
+    os.makedirs(output_subdir, exist_ok=True)
+    file = os.path.join(output_subdir, os.path.basename(html_file))
+    with open(file, 'w') as file:
+        file.write(str(removed_html2))
 
     output_subdir = os.path.join(output_dir, 'head',relative_dir)
     os.makedirs(output_subdir, exist_ok=True)
