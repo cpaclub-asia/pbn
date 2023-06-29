@@ -180,6 +180,7 @@ REQUEST_HEADERS: Dict = {
 # Options for an external utility whois
 # Keywords for whois-data
 EXPIRE_STRINGS: Tuple = (
+		'Creation Date:',
     'Registry Expiry Date:',
     'Expiration:',
     'Domain Expiration Date:',
