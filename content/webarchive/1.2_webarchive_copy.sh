@@ -2,8 +2,6 @@
 
 # Путь к файлу с доменами
 file="data/webarch-data/domains.txt"
-#file=$1
-
 
 # Проверка наличия файла
 if [ ! -f "$file" ]; then
@@ -15,7 +13,6 @@ fi
 while IFS= read -r line; do
     # Извлечение имени домена до первого пробела или точки с запятой
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
-    CMD="python3 webarchive_scrapper -f data/webarch-data/web.archive.org $DOMAIN"
-    echo $CMD
-    $CMD
+    /bin/mkdir -p data/sites-data/$DOMAIN/webarch
+    cp -r ./data/webarch-data/$DOMAIN/* ./data/sites-data/$DOMAIN/webarch
 done < "$file"
