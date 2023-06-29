@@ -13,7 +13,8 @@ def download_archive_data(domain, save_folder=None):
     os.makedirs(domain_folder, exist_ok=True)
 
     # Form the URL for requesting data from the web archive
-    url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original&collapse=urlkey"
+    # url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original&collapse=urlkey"
+    url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original"
 
     # Debug print the URL
     print("Request URL:", url)
