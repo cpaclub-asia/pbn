@@ -68,6 +68,12 @@ def create_folder_structure(save_folder, file_list):
                 file.write(download_response.content)
 
             urls_files[download_url]=rel_file_name;
+
+            list_file_name = os.path.join(save_folder,"urls.txt")
+            with open(list_file_name, 'w') as file:
+                for key, value in urls_files.items():
+                    file.write(f"{key},{value}\n")
+
         except Exception as e:
             print(f"An error occurred while processing file: {download_url}")
             print(str(e))
