@@ -1,8 +1,10 @@
 import traceback
 import os
 import requests
-from funcs import file_name_slash_index, is_root_path,add_index_html,get_path
+from webarchive_scrapper.funcs import file_name_slash_index, is_root_path,add_index_html,get_path
 from urllib.parse import urlparse
+from webarchive_scrapper.shared import urls_files;
+
 
 def create_folder_structure(save_folder, file_list):
     for download_url in file_list:
@@ -38,6 +40,7 @@ def create_folder_structure(save_folder, file_list):
 
             file_name = os.path.join(save_folder, year_month,path_url)
             file_name_all = os.path.join(save_folder,"all", path_url)
+            rel_file_name = os.path.join(year_month,path_url)
 
             #print(f"save_folder,year_month,domain_url,file_path,dir_url,path_url:{save_folder},{year_month},{domain_url},{path_url},{dir_url},{file_path}")
             print(f"domain_url:{domain_url}")
@@ -63,6 +66,8 @@ def create_folder_structure(save_folder, file_list):
 
             with open(file_name_all, 'wb') as file:
                 file.write(download_response.content)
+
+            urls_files[download_url]=rel_file_name;
         except Exception as e:
             print(f"An error occurred while processing file: {download_url}")
             print(str(e))

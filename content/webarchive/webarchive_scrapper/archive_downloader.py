@@ -2,9 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import os
-from funcs import file_name_slash_index, is_root_path
+from webarchive_scrapper.funcs import file_name_slash_index, is_root_path
 from urllib.parse import urlparse
-from file_downloader import create_folder_structure
+from webarchive_scrapper.file_downloader import create_folder_structure
+from webarchive_scrapper.shared import urls_files;
     
     
 def download_archive_data(domain, save_folder=None):
@@ -36,6 +37,7 @@ def download_archive_data(domain, save_folder=None):
     html_files = []
     image_files = []
     other_files = []
+
 
     # Process each URL address
     for row in rows:
@@ -91,5 +93,10 @@ def download_archive_data(domain, save_folder=None):
     create_folder_structure(domain_folder, html_files)
     create_folder_structure(domain_folder, other_files)
     create_folder_structure(domain_folder, image_files)
+
+    list_file_name = os.path.join(save_folder,"urls.txt")
+    with open(list_file_name, 'w') as file:
+        for key, value in urls_files.items():
+            file.write(f"{key},{value}\n")
 
     print("Download completed.")
