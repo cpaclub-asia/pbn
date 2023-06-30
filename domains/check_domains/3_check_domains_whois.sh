@@ -1,1 +1,2 @@
-python3 check_domains_whois.py -f data/domains-data/domains/github/github_all_nc.txt -c -i 0 -oe >> data/domains-data/domains/github/github_all_nc_whois.txt
+python3 check_domains_whois -f data/domains-data/crawl/2023/info_domains_noconnect.txt -c -i 0 -oe >> data/domains-data/crawl/2023/info_domains_noconnect_whois.txt
+
