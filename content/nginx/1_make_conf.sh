@@ -14,9 +14,10 @@ fi
 echo "Prepare"
 
 /bin/mkdir data/nginx-data
-/bin/mkdir data/nginx-data/static
+/bin/mkdir data/nginx-data/plain
 /bin/mkdir data/nginx-data/wordpress
-echo "" > data/nginx-data/include.conf
+echo "" > data/nginx-data/includes_plain.conf
+echo "" > data/nginx-data/includes_wordpress.conf
 
 # Чтение каждой строки из файла и выполнение команды CMD
 while IFS= read -r line; do
@@ -24,9 +25,10 @@ while IFS= read -r line; do
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
     echo "$DOMAIN"
     
-    sed "s/{{DOMAIN}}/$DOMAIN/g" "templates/plain_static.conf" > data/nginx-data/static/$DOMAIN.conf
+    sed "s/{{DOMAIN}}/$DOMAIN/g" "templates/plain_static.conf" > data/nginx-data/plain/$DOMAIN.conf
     sed "s/{{DOMAIN}}/$DOMAIN/g" "templates/wordpress_static.conf" > data/nginx-data/wordpress/$DOMAIN.conf
-    echo "include $DOMAIN.conf;" >> data/nginx-data/include.conf
+    echo "include /home/static/conf/plain/$DOMAIN.conf;" >> data/nginx-data/includes_plain.conf
+    echo "include /home/static/conf/wordpress/$DOMAIN.conf;" >> data/nginx-data/includes_wordpress.conf
 done < "$file"
 
 
