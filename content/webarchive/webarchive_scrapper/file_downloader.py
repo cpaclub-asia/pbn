@@ -2,10 +2,9 @@ import traceback
 import os
 import requests
 from funcs import file_name_slash_index, is_root_path, add_index_html, get_path
+from webarchive_scrapper.funcs import file_name_slash_index, is_root_path,add_index_html,get_path
 from urllib.parse import urlparse
-from webarchive_scrapper.shared import urls_files
-from webarchive_scrapper.shared import file_name_slash_index, is_root_path,add_index_html,get_path
-
+from webarchive_scrapper.shared import urls_files;
 
 
 def create_folder_structure(save_folder, file_list):
