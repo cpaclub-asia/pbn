@@ -3,6 +3,10 @@ import os
 import requests
 from funcs import file_name_slash_index, is_root_path, add_index_html, get_path
 from urllib.parse import urlparse
+from webarchive_scrapper.shared import urls_files
+from webarchive_scrapper.shared import file_name_slash_index, is_root_path,add_index_html,get_path
+
+
 
 def create_folder_structure(save_folder, file_list):
     for download_url in file_list:
@@ -29,10 +33,26 @@ def create_folder_structure(save_folder, file_list):
             file_name = os.path.join(save_folder, year_month, path_url)
             file_name_all = os.path.join(save_folder, "all", path_url)
 
-            print(f"domain_url: {domain_url}")
-            print(f"path_url: {path_url}")
-            print(f"dir_url: {dir_url}")
-            print(f"file_path: {file_path}")
+            #if(file_name==""):
+            #    file_name="index.html"
+
+
+
+
+
+            file_path = os.path.join(save_folder, year_month,dir_url)
+            file_path_all = os.path.join(save_folder,"all", dir_url)
+
+            file_name = os.path.join(save_folder, year_month,path_url)
+            file_name_all = os.path.join(save_folder,"all", path_url)
+            rel_file_name = os.path.join(year_month,path_url)
+
+            #print(f"save_folder,year_month,domain_url,file_path,dir_url,path_url:{save_folder},{year_month},{domain_url},{path_url},{dir_url},{file_path}")
+            print(f"domain_url:{domain_url}")
+            print(f"path_url:{path_url}")
+            print(f"dir_url:{dir_url}")
+            print(f"file_path:{file_path}")
+           
 
             os.makedirs(file_path, exist_ok=True)
             os.makedirs(file_path_all, exist_ok=True)

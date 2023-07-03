@@ -2,10 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import os
-from funcs import file_name_slash_index, is_root_path
+from webarchive_scrapper.funcs import file_name_slash_index, is_root_path
 from urllib.parse import urlparse
-from file_downloader import create_folder_structure
-    
+from webarchive_scrapper.file_downloader import create_folder_structure
+from webarchive_scrapper.shared import urls_files;
+from funcs.file_processor import is_html, is_img;
     
 def download_archive_data(domain, save_folder=None):
     # Create a folder to save data for the domain
@@ -29,6 +30,7 @@ def download_archive_data(domain, save_folder=None):
 
     # Dictionary to store the last versions of each file
     last_versions = {}
+    urls_files ={}
 
     # Lists to store different types of files
     index_files = []
@@ -36,6 +38,7 @@ def download_archive_data(domain, save_folder=None):
     html_files = []
     image_files = []
     other_files = []
+
 
     # Process each URL address
     for row in rows:
@@ -51,11 +54,11 @@ def download_archive_data(domain, save_folder=None):
         # Add the file to the appropriate list
         if is_root_path(original_url):
             index_files.append(download_url)
-        elif file_extension == '.html' or file_extension == '.htm' or file_extension == '.asp' or file_extension == '.aspx' or file_extension == '':
+        elif is_html(clean_url):
             html_files.append(download_url)
         elif original_url.endswith('sitemap.xml') or original_url.endswith('robots.txt') or original_url.endswith('favicon.ico'):
             system_files.append(download_url)
-        elif file_extension == '.jpg' or file_extension == '.jpeg' or file_extension == '.png' or file_extension == '.gif':
+        elif is_img(clean_url):
             image_files.append(download_url)
         else:
             other_files.append(download_url)
@@ -91,5 +94,6 @@ def download_archive_data(domain, save_folder=None):
     create_folder_structure(domain_folder, html_files)
     create_folder_structure(domain_folder, other_files)
     create_folder_structure(domain_folder, image_files)
+
 
     print("Download completed.")

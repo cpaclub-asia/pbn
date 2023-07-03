@@ -1,5 +1,7 @@
 import argparse
-from archive_downloader import download_archive_data
+from webarchive_scrapper.archive_downloader import download_archive_data
+from webarchive_scrapper.shared import urls_files;
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Download data from the web archive for a given domain.")

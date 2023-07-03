@@ -3,8 +3,9 @@ import socket
 import tldextract
 
 NUM_WORKERS = 100
-FILE_SRC="data/domains-data/domains/github/github_all.txt"
-FILE_DST="data/domains-data/domains/github/github_all_nc.txt"
+FILE_SRC="data/domains-data/crawl/2023/info_domains.txt"
+FILE_DST="data/domains-data/crawl/2023/info_domains_noconnect.txt"
+FILE_CON="data/domains-data/crawl/2023/info_domains_connect.txt"
 
 
 def check_domain(line):
@@ -20,8 +21,8 @@ def check_domain(line):
     #print(domain2)
     try:
         ip = socket.gethostbyname(domain2)
-        #with open('good.txt', 'a') as good_file:
-        #    good_file.write(f"{domain2}: {ip}\n")
+        with open(FILE_CON, 'a') as good_file:
+            good_file.write(f"{domain2} 30\n")
     except Exception as e:
         print(f"{domain2} 30 {line}")
         #with open('2y2_full.txt', 'a') as bad_file:

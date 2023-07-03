@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Путь к файлу с доменами
+file="data/nginx-data/domains.txt"
+#file=$1
+
+
+# Проверка наличия файла
+if [ ! -f "$file" ]; then
+    echo "Файл $file не найден."
+    exit 1
+fi
+
+echo "Prepare"
+
+/bin/mkdir data/nginx-data
+/bin/mkdir data/nginx-data/plain
+/bin/mkdir data/nginx-data/wordpress
+echo "" > data/nginx-data/includes_plain.conf
+echo "" > data/nginx-data/includes_wordpress.conf
+
+# Чтение каждой строки из файла и выполнение команды CMD
+while IFS= read -r line; do
+    # Извлечение имени домена до первого пробела или точки с запятой
+    DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
+    echo "$DOMAIN"
+    
+    sed "s/{{DOMAIN}}/$DOMAIN/g" "templates/plain_static.conf" > data/nginx-data/plain/$DOMAIN.conf
+    sed "s/{{DOMAIN}}/$DOMAIN/g" "templates/wordpress_static.conf" > data/nginx-data/wordpress/$DOMAIN.conf
+    echo "include /home/static/conf/plain/$DOMAIN.conf;" >> data/nginx-data/includes_plain.conf
+    echo "include /home/static/conf/wordpress/$DOMAIN.conf;" >> data/nginx-data/includes_wordpress.conf
+done < "$file"
+
+
