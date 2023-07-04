@@ -1,6 +1,7 @@
 import os
 import re
 from bs4 import BeautifulSoup,Comment
+import traceback
 
 def remove_web_archive_links(soup):
     # Удаление тегов <link> с web.archive.org из <head>

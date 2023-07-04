@@ -23,7 +23,7 @@ check_files() {
 }
 
 # Задайте директорию, которую нужно проверить
-directory="./data/webarch-data/"
+directory="./data/sites-data/"
 
 # Задайте список слов для поиска
 words=("porn" "casino" "betting")
