@@ -13,11 +13,12 @@ fi
 while IFS= read -r line; do
     # Извлечение имени домена до первого пробела или точки с запятой
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
-    CMD="tar zcvf data/sites-data/$DOMAIN/clean.tar.gz all data/sites-data/$DOMAIN/clean"
-    echo $CMD
-    $CMD
-    CMD="tar zcvf data/sites-data/$DOMAIN/assets.tar.gz all data/sites-data/$DOMAIN/assets"
-    echo $CMD
-    $CMD
 
+    /bin/mkdir -p data/sites-data/$DOMAIN/upload
+    cp -r ./data/sites-data/$DOMAIN/cleaned/all/ ./data/sites-data/$DOMAIN/upload/
+    cp -r ./data/sites-data/$DOMAIN/assets/all/ ./data/sites-data/$DOMAIN/upload/
+    
+    CMD="tar zcvf data/sites-data/upload_$DOMAIN.tar.gz data/sites-data/$DOMAIN/upload/*"
+    echo $CMD
+    $CMD
 done < "$file"

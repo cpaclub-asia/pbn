@@ -29,8 +29,8 @@ check_files() {
     done
 }
 
-# Choose directory that you need to check
-directory="./data/webarch-data/"
+# Задайте директорию, которую нужно проверить
+directory="./data/sites-data/"
 
 # List of words for check
 words=("porn" "casino" "betting")

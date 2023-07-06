@@ -18,9 +18,12 @@ The webarchive folder contains a suite of scripts used to interact with web.arch
 
     - ADD (Gleb) 1.2.sh просто полностью скопировать из  webarch-data в site-data, чтобы можно было не бояться удалять и работать с этой папкой
 - `./webarchive/2_webarchive_parser.sh`: This script parses the downloaded web archive files.
-    - ADD (GLEB) заменить чтобы скрипт 2 работал с папкой site-data и брал данные оттуда, а не из webarh
     - ADD (GLEB) 3.1 analyzec (язык, ключи из черного списка - выдавать сводное количество на всю папку)
-    - ADD (GLEB) 3.2 all
+    
+- `./webarchive/3.1_webarchive_analyze.sh`: This script searches the downloaded files for prohibited words and displays the folders in which they were found
+
+- `./webarchive/3.2_webarchive_all.sh`: This script after manually deleting files from specific folders, collects the remaining files in the `all` folder
+
 - `./webarchive/4_webarchive_compare.sh`: This script compares the parsed web archive data.
     - ADD (Miron) Придумать и предложить вариант описания прямо сюда как работать с картинками
     - ADD (Miron) Создавать папочки content/page content/posts автоматически, чтобы не забыть

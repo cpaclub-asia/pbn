@@ -2,7 +2,9 @@ echo "На входе есть список доменов, нужно его о
 
 FILE=data/domains.csv
 
+echo "Убираем дубликаты"
 ./check_domains/1_remove_duplicates $FILE $FILE.unique
+
 echo "Разделяем на две группы - те которые connect и noconnect"
 ./check_domains/2_check_domains_lookup $FILE.unique $FILE.connect $FILE.noconnect
 
@@ -10,6 +12,7 @@ echo "Проверяем whois (можно в будушем параллель�
 ./check_domains/3_check_domains_whois $FILE.connect $FILE.connect.whois
 ./check_domains/3_check_domains_whois $FILE.noconnect $FILE.noconnect.whois
 
-
 ./check_domains/4_grep_whois $FILE.connect.whois $FILE.connect.free $FILE.connect.soon
 ./check_domains/4_grep_whois $FILE.noconnect.whois $FILE.noconnect.free $FILE.noconnect.pending
+
+

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Путь к файлу с доменами
-file="data/webarch-data/domains.txt"
+file="data/sites-data/domains.txt"
 
 # Проверка наличия файла
 if [ ! -f "$file" ]; then
@@ -13,7 +13,7 @@ fi
 while IFS= read -r line; do
     # Извлечение имени домена до первого пробела или точки с запятой
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
-    CMD="python3 -m webarchive_remove data/sites-data/$DOMAIN/webarch data/sites-data/$DOMAIN/cleaned  data/sites-data/$DOMAIN/assets"
+    CMD="python3 webarchive_parser data/webarch-data/$DOMAIN/all data/sites-data/sites/$DOMAIN"
     echo $CMD
-    nohup $CMD &
+    $CMD
 done < "$file"
