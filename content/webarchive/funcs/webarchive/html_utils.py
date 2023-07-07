@@ -3,34 +3,30 @@ import re
 from bs4 import BeautifulSoup,Comment
 import traceback
 
-def remove_web_archive_links(soup):
+def remove_html(html):
+    updated_value = html
+    updated_value = re.sub(r'https://web\.archive\.org/web/\d+/', '', updated_value)
+    updated_value = re.sub(r'https://web\.archive\.org/web/\d+im_/', '', updated_value)
+    updated_value = re.sub(r'https://web\.archive\.org/web/\d+cs_/', '', updated_value)
+    
+    updated_value = re.sub(r'//web\.archive\.org/web/\d+/', '', updated_value)
+    updated_value = re.sub(r'//web\.archive\.org/web/\d+im_/', '', updated_value)
+    updated_value = re.sub(r'//web\.archive\.org/web/\d+cs_/', '', updated_value)
+
+    updated_value = re.sub(r'/web/\d+/', '', updated_value)
+    updated_value = re.sub(r'/web/\d+im_/', '', updated_value)
+    updated_value = re.sub(r'/web/\d+cs_/', '', updated_value)
+
+    return updated_value
+
+
+def remove_tags(soup):
     # Удаление тегов <link> с web.archive.org из <head>
     head_tag = soup.head
     if head_tag:
         css_links = soup.find_all('link', attrs={'rel': 'stylesheet', 'href': lambda href: href and '_static' in href})
         for link in css_links:
             link.extract()
-        
-    tags = soup.find_all()
-    for tag in tags:
-        for attr, value in tag.attrs.items():
-            if isinstance(value, str):
-                updated_value = value
-                updated_value = re.sub(r'https://web\.archive\.org/web/\d+/', '', updated_value)
-                updated_value = re.sub(r'https://web\.archive\.org/web/\d+im_/', '', updated_value)
-                updated_value = re.sub(r'https://web\.archive\.org/web/\d+cs_/', '', updated_value)
-                
-                updated_value = re.sub(r'//web\.archive\.org/web/\d+/', '', updated_value)
-                updated_value = re.sub(r'//web\.archive\.org/web/\d+im_/', '', updated_value)
-                updated_value = re.sub(r'//web\.archive\.org/web/\d+cs_/', '', updated_value)
-
-                updated_value = re.sub(r'/web/\d+/', '', updated_value)
-                updated_value = re.sub(r'/web/\d+im_/', '', updated_value)
-                updated_value = re.sub(r'/web/\d+cs_/', '', updated_value)
-
-                tag[attr] = updated_value
-
-
     return soup
 
 
@@ -67,9 +63,11 @@ def remove_some(file_name,input_dir,output_dir,relative_dir):
         with open(html_file, 'r', encoding='utf-8', errors='ignore') as file:
             html_content = file.read()
 
+        html_content=remove_html(html_content)
+
         soup = BeautifulSoup(html_content, 'html.parser')
 
-        removed_html = remove_web_archive_links(soup)
+        removed_html = remove_tags(soup)
         removed_html2 = remove_scripts(removed_html)
         removed_html3 = remove_comments(removed_html2)
         final=str(removed_html3)

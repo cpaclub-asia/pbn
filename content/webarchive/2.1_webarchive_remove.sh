@@ -15,5 +15,6 @@ while IFS= read -r line; do
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
     CMD="python3 -m webarchive_remove data/sites-data/$DOMAIN/webarch data/sites-data/$DOMAIN/cleaned  data/sites-data/$DOMAIN/assets"
     echo $CMD
-    $CMD
+    #$CMD
+    nohup $CMD > /dev/null &
 done < "$file"

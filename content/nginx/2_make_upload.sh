@@ -9,13 +9,14 @@ if [ ! -f "$file" ]; then
     exit 1
 fi
 
-    rm -R data/sites-data/upload
-
+echo Remove
+    rm -R data/upload-data/upload
 # Чтение каждой строки из файла и выполнение команды CMD
 while IFS= read -r line; do
     # Извлечение имени домена до первого пробела или точки с запятой
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
-
+    echo $DOMAIN
+    
     /bin/mkdir -p data/upload-data/upload/$DOMAIN
     cp -r ./data/sites-data/$DOMAIN/cleaned/all/ ./data/upload-data/upload/$DOMAIN
     cp -r ./data/sites-data/$DOMAIN/assets/all/ ./data/upload-data/upload/$DOMAIN
