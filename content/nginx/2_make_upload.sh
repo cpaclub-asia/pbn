@@ -9,16 +9,19 @@ if [ ! -f "$file" ]; then
     exit 1
 fi
 
+    rm -R data/sites-data/upload
+
 # Чтение каждой строки из файла и выполнение команды CMD
 while IFS= read -r line; do
     # Извлечение имени домена до первого пробела или точки с запятой
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
 
-    /bin/mkdir -p data/sites-data/$DOMAIN/upload
-    cp -r ./data/sites-data/$DOMAIN/cleaned/all/ ./data/sites-data/$DOMAIN/upload/
-    cp -r ./data/sites-data/$DOMAIN/assets/all/ ./data/sites-data/$DOMAIN/upload/
+    /bin/mkdir -p data/sites-data/upload/$DOMAIN
+    cp -r ./data/sites-data/$DOMAIN/cleaned/all/ ./data/sites-data/upload/$DOMAIN
+    cp -r ./data/sites-data/$DOMAIN/assets/all/ ./data/sites-data/upload/$DOMAIN
     
-    CMD="tar zcvf data/sites-data/upload_$DOMAIN.tar.gz data/sites-data/$DOMAIN/upload/*"
+done < "$file"
+
+    CMD="tar zcvf data/sites-data/upload.tar.gz data/sites-data/upload/*"
     echo $CMD
     $CMD
-done < "$file"
