@@ -34,7 +34,7 @@ def process_domains(filename):
     with open(filename, 'r') as file:
         domains = [line.strip() for line in file]
 
-    check_domain(domains[0])
+    #check_domain(domains[0])
     with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_WORKERS) as executor:
         executor.map(check_domain, domains)
 
