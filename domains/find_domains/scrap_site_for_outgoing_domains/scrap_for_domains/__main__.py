@@ -1,5 +1,6 @@
 import os
 from urllib.parse import urlparse
+from shared.args import args_src_dst
 
 def extract_external_domains(file_path):
     try:
@@ -33,7 +34,8 @@ def find_external_domains(directory):
 
     return external_domains
 
-# Замените 'путь_к_директории' на фактический путь к вашей директории с файлами
+
+
 directory_path = 'links'
 domains = find_external_domains(directory_path)
 

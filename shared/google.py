@@ -1,15 +1,14 @@
-import requests
-import time
 from bs4 import BeautifulSoup
-import csv
-import base64
-
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+
+import requests
+import time
+import base64
 
 chrome_options = Options()
 #chrome_options.add_argument("--headless")  # Запуск в фоновом режиме, без отображения окна браузера
@@ -30,16 +29,7 @@ def parse_cookies(cookies_text):
 
 def get_google_results(domain):
     query = f"https://www.google.com/search?q=site%3A{domain}"
-    headers = {
-        #"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
-        
-    }
-    
-    #cookies_text = "1P_JAR=2023-06-18-09; AEC=AUEFqZfz6VtLPaelZFe07ApA3vGlMrpcptjRygiJUqecUEXGNUDpGjQFOZ8; NID=511=Jia-WNUgAOirfLLMfP3tzC3ngKd5TU1QmbcGce6JvJKv-eOQhZiIsKhxL2XNOpPVqZOAEcyugfgIoM8RzerchAiIHpo4OQ_Q1XKaR3FzffVI1a_j0JqVPLzU4OrEuymJtjgmwlxf6UXuBnVOylR-IEucV9Q6dt_kwJRUkUbi4hQ"
-    #cookies = parse_cookies(cookies_text)
 
-    #print(query)
     #response = requests.get(query, headers=headers, cookies=cookies)
     driver.get(query)  # Открытие страницы Google
     print("Ожидание result-stats")
@@ -58,7 +48,6 @@ def get_google_results(domain):
     
     #if response.status_code == 200:
     print("Ok.")
-    time.sleep(3)
     soup = BeautifulSoup(response_text, 'html.parser')
     result_stats = soup.find(id="result-stats")
 
@@ -95,23 +84,9 @@ def get_google_results(domain):
     #return 0
 
 
-def get_domains_from_file(file_path):
-    with open(file_path, 'r') as file:
-        return [line.strip() for line in file]
-
-
-
-
-
-def append_domain_and_results_to_file(file_path, domain, results, favicon, titles, snippets):
-    with open(file_path, 'a', newline='') as file:
-        writer = csv.writer(file)
-        if file.tell() == 0:
-            writer.writerow(["Domain", "Results", "Favicon", "Titles", "Snippets"])  # Записываем заголовки
-        writer.writerow([domain, results, favicon, titles, snippets])
-
 
 def save_favicon(favicon_url, domain):
+
     if favicon_url.startswith("data:image/png;base64,"):
         # Remove the "data:image/png;base64," prefix
         favicon_base64 = favicon_url[len("data:image/png;base64,"):]
@@ -123,9 +98,11 @@ def save_favicon(favicon_url, domain):
         file_name = f"{domain}.png"
 
         # Save the favicon image as a file
+        '''
         with open(file_name, "wb") as file:
             file.write(favicon_data)
+        '''
 
         return file_name
     else:
-        return None
+        return None    

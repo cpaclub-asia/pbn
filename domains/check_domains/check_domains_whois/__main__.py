@@ -50,7 +50,7 @@ import subprocess
 import requests
 import concurrent.futures
 
-NUM_WORKERS = 100
+NUM_WORKERS = 10
 
 
 try:
@@ -179,6 +179,9 @@ REQUEST_HEADERS: Dict = {
 
 # Options for an external utility whois
 # Keywords for whois-data
+CREATION_STRINGS: Tuple = (
+	'Creation Date:',
+)
 EXPIRE_STRINGS: Tuple = (
     'Registry Expiry Date:',
     'Expiration:',
@@ -506,7 +509,7 @@ def make_whois_query(domain: str) -> Tuple:
         if domain.lower() not in ERRORS_DOMAIN:
             G_DOMAINS_ERROR += 1
             ERRORS_DOMAIN.append(domain.lower())
-        return None, None, None, None, 1
+        return None, None, None, None, 1, None
 
     # TODO: Work around whois issue #55 which returns a non-zero
     # exit code for valid domains.
@@ -520,12 +523,13 @@ def make_whois_query(domain: str) -> Tuple:
         r_expir_date,
         r_reg,
         r_w_server,
-        r_error
+        r_error,
+        r_creation_date
     ) = parse_whois_data(domain, whois_data)
     if r_w_data is not None:
         whois_data = r_w_data
 
-    return whois_data, r_expir_date, r_reg, r_w_server, r_error
+    return whois_data, r_expir_date, r_reg, r_w_server, r_error,r_creation_date
 
 
 def parse_whois_data(domain: str, whois_data: str) -> Tuple:
@@ -542,21 +546,22 @@ def parse_whois_data(domain: str, whois_data: str) -> Tuple:
     registrar = None
     whois_server = None
     ret_error = None
+    creation_date = None
 
     if 'No entries found for the selected source(s)' in whois_data:
         # It is Free!
         ret_error = 11
-        return raw_whois_data, None, None, None, ret_error
+        return raw_whois_data, None, None, None, ret_error, None
 
     elif 'http://www.denic.de/en/domains/whois-service/web-whois.html' in whois_data:
         # denic.de
         ret_error = 22
-        return raw_whois_data, None, None, None, ret_error
+        return raw_whois_data, None, None, None, ret_error, None
 
     elif 'https://www.dnc.org.nz/whois/search?domain_name=' in whois_data:
         # *.nz
         ret_error = 23
-        return raw_whois_data, None, None, None, ret_error
+        return raw_whois_data, None, None, None, ret_error, None
 
     elif 'https://whois.dot.ph/' in whois_data:
         # whois.dot.ph
@@ -568,7 +573,7 @@ def parse_whois_data(domain: str, whois_data: str) -> Tuple:
         except requests.exceptions.RequestException:
             ret_error = -1
             print(f'{FLR}Failed to fetch remote blocklist providers. Continue...')
-            return raw_whois_data, None, None, None, ret_error
+            return raw_whois_data, None, None, None, ret_error, None
 
         html = page.content.decode('utf-8', 'ignore')
         raw_whois_data = html
@@ -597,15 +602,16 @@ def parse_whois_data(domain: str, whois_data: str) -> Tuple:
                 continue
 
             if 'Your connection limit exceeded. Please slow down and try again later.' in line:
+                print("Your connection limit exceeded. Please slow down and try again later.")
                 # Interval is small
                 ret_error = 2
                 if domain not in ERRORS2_DOMAIN:
                     ERRORS2_DOMAIN.append(domain.lower())
-                return raw_whois_data, None, None, None, ret_error
+                return raw_whois_data, None, None, None, ret_error, None
 
             if any(not_found_string in line for not_found_string in NOT_FOUND_STRINGS):
                 # Is it Free?
-                return raw_whois_data, None, None, None, ret_error
+                return raw_whois_data, None, None, None, ret_error, None
 
             if any(expire_string in line for expire_string in EXPIRE_STRINGS):
                 if not expiration_date:
@@ -619,6 +625,19 @@ def parse_whois_data(domain: str, whois_data: str) -> Tuple:
                     except Exception:
                         ret_error = 1
 
+            
+            if any(expire_string in line for expire_string in CREATION_STRINGS):
+                if not creation_date:
+                    try:
+                        str_date = line.partition(': ')[2]
+                        if str_date == '':
+                            str_date = line.partition(']')[2]
+                        str_date = str_date.replace('/', '-')
+                        creation_date = dateutil.parser.parse(
+                            str_date, ignoretz=True)
+                    except Exception:
+                        ret_error = 1
+            
             if any(registrar_string in line for registrar_string in REGISTRAR_STRINGS):
                 if not registrar:
                     registrar = line.partition(': ')[2].strip()
@@ -628,7 +647,7 @@ def parse_whois_data(domain: str, whois_data: str) -> Tuple:
                 if not whois_server:
                     whois_server = line.partition(': ')[2].strip()
 
-    return raw_whois_data, expiration_date, registrar, whois_server, ret_error
+    return raw_whois_data, expiration_date, registrar, whois_server, ret_error, creation_date
 
 
 def calculate_expiration_days(expiration_date: datetime) -> int:
@@ -1181,6 +1200,14 @@ def process_cli():
         help='Path to the file with the list of domains (default is None)',
         metavar='FILE'
     )
+
+    parent_group.add_argument(
+        '-csv',
+        '--csv',
+        help='Path to the CSV file',
+        metavar='FILE'
+    )
+
     parent_group.add_argument(
         '-d',
         '--domain',
@@ -1288,6 +1315,10 @@ def process_cli():
         default=False,
         help='Use only external utility whois (default is False)'
     )
+
+
+
+
     parent_group.add_argument(
         '-ee',
         '--use-extra-external-whois',
@@ -1593,6 +1624,259 @@ def print_stat() -> None:
             f'{round(g_total_cost, 2)}'
         )
         print('---------------\n')
+
+
+def check_domain_b(domain_name: str,
+                 expiration_days: int,
+                 cost: float,
+                 interval_time: Optional[int] = None,
+                 current_domain: int = 0,
+                 checking_whois_text_changes: bool = True) -> bool:
+    """
+    Check domain
+    :param domain_name: str
+    :param expiration_days: int
+    :param cost: float
+    :param interval_time: int
+    :param current_domain: int
+    :param checking_whois_text_changes: bool
+    :return: bool (False - Error, True - Successfully)
+    """
+    global EXPIRES_DOMAIN
+    global SOON_DOMAIN
+    global ERRORS_DOMAIN
+    global ERRORS2_DOMAIN
+    global FREE_DOMAINS
+    global WHOIS_TEXT_CHANGED_DOMAIN
+
+    is_internal_error: bool = False
+    if not interval_time:
+        interval_time = CLI.interval_time
+
+    expiration_date: Optional[str] = None
+    registrar: Optional[str] = None
+    whois_server: Optional[str] = None
+    ret_error: Optional[int] = None
+
+    whois_data: Optional[str] = None
+
+    if CLI.use_only_external_whois:
+        (
+            whois_data,
+            expiration_date,
+            registrar,
+            whois_server,
+            ret_error,
+            creation_date
+        ) = make_whois_query(domain_name)
+
+
+    '''
+    else:
+        w: Optional[Any] = None
+        sys.stdout = os.devnull
+        sys.stderr = os.devnull
+        try:
+            flags: int = 0
+            flags = flags | whois.NICClient.WHOIS_QUICK
+            w = whois.whois(domain_name, flags=flags)
+            if w is not None:
+                whois_data = w.text
+        except Exception:
+            is_internal_error = True
+            ret_error = 1
+        sys.stdout = sys.__stdout__
+        sys.stderr = sys.__stderr__
+        # Init colorama again
+        init(autoreset=True)
+
+        if not is_internal_error:
+            is_internal_error = w is None
+
+        if not is_internal_error:
+            expiration_date = w.get('expiration_date')
+            registrar = w.get('registrar')
+            whois_server = w.get('whois_server')
+
+            is_internal_error = expiration_date is None
+
+        if is_internal_error:
+            if CLI.use_extra_external_whois:
+                (
+                    whois_data,
+                    expiration_date_e,
+                    registrar_e,
+                    whois_server_e,
+                    ret_error
+                ) = make_whois_query(domain_name)
+
+                if ret_error is not None:
+                    if ret_error in (1, 22):
+                        if domain_name.lower() not in ERRORS_DOMAIN:
+                            ERRORS_DOMAIN.append(domain_name.lower())
+                    elif ret_error == 2:
+                        # Exceeded the limit on whois
+                        if domain_name not in ERRORS2_DOMAIN:
+                            ERRORS2_DOMAIN.append(domain_name.lower())
+                if not expiration_date:
+                    expiration_date = expiration_date_e
+                if not registrar:
+                    registrar = registrar_e
+                if not whois_server:
+                    whois_server = whois_server_e
+            else:
+                if domain_name.lower() not in ERRORS_DOMAIN:
+                    ERRORS_DOMAIN.append(domain_name.lower())
+                print_domain(
+                    domain=domain_name,
+                    whois_server=None,
+                    registrar=None,
+                    expiration_date=None,
+                    days_remaining=-1,
+                    expire_days=-1,
+                    cost=cost,
+                    current_domain=current_domain,
+                    error=ret_error
+                )  # Error
+                if current_domain < G_DOMAINS_TOTAL:
+                    if interval_time:
+                        if CLI.print_to_console:
+                            print(f'\tWait {interval_time} sec...\r', end='')
+                        time.sleep(interval_time)
+                return False
+    '''
+   with open(CSV_FILE, 'a', newline='') as csv_file:
+        writer = csv.writer(csv_file, delimiter=';')
+        if file.tell() == 0:
+            writer.writerow(["Domain","Creation","Expiration_date","Days","Status","Registrar"])  
+
+    if (not whois_server) and (not registrar) and (not expiration_date):
+        print_domain(
+            domain=domain_name,
+            whois_server=whois_server,
+            registrar=registrar,
+            expiration_date=expiration_date,
+            days_remaining=-2,
+            expire_days=-1,
+            cost=cost,
+            current_domain=current_domain,
+            error=ret_error
+        )  # Free ?
+
+        with open(CSV_FILE, 'a') as csv_file:
+            csv_file.write(f"{domain_name};{creation_date};{expiration_date};;Free;{registrar}\n")
+
+        if current_domain < G_DOMAINS_TOTAL:
+            if interval_time:
+                if CLI.print_to_console:
+                    print(f'\tWait {interval_time} sec...\r', end='')
+                time.sleep(interval_time)
+        return False
+
+    if not expiration_date:
+        print_domain(
+            domain=domain_name,
+            whois_server=whois_server,
+            registrar=registrar,
+            expiration_date=expiration_date,
+            days_remaining=-1,
+            expire_days=-1,
+            cost=cost,
+            current_domain=current_domain,
+            error=ret_error
+        )  # Error
+
+        with open(CSV_FILE, 'a') as csv_file:
+            csv_file.write(f"{domain_name};{creation_date};{expiration_date};;Error;{registrar}\n")
+
+        if current_domain < G_DOMAINS_TOTAL:
+            if interval_time:
+                if CLI.print_to_console:
+                    print(f'\tWait {interval_time} sec...\r', end='')
+                time.sleep(interval_time)
+        return False
+
+    if 'datetime.datetime' in str(type(expiration_date)):
+        expiration_date_min = expiration_date
+    else:
+        expiration_date_min = max(expiration_date)
+
+    days_remaining: int = calculate_expiration_days(expiration_date_min)
+
+    print_domain(
+        domain=domain_name,
+        whois_server=whois_server,
+        registrar=registrar,
+        expiration_date=expiration_date_min,
+        days_remaining=days_remaining,
+        expire_days=expiration_days,
+        cost=cost,
+        current_domain=current_domain,
+        error=ret_error
+    )
+    
+
+    if days_remaining < expiration_days:
+        EXPIRES_DOMAIN[domain_name.lower()] = days_remaining
+
+    if days_remaining < -2:
+        if days_remaining > -30:
+            with open(CSV_FILE, 'a') as csv_file:
+                csv_file.write(f"{domain_name};{creation_date};{expiration_date};{days_remaining};Soon;{registrar}\n\n")
+        else:
+            with open(CSV_FILE, 'a') as csv_file:
+                csv_file.write(f"{domain_name};{creation_date};{expiration_date};{days_remaining};Pending;{registrar}\n\n")
+    else:
+        with open(CSV_FILE, 'a') as csv_file:
+            csv_file.write(f"{domain_name};{creation_date};{expiration_date};{days_remaining};Valid;{registrar}\n\n")
+
+
+    # Start of Monitoring whois-text changes
+    if checking_whois_text_changes:
+        if (whois_data is not None) and (str(whois_data).strip() != ''):
+            whois_data: str = str(whois_data).strip()
+            file: str = f'{domain_name.lower()}.json'
+            last_cache: Optional[Dict] = load_whois_cache(file)
+            curr_cache: Dict = {
+                'txt': whois_data,
+                'dt': f'{datetime.now():%Y.%m.%d %H:%M:%S}'
+            }
+            if CLI.track_whois_text_changes:
+                if last_cache:
+                    if last_cache.get('txt') != '':
+                        delta = compare_whois_text(last_cache.get('txt'), whois_data)
+                        if delta != '':
+                            delta_lines = delta.splitlines()
+                            d_txt = ''
+                            print('\r', end='')
+                            for line in delta_lines:
+                                d_txt += f'{line}\n'
+                                print(f'{" " * 7}{line}')
+                            print('')
+                            WHOIS_TEXT_CHANGED_DOMAIN[domain_name.lower()] = {
+                                'txt': remove_control_characters_of_colorama(d_txt),
+                                'dt': f'{datetime.now():%Y.%m.%d %H:%M:%S}'
+                            }
+            save_whois_cache(file, curr_cache)
+    # End of Monitoring whois-text changes
+
+
+
+
+    return True
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def check_domain(domain_name: str,
@@ -2017,6 +2301,76 @@ def check_cli_logic() -> None:
         print_heading()
 
 
+def check_domain_a(item):
+    current_domain=1
+
+
+    expiration_days: int = CLI.expire_days
+    group: str = item['group']
+    domain: str = item['domain']
+    expire_days: int = item['expire_days']
+    interval_time: int = item['interval_time']
+    cost: float = item['cost']
+    is_supported: bool = item['supported']
+    is_checking_whois_text_changes: bool = item['checking_whois_text_changes']
+
+    if group != "":
+        i += 1
+        si: str = f'{i:>4}'
+        if i == 1:
+            if CLI.print_to_console:
+                #print(f'{si}. {FLW}{group}')
+                print(f'{FLW}{group}')
+        else:
+            if CLI.print_to_console:
+                print(' ' * 40, end='')
+                #print(f'\n{si}. {FLW}{group}')
+                print(f'\n{FLW}{group}')
+        return
+
+    if expire_days > 0:
+        expiration_days = expire_days
+
+    if interval_time == -1:
+        interval_time = None
+
+    if domain != '':
+        current_domain += 1
+        domain_name: str = domain
+
+        if not is_supported:
+            dn: str = f'{domain_name.lower():<35}'
+            dnn: str = f'{FLR}{dn}'
+            number_domain: str = f"{current_domain:>5}"
+            dnn: str = f'{number_domain}. {dnn}'
+            #dnn: str = f'{dnn}'
+            dnn: str = f'{dnn:<42}'
+            print(f'{dnn} Sorry, this domain is not supported.')
+        else:
+            # Domain Check
+            if not check_domain_b(
+                    domain_name=domain_name,
+                    expiration_days=expiration_days,
+                    cost=cost,
+                    interval_time=interval_time,
+                    current_domain=current_domain,
+                    checking_whois_text_changes=is_checking_whois_text_changes
+            ):
+                # If error - skip
+                return
+
+        # Need to wait between queries to avoid triggering DOS measures like so:
+        # Your IP has been restricted due to excessive access, please wait a bit
+        if current_domain < G_DOMAINS_TOTAL:
+            if interval_time:
+                if CLI.print_to_console:
+                    print(
+                        f'\tWait {interval_time} sec...\r',
+                        end=''
+                    )
+                time.sleep(interval_time)
+
+
 def main() -> None:
     """
     Main function
@@ -2065,71 +2419,16 @@ def main() -> None:
             i: int = 0
             current_domain: int = 0
 
-            for item in G_DOMAINS_LIST:
-                expiration_days: int = CLI.expire_days
-                group: str = item['group']
-                domain: str = item['domain']
-                expire_days: int = item['expire_days']
-                interval_time: int = item['interval_time']
-                cost: float = item['cost']
-                is_supported: bool = item['supported']
-                is_checking_whois_text_changes: bool = item['checking_whois_text_changes']
+            #print(G_DOMAINS_LIST)
+            #check_domain_a(G_DOMAINS_LIST[0])
 
-                if group != "":
-                    i += 1
-                    si: str = f'{i:>4}'
-                    if i == 1:
-                        if CLI.print_to_console:
-                            #print(f'{si}. {FLW}{group}')
-                            print(f'{FLW}{group}')
-                    else:
-                        if CLI.print_to_console:
-                            print(' ' * 40, end='')
-                            #print(f'\n{si}. {FLW}{group}')
-                            print(f'\n{FLW}{group}')
-                    continue
+            if NUM_WORKERS > 1:
+                with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_WORKERS) as executor:
+                    executor.map(check_domain_a,G_DOMAINS_LIST)
+            else:
+                for item in G_DOMAINS_LIST:
+                    check_domain_a(item)
 
-                if expire_days > 0:
-                    expiration_days = expire_days
-
-                if interval_time == -1:
-                    interval_time = None
-
-                if domain != '':
-                    current_domain += 1
-                    domain_name: str = domain
-
-                    if not is_supported:
-                        dn: str = f'{domain_name.lower():<35}'
-                        dnn: str = f'{FLR}{dn}'
-                        number_domain: str = f"{current_domain:>5}"
-                        dnn: str = f'{number_domain}. {dnn}'
-                        #dnn: str = f'{dnn}'
-                        dnn: str = f'{dnn:<42}'
-                        print(f'{dnn} Sorry, this domain is not supported.')
-                    else:
-                        # Domain Check
-                        if not check_domain(
-                                domain_name=domain_name,
-                                expiration_days=expiration_days,
-                                cost=cost,
-                                interval_time=interval_time,
-                                current_domain=current_domain,
-                                checking_whois_text_changes=is_checking_whois_text_changes
-                        ):
-                            # If error - skip
-                            continue
-
-                    # Need to wait between queries to avoid triggering DOS measures like so:
-                    # Your IP has been restricted due to excessive access, please wait a bit
-                    if current_domain < G_DOMAINS_TOTAL:
-                        if interval_time:
-                            if CLI.print_to_console:
-                                print(
-                                    f'\tWait {interval_time} sec...\r',
-                                    end=''
-                                )
-                            time.sleep(interval_time)
 
             if CLI.print_to_console:
                 print(f'{" " * 38}\r', end='')
@@ -2160,6 +2459,7 @@ def main() -> None:
             print(f'{dnn} Sorry, this domain is not supported.')
         else:
             # Domain Check
+            #print(domain_name)
             check_domain(
                 domain_name=domain_name,
                 expiration_days=expiration_days,
@@ -2168,8 +2468,7 @@ def main() -> None:
                 current_domain=1,
                 checking_whois_text_changes=CLI.track_whois_text_changes
             )
-            with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_WORKERS) as executor:
-              executor.map(check_domain)
+
 
         if CLI.print_to_console:
             print_hr()
@@ -2192,6 +2491,8 @@ def main() -> None:
                 if res.status_code != 200:
                     print(f'{FLR}{res.text}')
 
+
+CSV_FILE="data/domains-data/crawl/2023/info_domains_noconnect_whois.csv"
 
 if __name__ == '__main__':
     # Parsing command line
