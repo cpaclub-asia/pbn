@@ -1,3 +1,4 @@
+import time
 import argparse
 from check_domains_google.funcs import get_domains_from_file,append_domain_and_results_to_file
 from shared.google import get_google_results
@@ -26,10 +27,11 @@ for domain in domains:
 
     snippets=""
     if results > 0:
-        wa_data=webarchive_get_list(domain)
-        index_files, system_files, html_files, image_files, other_files=wa_data
+        index_files, system_files, html_files, image_files, other_files=webarchive_get_list(domain)
         wa_data_count=[len(index_files), len(system_files), len(html_files), len(image_files), len(other_files)]
 
         append_domain_and_results_to_file(args.results_file, domain,wa_data_count,data1, results, favicon, titles, snippets)
+        time.sleep(2)
     else:
         append_domain_and_results_to_file(args.non_results_file, domain,wa_data_count,data1, results, favicon, titles, snippets)
+        time.sleep(3)
