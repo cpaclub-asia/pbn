@@ -17,5 +17,5 @@ while IFS= read -r line; do
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
     CMD="python3 -m webarchive_scrapper -f data/webarch-data $DOMAIN"
     echo $CMD
-    nohup $CMD &
+    $CMD
 done < "$file"
