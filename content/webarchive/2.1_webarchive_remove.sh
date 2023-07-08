@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Путь к файлу с доменами
-file="data/sites-data/domains.txt"
+file="data/webarch-data/domains.txt"
 
 # Проверка наличия файла
 if [ ! -f "$file" ]; then
