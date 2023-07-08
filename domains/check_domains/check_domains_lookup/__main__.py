@@ -3,7 +3,7 @@ import socket
 import tldextract
 from shared.args import args_src_dst1_dst2
 
-NUM_WORKERS = 100
+NUM_WORKERS = 30
 
 
 def check_domain(line):
