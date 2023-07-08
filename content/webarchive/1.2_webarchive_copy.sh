@@ -14,5 +14,8 @@ while IFS= read -r line; do
     # Извлечение имени домена до первого пробела или точки с запятой
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
     /bin/mkdir -p data/sites-data/$DOMAIN/webarch
-    nohup cp -r ./data/webarch-data/$DOMAIN/* ./data/sites-data/$DOMAIN/webarch &
+    CMD="cp -r ./data/webarch-data/$DOMAIN/* ./data/sites-data/$DOMAIN/webarch"
+    echo $CMD
+    #$CMD
+    nohup $CMD >>/dev/null &
 done < "$file"
