@@ -2490,7 +2490,7 @@ def main() -> None:
                     print(f'{FLR}{res.text}')
 
 
-CSV_FILE="data/domains-data/crawl/2023/info_domains_noconnect_whois.txt"
+CSV_FILE="data/domains-data/crawl/2023/info_domains_noconnect_whois.csv"
 
 if __name__ == '__main__':
     # Parsing command line
