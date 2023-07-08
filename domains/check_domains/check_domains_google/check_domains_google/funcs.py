@@ -35,7 +35,7 @@ def append_domain_and_results_to_file(file_path, domain,wa_data,data1, results, 
     with open(file_path, 'a', newline='') as file:
         writer = csv.writer(file, delimiter=';')
         if file.tell() == 0:
-            writer.writerow(["Domain", "Results", "Favicon", "Titles", "Snippets"])  # Записываем заголовки
+            writer.writerow(["Domain", "Results", "Favicon", "Titles", "Snippets","html","img","oth"])  # Записываем заголовки
         row=[domain, results, favicon, titles, snippets]
         row+=(wa_data)
         row+=(data1)

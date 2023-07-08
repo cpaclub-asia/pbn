@@ -27,8 +27,11 @@ for domain in domains:
 
     snippets=""
     if results > 0:
-        index_files, system_files, html_files, image_files, other_files=webarchive_get_list(domain)
-        wa_data_count=[len(index_files), len(system_files), len(html_files), len(image_files), len(other_files)]
+        try:
+            index_files, system_files, html_files, image_files, other_files=webarchive_get_list(domain)
+            wa_data_count=[len(html_files),len(image_files),len(other_files)]
+        except:
+            wa_data_count=[-1,-1,-1]
 
         append_domain_and_results_to_file(args.results_file, domain,wa_data_count,data1, results, favicon, titles, snippets)
         time.sleep(2)
