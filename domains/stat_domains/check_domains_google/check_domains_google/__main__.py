@@ -1,5 +1,6 @@
 import argparse
-from funcs import get_google_results,get_domains_from_file,append_domain_and_results_to_file,save_favicon
+from funcs import get_domains_from_file,append_domain_and_results_to_file,save_favicon
+from shared.google import get_google_results
 
 
 
@@ -10,9 +11,11 @@ parser.add_argument("results_file", help="Path to the file where the domains fou
 parser.add_argument("non_results_file", help="Path to the file where the domains not found in the search results will be saved")
 args = parser.parse_args()
 
-domains = get_domains_from_file(args.file)
+domains,data = get_domains_from_file(args.file)
 
 for domain in domains:
+    data1=data[domain]
+    
     #results = get_google_results(domain)
     results, titles, favicon = get_google_results(domain)
 
@@ -21,6 +24,6 @@ for domain in domains:
 
     snippets=""
     if results > 0:
-        append_domain_and_results_to_file(args.results_file, domain, results, favicon, titles, snippets)
+        append_domain_and_results_to_file(args.results_file, domain,data1, results, favicon, titles, snippets)
     else:
-        append_domain_and_results_to_file(args.non_results_file, domain, results, favicon, titles, snippets)
+        append_domain_and_results_to_file(args.non_results_file, domain,data1, results, favicon, titles, snippets)

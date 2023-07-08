@@ -1,0 +1,81 @@
+from bs4 import BeautifulSoup
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+
+chrome_options = Options()
+#chrome_options.add_argument("--headless")  # Запуск в фоновом режиме, без отображения окна браузера
+
+driver = webdriver.Chrome(options=chrome_options)
+
+
+
+def parse_cookies(cookies_text):
+    cookies = {}
+    lines = cookies_text.strip().split(";")
+    for line in lines:
+        if "=" in line:
+            key, value = line.split("=", 1)
+            cookies[key.strip()] = value.strip()
+    return cookies
+
+
+def get_google_results(domain):
+    query = f"https://www.google.com/search?q=site%3A{domain}"
+
+    #response = requests.get(query, headers=headers, cookies=cookies)
+    driver.get(query)  # Открытие страницы Google
+    print("Ожидание result-stats")
+    #WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "result-stats")))
+    while True:
+        try:
+            result_stats = driver.find_element(By.ID, "result-stats")
+            break
+        except:
+            time.sleep(1)
+
+
+    response_text=driver.page_source
+
+
+    
+    #if response.status_code == 200:
+    print("Ok.")
+    time.sleep(3)
+    soup = BeautifulSoup(response_text, 'html.parser')
+    result_stats = soup.find(id="result-stats")
+
+    if result_stats:
+        result_stats_text = result_stats.text.replace(',', '').split()[1]
+        if result_stats_text=="results":
+            result_stats_text = result_stats.text.replace(',', '').split()[0]
+        # Find all search result titles
+        search_results = soup.find_all("h3")
+        print(search_results)
+
+        #search_results = soup.find_all("h3", class_="LC20lb DKV0Md")
+        #print(search_results)
+        titles = [result.get_text() for result in search_results]
+
+        #favicon_link = soup.find("link", rel="shortcut icon")
+        #favicon_url = favicon_link["href"] if favicon_link else ""
+        favicon_img = soup.find("img", class_="XNo5Ab")
+        favicon_url = favicon_img["src"] if favicon_img else ""
+
+        favicon_file = save_favicon(favicon_url, domain) if favicon_url else ""
+        print(domain)
+        print(result_stats_text)
+        return int(result_stats_text), titles, favicon_file
+
+
+
+    #elif response.status_code == 429:  # Too Many Requests
+    #    # Retry after a delay of 5 seconds
+    #    print("Too many requests. Retrying after 5 seconds...")
+    #    time.sleep(5)
+    #    return get_google_results(domain)
+    #
+    #return 0
