@@ -50,7 +50,7 @@ import subprocess
 import requests
 import concurrent.futures
 
-NUM_WORKERS = 1
+NUM_WORKERS = 10
 
 
 try:
