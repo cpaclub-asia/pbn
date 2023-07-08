@@ -1817,7 +1817,7 @@ def check_domain_b(domain_name: str,
     if days_remaining < expiration_days:
         EXPIRES_DOMAIN[domain_name.lower()] = days_remaining
 
-    if days_remaining < 0:
+    if days_remaining < -2:
         if days_remaining > -30:
             with open(CSV_FILE, 'a') as csv_file:
                 csv_file.write(f"{domain_name};Soon;{days_remaining};{expiration_date};{creation_date};{registrar}\n")

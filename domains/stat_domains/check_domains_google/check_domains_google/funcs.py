@@ -10,7 +10,8 @@ def get_domains_from_file(file_path):
     #    return [line.strip() for line in file]
     
     with open(file_path, 'r') as file:
-        reader = csv.reader(file)
+        reader = csv.reader(file, delimiter='\t')
+        #reader = csv.reader(file, delimiter=';')
         headers = next(reader)  # Считываем заголовки столбцов
 
         if 'Domain' in headers:
@@ -30,12 +31,13 @@ def get_domains_from_file(file_path):
     
 
 
-def append_domain_and_results_to_file(file_path, domain,data1, results, favicon, titles, snippets):
+def append_domain_and_results_to_file(file_path, domain,wa_data,data1, results, favicon, titles, snippets):
     with open(file_path, 'a', newline='') as file:
-        writer = csv.writer(file)
+        writer = csv.writer(file, delimiter=';')
         if file.tell() == 0:
             writer.writerow(["Domain", "Results", "Favicon", "Titles", "Snippets"])  # Записываем заголовки
         row=[domain, results, favicon, titles, snippets]
+        row+=(wa_data)
         row+=(data1)
         writer.writerow(row)
 

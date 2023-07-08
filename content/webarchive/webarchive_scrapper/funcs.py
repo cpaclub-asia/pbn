@@ -1,11 +1,7 @@
 import os
 from urllib.parse import urlparse, urlunparse
 
-def is_root_path(original_url):
-    parsed_url = urlparse(original_url)
-    path = parsed_url.path
-    port = parsed_url.port
-    return (path == '/' or path == '') and (not port or port == 80)
+
     
 def add_trailing_slash(url):
 

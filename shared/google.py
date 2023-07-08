@@ -48,7 +48,6 @@ def get_google_results(domain):
     
     #if response.status_code == 200:
     print("Ok.")
-    time.sleep(3)
     soup = BeautifulSoup(response_text, 'html.parser')
     result_stats = soup.find(id="result-stats")
 

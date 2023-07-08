@@ -1,8 +1,8 @@
-import os
-import re
 from bs4 import BeautifulSoup
-from funcs.webarchive.html_utils import remove_some
+from shared.webarchive.html_utils import remove_some
 import shutil
+from urllib.parse import urlparse
+import os
 
 def process_files(input_dir, output_dir, assets_dir):
     for root, dirs, files in os.walk(input_dir):
@@ -30,3 +30,9 @@ def is_img(file_name):
     if file_extension.lower() in ['.jpg', '.jpeg', '.png', '.gif']:
         return True
     return False
+
+def is_root_path(original_url):
+    parsed_url = urlparse(original_url)
+    path = parsed_url.path
+    port = parsed_url.port
+    return (path == '/' or path == '') and (not port or port == 80)
