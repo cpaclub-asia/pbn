@@ -6,6 +6,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
+import requests
+import time
+import base64
+
 chrome_options = Options()
 #chrome_options.add_argument("--headless")  # Запуск в фоновом режиме, без отображения окна браузера
 
@@ -79,3 +83,27 @@ def get_google_results(domain):
     #    return get_google_results(domain)
     #
     #return 0
+
+
+
+def save_favicon(favicon_url, domain):
+
+    if favicon_url.startswith("data:image/png;base64,"):
+        # Remove the "data:image/png;base64," prefix
+        favicon_base64 = favicon_url[len("data:image/png;base64,"):]
+
+        # Decode the base64 image data
+        favicon_data = base64.b64decode(favicon_base64)
+
+        # Generate the file name
+        file_name = f"{domain}.png"
+
+        # Save the favicon image as a file
+        '''
+        with open(file_name, "wb") as file:
+            file.write(favicon_data)
+        '''
+
+        return file_name
+    else:
+        return None    

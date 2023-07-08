@@ -1,5 +1,5 @@
 import argparse
-from funcs import get_domains_from_file,append_domain_and_results_to_file,save_favicon
+from check_domains_google.funcs import get_domains_from_file,append_domain_and_results_to_file
 from shared.google import get_google_results
 
 
@@ -15,7 +15,7 @@ domains,data = get_domains_from_file(args.file)
 
 for domain in domains:
     data1=data[domain]
-    
+
     #results = get_google_results(domain)
     results, titles, favicon = get_google_results(domain)
 
