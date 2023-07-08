@@ -1,6 +1,6 @@
 import os
 from urllib.parse import urlparse
-from shared import args_src_dst
+from shared.args import args_src_dst
 
 def extract_external_domains(file_path):
     try:

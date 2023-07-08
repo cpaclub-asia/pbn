@@ -1,11 +1,9 @@
 import concurrent.futures
 import socket
 import tldextract
+from shared.args import args_src_dst1_dst2
 
 NUM_WORKERS = 100
-FILE_SRC="data/domains-data/crawl/2023/info_domains.txt"
-FILE_DST="data/domains-data/crawl/2023/info_domains_noconnect.txt"
-FILE_CON="data/domains-data/crawl/2023/info_domains_connect.txt"
 
 
 def check_domain(line):
@@ -39,6 +37,8 @@ def process_domains(filename):
     check_domain(domains[0])
     with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_WORKERS) as executor:
         executor.map(check_domain, domains)
+
+FILE_SRC,FILE_DST,FILE_CON = args_src_dst1_dst2("Connection check", "Src", "No connect", "Connect")
 
 if __name__ == "__main__":
     process_domains(FILE_SRC)
