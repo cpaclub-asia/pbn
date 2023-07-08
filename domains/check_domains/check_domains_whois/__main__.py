@@ -1745,8 +1745,10 @@ def check_domain_b(domain_name: str,
                         time.sleep(interval_time)
                 return False
     '''
-
-
+   with open(CSV_FILE, 'a', newline='') as csv_file:
+        writer = csv.writer(csv_file, delimiter=';')
+        if file.tell() == 0:
+            writer.writerow(["Domain","Creation","Expiration_date","Days","Status","Registrar"])  
 
     if (not whois_server) and (not registrar) and (not expiration_date):
         print_domain(
@@ -1762,7 +1764,7 @@ def check_domain_b(domain_name: str,
         )  # Free ?
 
         with open(CSV_FILE, 'a') as csv_file:
-            csv_file.write(f"{domain_name};Free;;{expiration_date};{creation_date};{registrar}\n")
+            csv_file.write(f"{domain_name};{creation_date};{expiration_date};;Free;{registrar}\n")
 
         if current_domain < G_DOMAINS_TOTAL:
             if interval_time:
@@ -1785,7 +1787,7 @@ def check_domain_b(domain_name: str,
         )  # Error
 
         with open(CSV_FILE, 'a') as csv_file:
-            csv_file.write(f"{domain_name};Error;;{expiration_date};{creation_date};{registrar}\n")
+            csv_file.write(f"{domain_name};{creation_date};{expiration_date};;Error;{registrar}\n")
 
         if current_domain < G_DOMAINS_TOTAL:
             if interval_time:
@@ -1820,13 +1822,13 @@ def check_domain_b(domain_name: str,
     if days_remaining < -2:
         if days_remaining > -30:
             with open(CSV_FILE, 'a') as csv_file:
-                csv_file.write(f"{domain_name};Soon;{days_remaining};{expiration_date};{creation_date};{registrar}\n")
+                csv_file.write(f"{domain_name};{creation_date};{expiration_date};{days_remaining};Soon;{registrar}\n\n")
         else:
             with open(CSV_FILE, 'a') as csv_file:
-                csv_file.write(f"{domain_name};Pending;{days_remaining};{expiration_date};{creation_date};{registrar}\n")
+                csv_file.write(f"{domain_name};{creation_date};{expiration_date};{days_remaining};Pending;{registrar}\n\n")
     else:
         with open(CSV_FILE, 'a') as csv_file:
-            csv_file.write(f"{domain_name};Valid;{days_remaining};{expiration_date};{creation_date};{registrar}\n")
+            csv_file.write(f"{domain_name};{creation_date};{expiration_date};{days_remaining};Valid;{registrar}\n\n")
 
 
     # Start of Monitoring whois-text changes
