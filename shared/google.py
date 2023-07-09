@@ -55,6 +55,11 @@ def get_google_results(domain):
         result_stats_text = result_stats.text.replace(',', '').split()[1]
         if result_stats_text=="results":
             result_stats_text = result_stats.text.replace(',', '').split()[0]
+        if result_stats_text=="кiлькость":
+            result_stats_text = result_stats.text.replace(',', '').split()[0]
+        if result_stats_text=="количество":
+            result_stats_text = result_stats.text.replace(',', '').split()[0]
+
         # Find all search result titles
         search_results = soup.find_all("h3")
         print(search_results)
@@ -71,6 +76,10 @@ def get_google_results(domain):
         favicon_file = save_favicon(favicon_url, domain) if favicon_url else ""
         print(domain)
         print(result_stats_text)
+
+        if(int(result_stats_text))>0:            
+            driver.save_screenshot(f"data/screen-data/google/{domain}.png")
+
         return int(result_stats_text), titles, favicon_file
 
 
@@ -95,7 +104,7 @@ def save_favicon(favicon_url, domain):
         favicon_data = base64.b64decode(favicon_base64)
 
         # Generate the file name
-        file_name = f"{domain}.png"
+        file_name = f"data/screen-data/favicons/{domain}.png"
 
         # Save the favicon image as a file
         '''
