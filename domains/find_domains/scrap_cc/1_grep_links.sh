@@ -1,6 +1,6 @@
 #LIST=data/cc-data/last
-LIST=data/cc-data/test
-RES=data/cc-data/links.txt
+LIST=data/cc-data/last
+RES=data/cc-data/links_com.txt
 
 
 #KEYWORDS=`cat all_keywords.txt`
@@ -14,7 +14,7 @@ echo $ZONESLIST
 
 #find $LIST -type f -exec grep 'паттерн' {} +
 
-grep -rhE '^(com|org|net|info|ru|pro|shop|xyz|life|live|today|online)\,' $LIST | grep '"status": "200"' | grep '"mime": "text/html"' | grep -oP '(?<="url": "https://)[^/]*'
+grep -rhE '^(com|org|net|info|ru|pro|shop|xyz|life|live|today|online)\,' $LIST | grep '"status": "200"' | grep '"mime": "text/html"' | ggrep -oP '(?<="url": "https://)[^/]*'
 
 # sed -e 's/"url": "https:\/\///' -e 's/"languages": "//' | awk -v ORS=';' 'NR%2{print;next}{print "\n"$0}'
 #  >  $RES

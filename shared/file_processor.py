@@ -55,8 +55,44 @@ def is_root_path(original_url):
     port = parsed_url.port
     return (path == '/' or path == '') and (not port or port == 80)
 
+def get_path(url):
+    if "/" not in url:
+        return ""
+    return os.path.join(*url.split('/')[:-1])
 
 
+def add_index_html(url):
+    # If the URL contains query parameters, return the URL as is
+    if "?" in url:
+        return url
+    # If the URL ends with a "/", append "index.html"
+    elif url.endswith("/"):
+        return url + "index.html"
+    # If the URL is an empty string, return "index.html"
+    elif url == "":
+        return "index.html"
+    # If the URL ends with a filename (i.e., contains a dot in the last segment), return the URL as is
+    elif "." in url.split("/")[-1]:
+        return url
+    # In all other cases, append "/index.html" to the URL
+    else:
+        return url + "/index.html"
+
+'''
+# Run tests
+assert add_index_html("") == "index.html"
+assert add_index_html("?technology=flake8") == "?technology=flake8"
+assert add_index_html("file.asp") == "file.asp"
+assert add_index_html("file") == "file/index.html"
+assert add_index_html("path/") == "path/index.html"
+assert add_index_html("path/file") == "path/file/index.html"
+assert add_index_html("path/file.ext") == "path/file.ext"
+assert add_index_html("path/index.html") == "path/index.html"
+assert add_index_html("path?technology=flake8") == "path?technology=flake8"
+assert add_index_html("path/?technology=flake8") == "path/?technology=flake8"
+assert add_index_html("path/file?technology=flake8") == "path/file?technology=flake8"
+assert add_index_html("path/file.ext?technology=flake8") == "path/file.ext?technology=flake8"
+'''
 
 
 

@@ -18,7 +18,8 @@ def webarchive_get_list(domain):
 
     # Send a GET request to retrieve data
     response = requests.get(url)
-
+    print("OK")
+    
     # Parse the XML response
     response_text = response.text.strip()
     rows = response_text.split('\n')

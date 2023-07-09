@@ -4,9 +4,8 @@ import re
 import os
 from urllib.parse import urlparse
 from webarchive_scrapper.file_downloader import create_folder_structure
+from shared.webarchive.webarchive_downloader import webarchive_get_list
 
-
-from shared.webarchive_downloader import webarchive_get_list
 
 
 def download_archive_data(domain, save_folder=None):
