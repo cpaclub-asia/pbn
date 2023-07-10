@@ -1652,7 +1652,7 @@ def check_domain_b(domain_name: str,
     :param checking_whois_text_changes: bool
     :return: bool (False - Error, True - Successfully)
     """
-    print(domain_name)
+    #print(domain_name)
     global EXPIRES_DOMAIN
     global SOON_DOMAIN
     global ERRORS_DOMAIN
