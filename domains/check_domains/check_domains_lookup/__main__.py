@@ -5,7 +5,7 @@ from shared.args import args_src_dst1_dst2
 import csv
 import re
 
-NUM_WORKERS = 20
+NUM_WORKERS = 10
 
 
 def check_domain(line):
