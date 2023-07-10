@@ -37,12 +37,13 @@ for domain in domains:
         if results > 0:
             webarchive_selenium_page(domain,"20220606005413")
             webarchive_selenium_page(domain,"20210101005413")
+            webarchive_selenium_page(domain,"20190606005413")
 
             append_domain_and_results_to_file(args.results_file, domain,wa_data_count,data1, results, favicon, titles, snippets)
-            time.sleep(3)
+            time.sleep(5)
         else:
             append_domain_and_results_to_file(args.non_results_file, domain,wa_data_count,data1, results, favicon, titles, snippets)
-            time.sleep(1)
+            time.sleep(5)
 
     else:
         results, titles, favicon=[-1,"",""]
