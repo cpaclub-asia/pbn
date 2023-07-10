@@ -10,8 +10,8 @@ def get_domains_from_file(file_path):
     #    return [line.strip() for line in file]
     
     with open(file_path, 'r') as file:
-        reader = csv.reader(file, delimiter='\t')
-        #reader = csv.reader(file, delimiter=';')
+        #reader = csv.reader(file, delimiter='\t')
+        reader = csv.reader(file, delimiter=';')
         headers = next(reader)  # Считываем заголовки столбцов
 
         if 'Domain' in headers:
