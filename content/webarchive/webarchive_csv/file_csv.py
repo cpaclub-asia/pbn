@@ -35,14 +35,20 @@ def make_csv(files_dir,title_path,csv_path):
 
                 file_extension = os.path.splitext(file_name)[1]
                 if file_extension.lower() in ['.html', '.htm', '.asp', '.aspx', '']:
-
                     print(f"csv->:{file_path}")
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        with open(title_file, 'r', encoding='utf-8') as f2:
+                    try:
+                        with open(file_path, 'r', encoding='utf-8') as f:
                             html = f.read()
+                        with open(title_file, 'r', encoding='utf-8') as f2:
                             title = f2.read()
-                            writer.writerow({'ID':id,'Title':title,'Content': html,'Excerpt':'','Date':generate_random_date(),'"Post Type"':'post','Permalink':slug})
-                            id+=1
+                        writer.writerow({'ID': id, 'Title': title, 'Content': html, 'Excerpt': '', 'Date': generate_random_date(), '"Post Type"': 'post', 'Permalink': slug})
+                        id += 1
+                    except FileNotFoundError:
+                        # Обработка ошибки, если файл не найден
+                        print(f"Ошибка: Файл не найден: {file_path}")
+                    except Exception as e:
+                        # Обработка других возможных ошибок
+                        print(f"Ошибка при обработке файла: {file_path}. Подробности: {str(e)}")
  
 
 
