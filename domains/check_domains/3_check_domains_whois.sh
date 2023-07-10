@@ -1,2 +1,15 @@
-python3 check_domains_whois -f data/domains-data/crawl/2023/info_domains_noconnect.txt -c -i 0 -oe >> data/domains-data/crawl/2023/info_domains_noconnect_whois.txt
+SRC=$1
+DST=$2
 
+#data/cc-data.n/domains
+SRC=data/cc-data.n/domains.test/cdx-00023.connect
+SRC1=$SRC
+DST1=$SRC.whois.csv
+
+python3 -m check_domains_whois -f $SRC1 -c -i 0 -oe --track-whois-text-changes --workers 5 --csv $DST1
+
+#SRC=data/cc-data/domains-u/cdx-00081.noconnect
+#SRC1=$SRC.csv
+#DST1=$SRC.whois.csv
+
+#python3 -m check_domains_whois -f $SRC1 -c -i 0 -oe --csv $DST1

@@ -1,10 +1,8 @@
-LIST=data/domains-data/commoncrawl_domains_2015_whois_checked.txt
-#LIST=pbn-data/info0_whois.txt
+SRC=data/cc-data.n/domains.test/cdx-00023.connect.whois
+SRC1=$SRC.csv
+DST1=$SRC.free.csv
+DST2=$SRC.pending.csv
 
-ZONES=`cat grep/zones_grep.txt`
-
-echo $ZONES\n
-
-
-cat $LIST | grep -E "$ZONES" | grep "Free" > $LIST.free
-cat $LIST | grep -E "$ZONES" | grep "Exp" | grep "( -" > $LIST.expired
+cat $SRC1 | grep "Free" > $DST1
+cat $SRC1 | grep "Pending" > $DST2
+cat $SRC1 | grep "Soon" >> $DST2

@@ -1,7 +1,7 @@
 import os
 import sys
 import argparse
-from funcs.file_processor import process_files
+from shared.file_processor import process_files
 
 def main():
     parser = argparse.ArgumentParser(description='HTML File Processor')
