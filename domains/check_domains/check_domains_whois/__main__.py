@@ -49,8 +49,9 @@ from pathlib import Path
 import subprocess
 import requests
 import concurrent.futures
+import csv
 
-NUM_WORKERS = 3
+#NUM_WORKERS = 1
 
 
 try:
@@ -130,7 +131,7 @@ SEP: str = os.sep
 pathname: str = os.path.dirname(os.path.abspath(__file__))
 
 # Folder for storing the whois cache.
-WHOIS_CACHE_PATH: str = pathname + SEP + 'ddec-cache' + SEP
+WHOIS_CACHE_PATH: str = "data/cache/whois/" #pathname + SEP + 'ddec-cache' + SEP
 
 # SMTP options
 SMTP_SERVER: str = os.getenv('SMTP_SERVER', 'localhost')
@@ -1207,7 +1208,13 @@ def process_cli():
         help='Path to the CSV file',
         metavar='FILE'
     )
-
+    parent_group.add_argument(
+        '-workers',
+        '--workers',
+        default=1,
+        type=int,
+        help='Workers (in seconds, default is 1)'
+    )
     parent_group.add_argument(
         '-d',
         '--domain',
@@ -1465,6 +1472,9 @@ def print_domain(domain: str,
     global ERRORS_DOMAIN
     global SOON_DOMAIN
 
+    global CSV_FILENAME
+    global NUM_WORKERS
+
     if not domain:
         domain = '-'
     else:
@@ -1642,12 +1652,17 @@ def check_domain_b(domain_name: str,
     :param checking_whois_text_changes: bool
     :return: bool (False - Error, True - Successfully)
     """
+    print(domain_name)
     global EXPIRES_DOMAIN
     global SOON_DOMAIN
     global ERRORS_DOMAIN
     global ERRORS2_DOMAIN
     global FREE_DOMAINS
     global WHOIS_TEXT_CHANGED_DOMAIN
+    
+    global CSV_FILENAME
+
+    #print(domain_name)
 
     is_internal_error: bool = False
     if not interval_time:
@@ -1745,9 +1760,10 @@ def check_domain_b(domain_name: str,
                         time.sleep(interval_time)
                 return False
     '''
-    with open(CSV_FILE, 'a', newline='') as csv_file:
+    
+    with open(CSV_FILENAME, 'a', newline='') as csv_file:
         writer = csv.writer(csv_file, delimiter=';')
-        if file.tell() == 0:
+        if csv_file.tell() == 0:
             writer.writerow(["Domain","Creation","Expiration_date","Days","Status","Registrar"])  
 
     if (not whois_server) and (not registrar) and (not expiration_date):
@@ -1763,7 +1779,7 @@ def check_domain_b(domain_name: str,
             error=ret_error
         )  # Free ?
 
-        with open(CSV_FILE, 'a') as csv_file:
+        with open(CSV_FILENAME, 'a') as csv_file:
             csv_file.write(f"{domain_name};{creation_date};{expiration_date};;Free;{registrar}\n")
 
         if current_domain < G_DOMAINS_TOTAL:
@@ -1821,13 +1837,13 @@ def check_domain_b(domain_name: str,
 
     if days_remaining < -2:
         if days_remaining > -30:
-            with open(CSV_FILE, 'a') as csv_file:
+            with open(CSV_FILENAME, 'a') as csv_file:
                 csv_file.write(f"{domain_name};{creation_date};{expiration_date};{days_remaining};Soon;{registrar}\n\n")
         else:
-            with open(CSV_FILE, 'a') as csv_file:
+            with open(CSV_FILENAME, 'a') as csv_file:
                 csv_file.write(f"{domain_name};{creation_date};{expiration_date};{days_remaining};Pending;{registrar}\n\n")
     else:
-        with open(CSV_FILE, 'a') as csv_file:
+        with open(CSV_FILENAME, 'a') as csv_file:
             csv_file.write(f"{domain_name};{creation_date};{expiration_date};{days_remaining};Valid;{registrar}\n\n")
 
 
@@ -2132,6 +2148,7 @@ def prepare_domains_list(file: str) -> None:
             })
 
             try:
+                line=line.split(";")[0]
                 ss: str = line.strip()
                 if len(ss) == 0:
                     continue
@@ -2382,7 +2399,8 @@ def main() -> None:
     global ERRORS2_DOMAIN
     global FREE_DOMAINS
     global WHOIS_TEXT_CHANGED_DOMAIN
-
+    global CSV_FILENAME
+    global NUM_WORKERS
     # Check command line logic
     check_cli_logic()
 
@@ -2404,6 +2422,16 @@ def main() -> None:
                 f'{FLR}{WHOIS_CACHE_PATH}'
             )
             sys.exit(-1)
+    if CLI.csv:
+        CSV_FILENAME=CLI.csv.strip()
+    else:
+        CSV_FILENAME="data/domains-data/crawl/2023/info_domains_noconnect_whois.csv"
+
+    if CLI.workers:
+        NUM_WORKERS = CLI.workers
+        print(f"workers:{NUM_WORKERS}")
+    else:
+        NUM_WORKERS = 1
 
     if CLI.file:
         # Source data from file
@@ -2492,7 +2520,7 @@ def main() -> None:
                     print(f'{FLR}{res.text}')
 
 
-CSV_FILE="data/domains-data/crawl/2023/info_domains_noconnect_whois.csv"
+
 
 if __name__ == '__main__':
     # Parsing command line
