@@ -1,13 +1,30 @@
-SRC=$1
-DST1=$2
-DST2=$3
+#SRC=$1
+#DST1=$2
+#DST2=$3
 
 #SRC="data/domains-data/crawl/2023/info_domains.txt"
 #DST1="data/domains-data/crawl/2023/info_domains_noconnect.txt"
 #DST2="data/domains-data/crawl/2023/info_domains_connect.txt"
 
-SRC=data/cc-data/domains-u/cdx-00081
-DST1=$SRC.noconnect.csv
-DST2=$SRC.connect.csv
+#SRC=data/domains-data/cc-2023-06-domains.com.csv
+#DST1=$SRC.noconnect.csv
+#DST2=$SRC.connect.csv
 
-python3 -m check_domains_lookup $SRC $DST1 $DST2
+#python3 -m check_domains_lookup $SRC $DST1 $DST2
+
+
+INPUT_DIR=data/cc-data.n/domains.com
+OUTPUT_DIR=data/cc-data.n/domains.com.lookup
+
+mkdir -p $OUTPUT_DIR
+
+for file in $INPUT_DIR/*; do
+  base=$(basename "$file")
+  echo $base
+  
+  SRC=$file
+  DST1=$OUTPUT_DIR/$base.noconnect
+  DST2=$OUTPUT_DIR/$base.connect
+
+  python3 -m check_domains_lookup $SRC $DST1 $DST2
+done

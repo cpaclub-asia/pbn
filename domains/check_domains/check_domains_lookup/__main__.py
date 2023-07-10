@@ -57,7 +57,7 @@ def process_domains(filename):
         for row in reader:
             domains.append(row)
 
-        print(domains)
+        #print(domains)
                 
                 
 
