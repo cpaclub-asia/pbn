@@ -40,8 +40,7 @@ caps['prefs'] = {
 driver = webdriver.Chrome(options=chrome_options, desired_capabilities=caps)
 '''
 
-caps = DesiredCapabilities.CHROME
-driver = webdriver.Chrome(options=chrome_options, desired_capabilities=caps)
+driver = webdriver.Chrome(options=chrome_options)
 
 
 
