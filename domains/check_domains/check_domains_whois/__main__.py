@@ -50,7 +50,7 @@ import subprocess
 import requests
 import concurrent.futures
 
-NUM_WORKERS = 10
+NUM_WORKERS = 3
 
 
 try:
@@ -1745,7 +1745,7 @@ def check_domain_b(domain_name: str,
                         time.sleep(interval_time)
                 return False
     '''
-   with open(CSV_FILE, 'a', newline='') as csv_file:
+    with open(CSV_FILE, 'a', newline='') as csv_file:
         writer = csv.writer(csv_file, delimiter=';')
         if file.tell() == 0:
             writer.writerow(["Domain","Creation","Expiration_date","Days","Status","Registrar"])  

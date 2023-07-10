@@ -1,14 +1,15 @@
 SRC=$1
 DST=$2
 
-SRC="data/domains-data/crawl/2023/info_domains_noconnect.txt"
-DST="data/domains-data/crawl/2023/info_domains_noconnect_whois.csv"
+#data/cc-data.n/domains
+SRC=data/cc-data/domains.test/cdx-00081.noconnect
+SRC1=$SRC.csv
+DST1=$SRC.whois.csv
 
-python3 -m check_domains_whois -f $SRC -c -i 0 -oe --csv $DST
-#nohup python3 -m check_domains_whois -f $SRC -c -i 0 -oe --csv $DST &
+python3 -m check_domains_whois -f $SRC1 -c -i 0 -oe --csv $DST1
 
+#SRC=data/cc-data/domains-u/cdx-00081.noconnect
+#SRC1=$SRC.csv
+#DST1=$SRC.whois.csv
 
-SRC="data/domains-data/crawl/2023/info_domains_connect.txt"
-DST="data/domains-data/crawl/2023/info_domains_connect_whois.csv"
-python3 -m check_domains_whois -f $SRC -c -i 0 -oe --csv $DST
-#nohup python3 -m check_domains_whois -f $SRC -c -i 0 -oe --csv $DST &
+#python3 -m check_domains_whois -f $SRC1 -c -i 0 -oe --csv $DST1
