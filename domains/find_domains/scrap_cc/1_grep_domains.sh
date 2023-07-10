@@ -1,7 +1,7 @@
 #!/bin/bash
 
-INPUT_DIR=data/cc-data.2/current
-OUTPUT_DIR=data/cc-data/domains
+INPUT_DIR=data/cc-data.r/current
+OUTPUT_DIR=data/cc-data.n/predomains.r
 
 mkdir -p $OUTPUT_DIR
 

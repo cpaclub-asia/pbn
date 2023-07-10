@@ -6,8 +6,8 @@ DST2=$3
 #DST1="data/domains-data/crawl/2023/info_domains_noconnect.txt"
 #DST2="data/domains-data/crawl/2023/info_domains_connect.txt"
 
-SRC="data/domains-data/crawl/2015/commoncrawl_domains_2015.csv"
-DST1="data/domains-data/crawl/2015/commoncrawl_domains_2015_noconnect.csv"
-DST2="data/domains-data/crawl/2015/commoncrawl_domains_2015_connect.csv"
+SRC=data/cc-data/domains-u/cdx-00081
+DST1=$SRC.noconnect.csv
+DST2=$SRC.connect.csv
 
 python3 -m check_domains_lookup $SRC $DST1 $DST2
