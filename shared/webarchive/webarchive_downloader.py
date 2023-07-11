@@ -6,12 +6,14 @@ import re
 import os
 
 
-def webarchive_get_list(domain):
+def webarchive_get_list(domain, collapse):
 
 
     # Form the URL for requesting data from the web archive
-    # url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original&collapse=urlkey"
-    url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original"
+    if collapse:
+        url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original&collapse=urlkey"
+    else:
+        url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original"
 
     # Debug print the URL
     print("Request URL:", url)

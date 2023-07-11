@@ -40,6 +40,75 @@ caps['prefs'] = {
 driver = webdriver.Chrome(options=chrome_options, desired_capabilities=caps)
 '''
 
+'''
+        # Path To Custom Profile
+        options.add_argument("user-data-dir=C:\\Path\\To\\Custom\\Profile")
+        self.driver = webdriver.Chrome(PATH, options=options)
+
+        chrome://version
+'''
+
+'''
+saveas = ActionChains(driver).key_down(Keys.CONTROL).send_keys('S').key_up(Keys.CONTROL).send_keys('MyDocumentName').key_down(Keys.ALT).send_keys('S').key_up(Keys.ALT)
+'''
+
+
+'''
+from selenium import webdriver
+import chromedriver_binary
+from lxml import html
+import requests
+import os
+
+driver = webdriver.Chrome()
+URL = 'https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastx&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome'
+SEQUENCE = 'CCTAAACTATAGAAGGACAGCTCAAACACAAAGTTACCTAAACTATAGAAGGACAGCTCAAACACAAAGTTACCTAAACTATAGAAGGACAGCTCAAACACAAAGTTACCTAAACTATAGAAGGACAGCTCAAACACAAAGTTACCTAAACTATAGAAGGACA' 
+base = 'https://blast.ncbi.nlm.nih.gov/'
+
+driver.get(URL)
+seq_query_field = driver.find_element_by_id("seq")
+seq_query_field.send_keys(SEQUENCE)
+blast_button = driver.find_element_by_id("b1")
+blast_button.click()
+
+content = driver.page_source
+# write the page content
+os.mkdir('page')
+with open('page/page.html', 'w') as fp:
+    fp.write(content)
+
+# download the referenced files to the same path as in the html
+sess = requests.Session()
+sess.get(base)            # sets cookies
+
+# parse html
+h = html.fromstring(content)
+# get css/js files loaded in the head
+for hr in h.xpath('head//@href'):
+    if not hr.startswith('http'):
+        local_path = 'page/' + hr
+        hr = base + hr
+    res = sess.get(hr)
+    if not os.path.exists(os.path.dirname(local_path)):
+        os.makedirs(os.path.dirname(local_path))
+    with open(local_path, 'wb') as fp:
+        fp.write(res.content)
+
+# get image/js files from the body.  skip anything loaded from outside sources
+for src in h.xpath('//@src'):
+    if not src or src.startswith('http'):
+        continue
+    local_path = 'page/' + src
+    print(local_path)
+    src = base + src
+    res = sess.get(hr)
+    if not os.path.exists(os.path.dirname(local_path)):
+        os.makedirs(os.path.dirname(local_path))
+    with open(local_path, 'wb') as fp:
+        fp.write(res.content)  
+
+'''
+
 driver = webdriver.Chrome(options=chrome_options)
 
 
