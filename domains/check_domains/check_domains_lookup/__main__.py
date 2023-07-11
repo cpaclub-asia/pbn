@@ -8,7 +8,7 @@ import urllib.request
 from urllib.error import URLError
 import os
 
-NUM_WORKERS = 20
+NUM_WORKERS = 200
 
 FILE_SRC,FILE_DST,FILE_CON = args_src_dst1_dst2("Connection check", "Src", "No connect", "Connect")
 
@@ -45,9 +45,7 @@ def check_domain(domain,full):
         print("-")
         return False
     if not full:
-        print("NOT")
         return True
-    print("YES")
 
     first_letter = domain[0]
     tld=get_domain_tld(domain)
