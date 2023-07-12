@@ -10,6 +10,15 @@ from queue import Queue
 
 
 
+
+
+import socket
+import tldextract
+import re
+import urllib.request
+from urllib.error import URLError
+import os
+
 NUM_PROCESSES = multiprocessing.cpu_count()*12
 NUM_THREADS = 10
 
