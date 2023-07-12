@@ -1,5 +1,5 @@
 import multiprocessing
-from check_domains_lookup.lookup import process_line
+#from check_domains_lookup.lookup import process_line
 from shared.args import args_src_dst1_dst2
 import csv
 import concurrent.futures
@@ -11,7 +11,7 @@ from queue import Queue
 
 
 NUM_PROCESSES = multiprocessing.cpu_count()*12
-NUM_THREADS = 10
+NUM_THREADS = 1
 
 FILE_SRC,FILE_DST,FILE_CON = args_src_dst1_dst2("Connection check", "Src", "No connect", "Connect")
 
