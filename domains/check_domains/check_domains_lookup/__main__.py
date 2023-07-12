@@ -20,12 +20,8 @@ import urllib.request
 from urllib.error import URLError
 import os
 
-<<<<<<< HEAD
 NUM_PROCESSES = multiprocessing.cpu_count()*12
 NUM_THREADS = 20
-=======
-#NUM_PROCESSES = multiprocessing.cpu_count()*12
->>>>>>> c5ade935f1474d756223f029e55b3d4325de73d5
 
 
 FILE_SRC,FILE_DST,FILE_CON,CHECK_FULL,NUM_THREADS = args_src_dst1_dst2_full_threads("Connection check", "Src", "No connect", "Connect")
