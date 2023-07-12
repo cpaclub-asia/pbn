@@ -4,23 +4,12 @@ import requests
 from shared.file_processor import is_html, is_img, is_root_path
 import re
 import os
-tldextract
-
+import tldextract
+from shared.cache import get_cache_path,write_file_content,read_file_content
 
 CACHE_DIR="data/cache/"
 CACHE_WA_DIR=CACHE_DIR+"webarchive/"
 
-def read_file_content(filename):
-    try:
-        with open(filename, 'r') as file:
-            return file.read()
-    except FileNotFoundError:
-        return False
-
-def get_cache_path(domain):
-    first_letter = domain[0]
-    tld=get_domain_tld(domain)
-    return=f"{tld}/{first_letter}/{domain}"
 
 def webarchive_get_list(domain, collapse):
 
@@ -35,23 +24,24 @@ def webarchive_get_list(domain, collapse):
 
     CACHE_FILE_NAME=f"{CACHE_WA_DIR_C}/{get_cache_path(domain)}.index.html"
     from_cache=read_file_content(CACHE_FILE_NAME)
-    if(from_cache):
+
+
+    response_text=""
+
+    if(from_cache!=False):
         print("from cache")
-        return from_cache
-    
-    
-    # Debug print the URL
-    print("Request URL:", url)
+        response_text=from_cache
+    else:
+        # Debug print the URL
+        print("Request URL:", url)
 
-    # Send a GET request to retrieve data
-    response = requests.get(url)
-    print("OK")
-    
-    with open(CACHE_FILE_NAME", "w") as file:
-        file.write(response)
+        # Send a GET request to retrieve data
+        response = requests.get(url)
+        print("OK")
+        # Parse the XML response
+        response_text = response.text.strip()
+        write_file_content(CACHE_FILE_NAME,response_text)
 
-    # Parse the XML response
-    response_text = response.text.strip()
     rows = response_text.split('\n')
 
     # Dictionary to store the last versions of each file
@@ -92,5 +82,5 @@ def webarchive_get_list(domain, collapse):
         # Check if the current version is the latest
         if clean_url not in last_versions:
             last_versions[clean_url] = download_url
-    
+    #print ([index_files, system_files, html_files, image_files, other_files])
     return index_files, system_files, html_files, image_files, other_files

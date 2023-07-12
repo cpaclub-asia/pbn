@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 
 import requests
 import time
@@ -110,8 +111,8 @@ for src in h.xpath('//@src'):
 '''
 
 driver = webdriver.Chrome(options=chrome_options)
-
-
+#wait = WebDriverWait(driver, 600)
+driver.implicitly_wait(600)
 
 
 domain_before=""
@@ -123,7 +124,10 @@ def webarchive_selenium_page(domain, timestamp):
         #Save results of previous domain
         response_text=driver.page_source
         if not "Redirecting to..." in response_text:
-            driver.save_screenshot(f"data/screen-data/webarchive/{domain}_{timestamp}.png")
+            try:
+                driver.save_screenshot(f"data/screen-data/webarchive/{domain}_webarchive_{timestamp}.png")
+            except:
+                print("save screen failed")
     
     domain_before=domain
         

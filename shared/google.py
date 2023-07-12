@@ -10,10 +10,20 @@ import requests
 import time
 import base64
 
+from shared.cache import get_cache_path,write_file_content,read_file_content
+
 chrome_options = Options()
 #chrome_options.add_argument("--headless")  # Запуск в фоновом режиме, без отображения окна браузера
 
 driver = webdriver.Chrome(options=chrome_options)
+
+
+CACHE_DIR="data/cache/"
+CACHE_GOOGLE_DIR=CACHE_DIR+"google/"
+
+SCREENS_DIR="data/screens/"
+SCREENS_GOOGLE_DIR=CACHE_DIR+"google/"
+SCREENS_FAVICONS_DIR=CACHE_DIR+"favicons/"
 
 
 
@@ -28,26 +38,33 @@ def parse_cookies(cookies_text):
 
 
 def get_google_results(domain):
-    query = f"https://www.google.com/search?q=site%3A{domain}"
+    CACHE_FILE_NAME=f"{CACHE_GOOGLE_DIR}/{get_cache_path(domain)}.google.html"
+    from_cache=read_file_content(CACHE_FILE_NAME)
 
-    #response = requests.get(query, headers=headers, cookies=cookies)
-    driver.get(query)  # Открытие страницы Google
-    print("Ожидание result-stats")
-    #WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "result-stats")))
-    while True:
-        try:
-            result_stats = driver.find_element(By.ID, "result-stats")
-            break
-        except:
-            time.sleep(1)
+    response_text=""
 
+    if(from_cache!=False):
+        print("from cache")
+        response_text=from_cache
+    else:
+        url = f"https://www.google.com/search?q=site%3A{domain}"
+        print("Request URL:", url)
 
-    response_text=driver.page_source
+        driver.get(url) 
+        print("Ожидание result-stats")
+        #WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "result-stats")))
+        while True:
+            try:
+                result_stats = driver.find_element(By.ID, "result-stats")
+                break
+            except:
+                time.sleep(1)
 
+        response_text=driver.page_source
+        print("Ok")
+        write_file_content(CACHE_FILE_NAME,response_text)
 
     
-    #if response.status_code == 200:
-    print("Ok.")
     soup = BeautifulSoup(response_text, 'html.parser')
     result_stats = soup.find(id="result-stats")
 
@@ -78,7 +95,7 @@ def get_google_results(domain):
         print(result_stats_text)
 
         if(int(result_stats_text))>0:            
-            driver.save_screenshot(f"data/screen-data/google/{domain}.png")
+            driver.save_screenshot(f"data/screen-data/google/{domain}_google.png")
 
         return int(result_stats_text), titles, favicon_file
 

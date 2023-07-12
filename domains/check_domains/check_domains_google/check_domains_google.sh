@@ -1,6 +1,6 @@
 SRC=$1
 DST=$2
-SRC=data/cc-data.n/domains.test/cdx-00081.noconnect.whois.pending
+SRC=data/cc-data.n/com.expired
 
 #SRC="data/domains-data/crawl/2023/info_domains_noconnect_whois.free"
 SRC1="$SRC.csv"
