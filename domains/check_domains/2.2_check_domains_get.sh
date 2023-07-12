@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #SRC=$1
 #DST1=$2
 #DST2=$3
@@ -20,7 +22,7 @@ OUTPUT_DIR2=data/cc-data.n/domains.com.get
 CHECK_FULL=True
 NUM_THREADS=10
 #NUM_PROCESSES=$(nproc)
-NUM_PROCESSES=1
+NUM_PROCESSES=2
 
 
 
@@ -32,12 +34,12 @@ mkdir -p $OUTPUT_DIR2
 process_file() {
   file="$1"
   base=$(basename "$file")
-  echo "$base"
+  #echo "$base"
 
   SRC="$file"
   DST1="$OUTPUT_DIR1/$base.noget"
   DST2="$OUTPUT_DIR2/$base.get"
-echo $DST1 $CHECK_FULL $NUM_THREADS
+  #echo $DST1 $CHECK_FULL $NUM_THREADS
   python3 -m check_domains_lookup "$SRC" "$DST1" "$DST2" $CHECK_FULL $NUM_THREADS
 }
 
@@ -50,6 +52,7 @@ else
   # Иначе, выполняем скрипт через parallel
   export -f process_file
   find "$INPUT_DIR" -type f | parallel -j -X "$NUM_PROCESSES" --eta process_file
+  #find "$INPUT_DIR" -type f | process_file $1
 fi
 
 exit 0
