@@ -10,7 +10,7 @@ from queue import Queue
 
 
 
-NUM_PROCESSES = multiprocessing.cpu_count()*20
+NUM_PROCESSES = multiprocessing.cpu_count()*12
 NUM_THREADS = 10
 
 FILE_SRC,FILE_DST,FILE_CON = args_src_dst1_dst2("Connection check", "Src", "No connect", "Connect")
