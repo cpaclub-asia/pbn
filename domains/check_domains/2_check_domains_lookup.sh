@@ -14,20 +14,33 @@
 
 
 INPUT_DIR=data/cc-data.n/domains.com
-OUTPUT_DIR1=data/cc-data.n/domains.com.noconnect
-OUTPUT_DIR2=data/cc-data.n/domains.com.connect
 
 #NUM_PROCESSES=$(nproc)
-NUM_PROCESSES=1
+NUM_PROCESSES=4
 
 
 mkdir -p $OUTPUT_DIR1
 mkdir -p $OUTPUT_DIR2
 
 
+for file in $INPUT_DIR/*; do
+  base=$(basename "$file")
+  echo $base
+  
+  SRC=$file
+  DST1=$OUTPUT_DIR1/$base.noconnect
+  DST2=$OUTPUT_DIR2/$base.connect
+
+  python3 -m check_domains_lookup $SRC $DST1 $DST2
+done
+
+exit 0
 
 # Функция, которую будем выполнять для каждого файла
 process_file() {
+OUTPUT_DIR1=data/cc-data.n/domains.com.noconnect
+OUTPUT_DIR2=data/cc-data.n/domains.com.connect
+
   file="$1"
   base=$(basename "$file")
   echo "$base"
