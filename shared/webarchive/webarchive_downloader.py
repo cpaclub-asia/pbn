@@ -4,7 +4,23 @@ import requests
 from shared.file_processor import is_html, is_img, is_root_path
 import re
 import os
+tldextract
 
+
+CACHE_DIR="data/cache/"
+CACHE_WA_DIR=CACHE_DIR+"webarchive/"
+
+def read_file_content(filename):
+    try:
+        with open(filename, 'r') as file:
+            return file.read()
+    except FileNotFoundError:
+        return False
+
+def get_cache_path(domain):
+    first_letter = domain[0]
+    tld=get_domain_tld(domain)
+    return=f"{tld}/{first_letter}/{domain}"
 
 def webarchive_get_list(domain, collapse):
 
@@ -12,9 +28,18 @@ def webarchive_get_list(domain, collapse):
     # Form the URL for requesting data from the web archive
     if collapse:
         url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original&collapse=urlkey"
+        CACHE_WA_DIR_C=CACHE_WA_DIR+"collapse/"
     else:
         url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original"
+        CACHE_WA_DIR_C=CACHE_WA_DIR+"full/"
 
+    CACHE_FILE_NAME=f"{CACHE_WA_DIR_C}/{get_cache_path(domain)}.index.html"
+    from_cache=read_file_content(CACHE_FILE_NAME)
+    if(from_cache):
+        print("from cache")
+        return from_cache
+    
+    
     # Debug print the URL
     print("Request URL:", url)
 
@@ -22,6 +47,9 @@ def webarchive_get_list(domain, collapse):
     response = requests.get(url)
     print("OK")
     
+    with open(CACHE_FILE_NAME", "w") as file:
+        file.write(response)
+
     # Parse the XML response
     response_text = response.text.strip()
     rows = response_text.split('\n')
