@@ -21,7 +21,7 @@ from urllib.error import URLError
 import os
 
 NUM_PROCESSES = multiprocessing.cpu_count()*12
-NUM_THREADS = 1
+NUM_THREADS = 20
 
 FILE_SRC,FILE_DST,FILE_CON = args_src_dst1_dst2("Connection check", "Src", "No connect", "Connect")
 
