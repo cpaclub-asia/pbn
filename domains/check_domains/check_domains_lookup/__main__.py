@@ -24,6 +24,34 @@ def worker(queue):
 '''
 
 
+def process_line(line):
+    #print(line)
+    #global domain_index
+    #domain2=line[domain_index]
+    domain3=line[0]
+    domain4=re.match(r'^[a-z0-9.-]+', domain3).group(0)
+    
+    #domain3 = domain.split()[0].strip(',').strip(':').strip(';')  # take only the first part before space or comma
+    domain2=domain4
+    #print(domain4)
+    
+    #extracted = tldextract.extract(domain4)
+    #domain2 = extracted.domain + '.' + extracted.suffix
+
+    if len(domain2.split('.')) >= 3:
+        print(f"Skipping {domain2}: {line}")
+        return
+        
+    domain=domain2
+
+    #print(domain)
+    if check_domain(domain,False):
+        with open(FILE_CON, 'a') as good_file:
+            good_file.write(f"{domain};{line[1]}\n")
+    else:
+        with open(FILE_DST, 'a') as bad_file:
+            bad_file.write(f"{domain};{line[1]}\n")
+
 def process_domains(filename):
     with open(filename, 'r') as file:
         reader = csv.reader(file, delimiter=';')
