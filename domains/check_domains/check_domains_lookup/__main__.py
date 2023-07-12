@@ -1,5 +1,5 @@
 import multiprocessing
-from check_domains_lookup.lookup import process_line
+from check_domains_lookup.lookup import check_domain
 from shared.args import args_src_dst1_dst2
 import csv
 import concurrent.futures
