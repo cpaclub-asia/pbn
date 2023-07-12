@@ -35,7 +35,7 @@ def process_domains(filename):
             domain_index = 0  # Если столбец "Domain" не найден, читаем из первого столбца
 
         #data = {}
-        queue = Queue()
+        #queue = Queue()
         #for domain in domains:
         #    queue.put(domain)
 
@@ -44,11 +44,10 @@ def process_domains(filename):
         
         for row in reader:
             domains.append(row)
-            queue.put(row)
+            #queue.put(row)
 
-        with multiprocessing.Pool(NUM_PROCESSES) as pool:
-                pool.map(process_line, domains)
-
+        #with multiprocessing.Pool(NUM_PROCESSES) as pool:
+        #        pool.map(process_line, domains)
         #print(domains)
         '''
         with multiprocessing.Pool(NUM_PROCESSES) as pool:
@@ -59,19 +58,19 @@ def process_domains(filename):
                 for worker in workers:
                     worker.result()
         '''
-        '''                            
-        #if NUM_WORKERS>1:
-            #with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_WORKERS) as executor:
-            #    executor.map(process_line, domains)
+        if NUM_THREADS>1:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_THREADS) as executor:
+                executor.map(process_line, domains)
+        else:
+            for line in domains:
+                process_line(line)
         
 
+        '''                            
         with multiprocessing.Pool(NUM_PROCESSES) as pool:
             with ThreadPoolExecutor(max_workers=NUM_THREADS) as executor:
                 pool.map(process_line, domains)
         
-        #else:
-        #    for line in domains:
-        #        process_line(line)
         '''
 
 
