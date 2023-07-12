@@ -81,7 +81,7 @@ def process_line(line):
     domain=domain2
 
     #print(domain)
-    if check_domain(domain,True):
+    if check_domain(domain,False):
         with open(FILE_CON, 'a') as good_file:
             good_file.write(f"{domain};{line[1]}\n")
     else:
