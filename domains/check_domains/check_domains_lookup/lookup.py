@@ -45,10 +45,12 @@ def check_domain(domain,full):
 
     first_letter = domain[0]
     tld=get_domain_tld(domain)
-    download_url(f"https://{domain}/",f"{CACHE_INDEX_DIR}/{tld}/{first_letter}/{domain}.index.html")
-    print(".")
+    r=download_url(f"https://{domain}/",f"{CACHE_INDEX_DIR}/{tld}/{first_letter}/{domain}.index.html")
+    if not r:
+        print("-")
+        return False
     download_url(f"https://{domain}/robots.txt",f"{CACHE_ROBOTS_DIR}/{tld}/{first_letter}/{domain}.robots.txt")
-    print(".")
+    print("+")
     download_url(f"https://{domain}/favicon.ico",f"{CACHE_FAVICON_DIR}/{tld}/{first_letter}/{domain}.favicon.ico")
     print(".")
     download_url(f"https://{domain}/sitemap.xml",f"{CACHE_SITEMAP_DIR}/{tld}/{first_letter}/{domain}.sitemap.xml")

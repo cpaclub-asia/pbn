@@ -1,7 +1,7 @@
 import multiprocessing
 
 from check_domains_lookup.lookup import check_domain
-from shared.args import args_src_dst1_dst2
+from shared.args import args_src_dst1_dst2_full_threads
 import csv
 import concurrent.futures
 from concurrent.futures import ThreadPoolExecutor
@@ -20,11 +20,11 @@ import urllib.request
 from urllib.error import URLError
 import os
 
-NUM_PROCESSES = multiprocessing.cpu_count()*12
-NUM_THREADS = 1
+#NUM_PROCESSES = multiprocessing.cpu_count()*12
 
-FILE_SRC,FILE_DST,FILE_CON = args_src_dst1_dst2("Connection check", "Src", "No connect", "Connect")
 
+FILE_SRC,FILE_DST,FILE_CON,CHECK_FULL,NUM_THREADS = args_src_dst1_dst2_full_threads("Connection check", "Src", "No connect", "Connect")
+print(f"{CHECK_FULL},{NUM_THREADS}")
 
 '''
 def worker(queue):
@@ -55,7 +55,7 @@ def process_line(line):
     domain=domain2
 
     #print(domain)
-    if check_domain(domain,False):
+    if check_domain(domain,CHECK_FULL):
         with open(FILE_CON, 'a') as good_file:
             good_file.write(f"{domain};{line[1]}\n")
     else:

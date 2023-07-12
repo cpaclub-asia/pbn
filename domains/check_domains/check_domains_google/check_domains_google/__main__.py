@@ -35,9 +35,10 @@ for domain in domains:
         print(f"{titles} {favicon}")
 
         if results > 0:
-            webarchive_selenium_page(domain,"20220606005413")
+            webarchive_selenium_page(domain,"20230101005413")
+            webarchive_selenium_page(domain,"20220101005413")
             webarchive_selenium_page(domain,"20210101005413")
-            webarchive_selenium_page(domain,"20190606005413")
+            webarchive_selenium_page(domain,"20200606005413")
 
             append_domain_and_results_to_file(args.results_file, domain,wa_data_count,data1, results, favicon, titles, snippets)
             time.sleep(5)
