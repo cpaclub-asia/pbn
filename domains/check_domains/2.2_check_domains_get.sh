@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Делаем по базе online, не ждя whois поскольку whois дольше обрабатывать
+
 #SRC=$1
 #DST1=$2
 #DST2=$3
@@ -16,13 +18,13 @@
 
 
 
-INPUT_DIR=data/cc-data.n/domains.com.connect
-OUTPUT_DIR1=data/cc-data.n/domains.com.noget
-OUTPUT_DIR2=data/cc-data.n/domains.com.get
+INPUT_DIR=data/domains-data/connect/cc-2023-06/com
+OUTPUT_DIR1=data/domains-data/offline/cc-2023-06/com
+OUTPUT_DIR2=data/domains-data/online/cc-2023-06/com
 CHECK_FULL=True
 NUM_THREADS=10
 #NUM_PROCESSES=$(nproc)
-NUM_PROCESSES=2
+NUM_PROCESSES=1
 
 
 
@@ -43,6 +45,8 @@ process_file() {
   python3 -m check_domains_lookup "$SRC" "$DST1" "$DST2" $CHECK_FULL $NUM_THREADS
 }
 
+  export -f process_file
+
 # Если NUM_PROCESSES равно 1, выполняем скрипт через цикл
 if [ "$NUM_PROCESSES" -eq 1 ]; then
   for file in "$INPUT_DIR"/*; do
@@ -50,7 +54,6 @@ if [ "$NUM_PROCESSES" -eq 1 ]; then
   done
 else
   # Иначе, выполняем скрипт через parallel
-  export -f process_file
   find "$INPUT_DIR" -type f | parallel -j -X "$NUM_PROCESSES" --eta process_file
   #find "$INPUT_DIR" -type f | process_file $1
 fi
