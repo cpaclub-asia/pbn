@@ -19,7 +19,7 @@ OUTPUT_DIR2=data/cc-data.n/domains.com.connect
 CHECK_FULL=False
 NUM_THREADS=10
 #NUM_PROCESSES=$(nproc)
-NUM_PROCESSES=4
+NUM_PROCESSES=8
 
 
 
