@@ -48,6 +48,11 @@ def is_css(file_name):
         return True
     return False
 
+def is_binary(file_name):
+    file_extension = get_file_extension(file_name)
+    if file_extension.lower() in ['.jpg', '.jpeg', '.png', '.gif','.pdf', '.bmp', '.ico']:
+        return True
+    return False
 
 def is_root_path(original_url):
     parsed_url = urlparse(original_url)

@@ -1,7 +1,7 @@
 import traceback
 import os
 import requests
-from shared.file_processor import is_root_path, add_index_html, get_path
+from shared.file_processor import is_root_path, add_index_html, get_path, is_binary
 
 from urllib.parse import urlparse
 from webarchive_scrapper.shared import urls_files;
@@ -60,11 +60,8 @@ def create_folder_structure(save_folder, file_list):
             download_response = requests.get(download_url)
             print(f"Downloaded file: {download_url}")
 
-            # Get the file extension from the URL
-            file_extension = os.path.splitext(file_name)[1]
-
 						# Determine the write mode based on the file extension
-            if file_extension.lower() in ('.jpg', '.jpeg', '.png', '.gif'):
+            if is_binary(file_name) :
               write_mode = 'wb'  # Binary mode for image files
 
 								# Save the image files using the chosen write mode

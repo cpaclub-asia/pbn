@@ -9,7 +9,7 @@ from shared.webarchive.webarchive_downloader import webarchive_get_list
 
 
 def download_archive_data(domain, save_folder=None):
-    index_files, system_files, html_files, image_files, other_files=webarchive_get_list(domain)
+    index_files, system_files, html_files, image_files, other_files=webarchive_get_list(domain,True)
 
     # Create a folder to save data for the domain
     domain_folder = os.path.join(save_folder, domain) if save_folder else domain
