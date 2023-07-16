@@ -1,1 +1,1 @@
-apt install whois python3-pip
+apt install whois python3-pip parallel coreutils

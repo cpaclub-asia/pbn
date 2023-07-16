@@ -23,8 +23,9 @@ OUTPUT_DIR1=data/domains-data/offline/cc-2023-06/com
 OUTPUT_DIR2=data/domains-data/online/cc-2023-06/com
 CHECK_FULL=True
 NUM_THREADS=10
+
 #NUM_PROCESSES=$(nproc)
-NUM_PROCESSES=1
+NUM_PROCESSES=8
 
 
 
@@ -34,13 +35,21 @@ mkdir -p $OUTPUT_DIR2
 
 # Функция, которую будем выполнять для каждого файла
 process_file() {
+
+INPUT_DIR=data/domains-data/connect/cc-2023-06/com
+OUTPUT_DIR1=data/domains-data/offline/cc-2023-06/com
+OUTPUT_DIR2=data/domains-data/online/cc-2023-06/com
+CHECK_FULL=True
+NUM_THREADS=10
+
+
   file="$1"
   base=$(basename "$file")
   #echo "$base"
 
   SRC="$file"
-  DST1="$OUTPUT_DIR1/$base.noget"
-  DST2="$OUTPUT_DIR2/$base.get"
+  DST1="$OUTPUT_DIR1/$base.offline"
+  DST2="$OUTPUT_DIR2/$base.online"
   #echo $DST1 $CHECK_FULL $NUM_THREADS
   python3 -m check_domains_lookup "$SRC" "$DST1" "$DST2" $CHECK_FULL $NUM_THREADS
 }
@@ -54,7 +63,7 @@ if [ "$NUM_PROCESSES" -eq 1 ]; then
   done
 else
   # Иначе, выполняем скрипт через parallel
-  find "$INPUT_DIR" -type f | parallel -j -X "$NUM_PROCESSES" --eta process_file
+  find "$INPUT_DIR" -type f | parallel -X -j "$NUM_PROCESSES" --eta process_file
   #find "$INPUT_DIR" -type f | process_file $1
 fi
 
