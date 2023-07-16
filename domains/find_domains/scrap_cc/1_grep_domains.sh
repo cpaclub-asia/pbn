@@ -11,5 +11,4 @@ for file in $INPUT_DIR/*; do
   base=$(basename "$file")
   echo $base
   grep '"status": "200"' "$file" | grep '"mime": "text/html"' | grep -oP '(?<="url": "https:\/\/)[^"/?&#\\]*' > "$OUTPUT_DIR/$base"
-exit 0
 done
