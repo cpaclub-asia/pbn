@@ -4,7 +4,7 @@
 file="data/nginx-data/domains.txt"
 #file=$1
 
-USER=static
+USER=google2
 
 # Проверка наличия файла
 if [ ! -f "$file" ]; then

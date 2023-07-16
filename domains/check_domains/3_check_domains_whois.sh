@@ -1,7 +1,7 @@
 
 #data/cc-data.n/domains
-INPUT_DIR=data/cc-data.n/domains.com.noconnect
-OUTPUT_DIR=data/cc-data.n/domains.com.noconnect.whois
+INPUT_DIR=data/domains-data/noconnect/cc-2023-06/com
+OUTPUT_DIR=data/domains-data/noconnect.whois/cc-2023-06/com
 WORKERS=5
 
 mkdir -p $OUTPUT_DIR

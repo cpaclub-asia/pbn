@@ -4,5 +4,5 @@ DST1=$SRC.free.csv
 DST2=$SRC.pending.csv
 
 cat $SRC1 | grep "Free" > $DST1
-cat $SRC1 | grep "Pending" > $DST2
+cat $SRC1 | grep "Exp" > $DST2
 cat $SRC1 | grep "Soon" >> $DST2

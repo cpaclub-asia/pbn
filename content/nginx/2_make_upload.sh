@@ -18,8 +18,8 @@ while IFS= read -r line; do
     echo $DOMAIN
     
     /bin/mkdir -p data/upload-data/upload/$DOMAIN
-    cp -r ./data/sites-data/$DOMAIN/cleaned/all/ ./data/upload-data/upload/$DOMAIN
-    cp -r ./data/sites-data/$DOMAIN/assets/all/ ./data/upload-data/upload/$DOMAIN
+    cp -r ./data/sites-data/$DOMAIN/cleaned/all/* ./data/upload-data/upload/$DOMAIN
+    cp -r ./data/sites-data/$DOMAIN/assets/all/* ./data/upload-data/upload/$DOMAIN
     
 done < "$file"
 
