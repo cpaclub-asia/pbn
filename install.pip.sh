@@ -1,1 +1,1 @@
-pip3 install tldextract python-whois
+pip3 install tldextract python-whois bs4
