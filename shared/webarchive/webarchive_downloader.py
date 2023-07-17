@@ -26,8 +26,14 @@ def webarchive_get_list(domain, collapse, additional):
         url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original"
         CACHE_WA_DIR_C=CACHE_WA_DIR+"full/"
 
-    CACHE_FILE_NAME=f"{CACHE_WA_DIR_C}/{get_cache_path(domain)}.index.html"
-    from_cache=read_file_content(CACHE_FILE_NAME)
+    CACHE_FILE_NAME=""
+    from_cache=""
+    
+    if additional.strip():
+        url+="&"+additional
+    else:
+        CACHE_FILE_NAME=f"{CACHE_WA_DIR_C}/{get_cache_path(domain)}.index.html"
+        from_cache=read_file_content(CACHE_FILE_NAME)
 
 
     response_text=""
@@ -44,7 +50,8 @@ def webarchive_get_list(domain, collapse, additional):
         print("OK")
         # Parse the XML response
         response_text = response.text.strip()
-        write_file_content(CACHE_FILE_NAME,response_text)
+        if CACHE_FILE_NAME
+            write_file_content(CACHE_FILE_NAME,response_text)
 
     rows = response_text.split('\n')
 
