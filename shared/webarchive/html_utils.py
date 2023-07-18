@@ -10,14 +10,17 @@ def remove_wa_links(html):
     updated_value = html
     updated_value = re.sub(r'https://web\.archive\.org/web/\d+/', '', updated_value)
     updated_value = re.sub(r'https://web\.archive\.org/web/\d+im_/', '', updated_value)
+    updated_value = re.sub(r'https://web\.archive\.org/web/\d+if_/', '', updated_value)
     updated_value = re.sub(r'https://web\.archive\.org/web/\d+cs_/', '', updated_value)
     
     updated_value = re.sub(r'//web\.archive\.org/web/\d+/', '', updated_value)
     updated_value = re.sub(r'//web\.archive\.org/web/\d+im_/', '', updated_value)
+    updated_value = re.sub(r'//web\.archive\.org/web/\d+if_/', '', updated_value)
     updated_value = re.sub(r'//web\.archive\.org/web/\d+cs_/', '', updated_value)
 
     updated_value = re.sub(r'/web/\d+/', '', updated_value)
     updated_value = re.sub(r'/web/\d+im_/', '', updated_value)
+    updated_value = re.sub(r'/web/\d+if_/', '', updated_value)
     updated_value = re.sub(r'/web/\d+cs_/', '', updated_value)
 
     return updated_value

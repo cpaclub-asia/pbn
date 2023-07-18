@@ -1,7 +1,7 @@
 #!/bin/bash
 
-INPUT_DIR=data/cc-data/predomains
-OUTPUT_DIR=data/domains-data/list/cc-2023-06/new
+INPUT_DIR=data/cc-data/predomains.new
+OUTPUT_DIR=data/domains-data/list/cc-2023-06/new2
 
 
 mkdir -p $OUTPUT_DIR
