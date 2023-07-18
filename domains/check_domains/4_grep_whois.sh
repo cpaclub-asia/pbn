@@ -1,8 +1,9 @@
-SRC=data/cc-data.n/domains.test/cdx-00023.connect.whois
+SRC=data/domains-data/noconnect.whois/cc-2023-06/noconnect.whois.17072023
 SRC1=$SRC.csv
 DST1=$SRC.free.csv
-DST2=$SRC.pending.csv
+DST2=$SRC.expired.csv
+DST3=$SRC.soon.csv
 
 cat $SRC1 | grep "Free" > $DST1
 cat $SRC1 | grep "Exp" > $DST2
-cat $SRC1 | grep "Soon" >> $DST2
+cat $SRC1 | grep "Soon" >> $DST3
