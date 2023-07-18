@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #SRC=$1
 #DST1=$2
 #DST2=$3
@@ -13,19 +15,19 @@
 #python3 -m check_domains_lookup $SRC $DST1 $DST2
 
 
-<<<<<<< HEAD
-INPUT_DIR=data/cc-data.n/domains.com
-OUTPUT_DIR1=data/cc-data.n/domains.com.noconnect
-OUTPUT_DIR2=data/cc-data.n/domains.com.connect
+INPUT_DIR=data/domains-data/list/cc-2023-06/nocom
+OUTPUT_DIR1=data/domains-data/noconnect/cc-2023-06/nocom
+OUTPUT_DIR2=data/domains-data/connect/cc-2023-06/nocom
 CHECK_FULL=False
-NUM_THREADS=10
+NUM_THREADS=20
 #NUM_PROCESSES=$(nproc)
-NUM_PROCESSES=8
-=======
+NUM_PROCESSES=12
 
->>>>>>> 551b78bd2aa271d8de35584fe61286ec64577579
+export OUTPUT_DIR1
+export OUTPUT_DIR2
 
-
+export CHECK_FULL
+export NUM_THREADS
 
 mkdir -p $OUTPUT_DIR1
 mkdir -p $OUTPUT_DIR2
@@ -33,15 +35,6 @@ mkdir -p $OUTPUT_DIR2
 
 # Функция, которую будем выполнять для каждого файла
 process_file() {
-
-INPUT_DIR=data/cc-data.n/domains.com
-OUTPUT_DIR1=data/cc-data.n/domains.com.noconnect
-OUTPUT_DIR2=data/cc-data.n/domains.com.connect
-CHECK_FULL=False
-NUM_THREADS=10
-#NUM_PROCESSES=$(nproc)
-NUM_PROCESSES=4
-
   file="$1"
   base=$(basename "$file")
   echo "$base"
