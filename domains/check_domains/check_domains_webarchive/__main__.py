@@ -34,7 +34,7 @@ for domain in domains:
         time.sleep(1)
         webarchive_selenium_page(domain,"20200606005413")
         time.sleep(1)
-        append_domain_and_results_to_file_wa(DST_WA, domain,wa_data_count,data1)
+        append_domain_and_results_to_file_(DST_WA, domain,wa_data_count,data1)
     else:
         append_domain_and_results_to_file_wa(DST_NOWA, domain,wa_data_count,data1)
         time.sleep(1)

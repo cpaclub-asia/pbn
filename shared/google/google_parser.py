@@ -1,10 +1,10 @@
+from shared.google.google_selenium import google_selenium_page,google_selenium_screenshot
+
+
+
 from bs4 import BeautifulSoup
 
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+
 
 import requests
 import time
@@ -19,14 +19,9 @@ from shared.cache import get_cache_path,write_file_content,read_file_content
 
 
 
+DELAY_GOOGLE=60
 
 
-chrome_options = Options()
-#chrome_options.add_argument("--headless")  # Запуск в фоновом режиме, без отображения окна браузера
-chrome_path = '/usr/bin/chromium-browser'
-chrome_options.binary_location = chrome_path
-
-driver = webdriver.Chrome(options=chrome_options)
 
 
 CACHE_DIR="data/cache/"
@@ -58,20 +53,7 @@ def get_google_results(domain):
         print("from cache")
         response_text=from_cache
     else:
-        url = f"https://www.google.com/search?q=site%3A{domain}"
-        print("Request URL:", url)
-
-        driver.get(url) 
-        print("Ожидание result-stats")
-        #WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "result-stats")))
-        while True:
-            try:
-                result_stats = driver.find_element(By.ID, "result-stats")
-                break
-            except:
-                time.sleep(1)
-
-        response_text=driver.page_source
+        response_text=google_selenium_page(domain)
         print("Ok")
         write_file_content(CACHE_FILE_NAME,response_text)
 
@@ -105,9 +87,13 @@ def get_google_results(domain):
         print(domain)
         print(result_stats_text)
 
-        if(int(result_stats_text))>0:            
-            driver.save_screenshot(f"data/screen-data/google/{domain}_google.png")
+        if(int(result_stats_text))>0:
+            if(from_cache!=True):
+                google_selenium_screenshot(f"data/screen-data/google/{domain}_google.png")
 
+        if(from_cache!=True):
+            print(f"sleep {DELAY_GOOGLE}")
+            time.sleep(DELAY_GOOGLE)
         return int(result_stats_text), titles, favicon_file
 
 

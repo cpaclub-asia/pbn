@@ -31,17 +31,17 @@ def get_domains_from_file(file_path):
     
 
 
-def append_domain_and_results_to_file(file_path, domain,wa_data,data1, results, favicon, titles, snippets):
+def append_domain_and_results_to_file(file_path, domain,newdata,data1):
     with open(file_path, 'a', newline='') as file:
         writer = csv.writer(file, delimiter=';')
-        if file.tell() == 0:
-            writer.writerow(["Domain", "Gres","html","img","oth", "Favicon", "Titles"])  # Записываем заголовки
+        #if file.tell() == 0:
+        #            writer.writerow(["Domain", "Gres","html","img","oth", "Favicon", "Titles"])  # Записываем заголовки
         #, "Snippets"]
-        row=[domain, results]
-        row+=(wa_data)
-        row+=[favicon, titles]
+        row=data1
+        row+=(newdata)
+        #row+=[favicon, titles]
         #row+=[snippets]
-        row+=(data1)
+        #row+=(data1)
         writer.writerow(row)
 
 
