@@ -12,8 +12,19 @@ import base64
 
 from shared.cache import get_cache_path,write_file_content,read_file_content
 
+
+
+# Set additional options if needed
+# chrome_options.add_argument('--headless')  # Uncomment this line to run in headless mode
+
+
+
+
+
 chrome_options = Options()
 #chrome_options.add_argument("--headless")  # Запуск в фоновом режиме, без отображения окна браузера
+chrome_path = '/usr/bin/chromium-browser'
+chrome_options.binary_location = chrome_path
 
 driver = webdriver.Chrome(options=chrome_options)
 
