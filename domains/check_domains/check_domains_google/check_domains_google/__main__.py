@@ -22,7 +22,7 @@ for domain in domains:
 
     #results = get_google_results(domain)
     #try:
-    index_files, system_files, html_files, image_files, other_files=webarchive_get_list(domain,True)
+    index_files, system_files, html_files, image_files, other_files=webarchive_get_list(domain,True,"")
     wa_data_count=[len(index_files),len(html_files),len(image_files),len(other_files)]
     print([len(index_files),len(html_files),len(image_files),len(other_files)])
     #except:

@@ -50,7 +50,7 @@ def webarchive_get_list(domain, collapse, additional):
         print("OK")
         # Parse the XML response
         response_text = response.text.strip()
-        if CACHE_FILE_NAME
+        if CACHE_FILE_NAME:
             write_file_content(CACHE_FILE_NAME,response_text)
 
     rows = response_text.split('\n')
