@@ -10,7 +10,7 @@ from shared.webarchive.webarchive_selenium import webarchive_selenium_page
 from shared.args import args_src_dst1_dst2
 
 SRC,DST_WA,DST_NOWA = args_src_dst1_dst2("Webarchive check", "Src", "DST_WA", "DST_NOWA")
-
+print(f"{SRC},{DST_WA},{DST_NOWA}")
 
 domains,data = get_domains_from_file(SRC)
 #print(webarchive_get_list("jajaladaexclusivefashion.com",True))
@@ -27,14 +27,14 @@ for domain in domains:
     print(f"Domain {domain} WA {wa_data_count[0]} ")
     if wa_data_count[0] >= 1:
         webarchive_selenium_page(domain,"20230101005413")
-        time.sleep(1)
+        time.sleep(5)
         webarchive_selenium_page(domain,"20220101005413")
-        time.sleep(1)
+        time.sleep(5)
         webarchive_selenium_page(domain,"20210101005413")
-        time.sleep(1)
+        time.sleep(5)
         webarchive_selenium_page(domain,"20200606005413")
         time.sleep(1)
-        append_domain_and_results_to_file_(DST_WA, domain,wa_data_count,data1)
+        append_domain_and_results_to_file_wa(DST_WA, domain,wa_data_count,data1)
     else:
         append_domain_and_results_to_file_wa(DST_NOWA, domain,wa_data_count,data1)
         time.sleep(1)

@@ -6,9 +6,24 @@ import re
 import os
 import tldextract
 from shared.cache import get_cache_path,write_file_content,read_file_content
+import traceback
+import time
 
 CACHE_DIR="data/cache/"
 CACHE_WA_DIR=CACHE_DIR+"webarchive/"
+
+def try_get(url):
+    while True:
+        try:
+            response = requests.get(url)
+            if response !="":
+                return response
+        except Exception as e:
+            print(f"ERROR!!!! WHILE GET WA")
+            print(str(e))
+            traceback.print_exc()
+        print("sleep 60")
+        time.sleep(60)
 
 
 def webarchive_get_list(domain, collapse, additional):
@@ -46,7 +61,8 @@ def webarchive_get_list(domain, collapse, additional):
         print("Request URL:", url)
 
         # Send a GET request to retrieve data
-        response = requests.get(url)
+        response=try_get(url)
+
         print("OK")
         # Parse the XML response
         response_text = response.text.strip()

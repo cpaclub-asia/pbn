@@ -17,6 +17,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 #chrome_options.add_argument("--headless")  # Запуск в фоновом режиме, без отображения окна браузера
 chrome_options = Options()
+#chrome_options.add_argument("user-data-dir=C:\\Path\\To\\Custom\\Profile")
 
 '''
 # Disable images
