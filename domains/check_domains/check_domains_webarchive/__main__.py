@@ -12,6 +12,7 @@ from shared.args import args_src_dst1_dst2
 SRC,DST_WA,DST_NOWA = args_src_dst1_dst2("Webarchive check", "Src", "DST_WA", "DST_NOWA")
 print(f"{SRC},{DST_WA},{DST_NOWA}")
 
+
 domains,data = get_domains_from_file(SRC)
 #print(webarchive_get_list("jajaladaexclusivefashion.com",True))
 

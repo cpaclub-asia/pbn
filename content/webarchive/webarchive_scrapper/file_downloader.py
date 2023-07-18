@@ -5,7 +5,7 @@ from shared.file_processor import is_root_path, add_index_html, get_path, is_bin
 
 from urllib.parse import urlparse
 from webarchive_scrapper.shared import urls_files;
-
+from shared.inet import try_get
 
 def create_folder_structure(save_folder, file_list):
     for download_url in file_list:
@@ -57,10 +57,19 @@ def create_folder_structure(save_folder, file_list):
             os.makedirs(file_path_all, exist_ok=True)
 
             # Send a GET request to download data
-            download_response = requests.get(download_url)
-            print(f"Downloaded file: {download_url}")
+
+            print(f"Downloading url: {download_url}")
+            download_response = try_get(download_url)
+            print("OK")
+
+            with open(file_name, 'wb') as file:
+              file.write(download_response.content)
+
+            with open(file_name_all, 'wb') as file:
+              file.write(download_response.content)
 
 						# Determine the write mode based on the file extension
+            '''
             if is_binary(file_name) :
               write_mode = 'wb'  # Binary mode for image files
 
@@ -80,7 +89,7 @@ def create_folder_structure(save_folder, file_list):
 
               with open(file_name_all, write_mode, encoding=encoding) as file:
                 file.write(download_response.text)
-
+            '''
 
                 
         except Exception as e:

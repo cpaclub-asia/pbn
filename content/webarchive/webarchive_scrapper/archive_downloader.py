@@ -8,19 +8,14 @@ from shared.webarchive.webarchive_downloader import webarchive_get_list
 
 
 
-def download_archive_data(domain, save_folder=None):
-    index_files, system_files, html_files, image_files, other_files=webarchive_get_list(domain,True)
+def download_archive_data(domain, save_folder=None,args=""):
+    index_files, system_files, html_files, image_files, other_files=webarchive_get_list(domain,True,args)
 
     # Create a folder to save data for the domain
     domain_folder = os.path.join(save_folder, domain) if save_folder else domain
     os.makedirs(domain_folder, exist_ok=True)
 
-    # Debug information about the list of files
-    print("Number of HTML files:", len(html_files))
-    print("Number of image files:", len(image_files))
-    print("Number of system files:", len(system_files))
-    print("Number of index files:", len(index_files))
-    print("Number of other files:", len(other_files))
+
 
     # Display the list of files to be downloaded
     print("\nFiles to be downloaded:")
@@ -35,6 +30,12 @@ def download_archive_data(domain, save_folder=None):
     print("\nImage Files:")
     print("\n".join(image_files))
 
+    # Debug information about the list of files
+    print("Number of HTML files:", len(html_files))
+    print("Number of image files:", len(image_files))
+    print("Number of system files:", len(system_files))
+    print("Number of index files:", len(index_files))
+    print("Number of other files:", len(other_files))
 
     # Create the folder structure and download files based on priority
     create_folder_structure(domain_folder, index_files)
