@@ -91,7 +91,9 @@ def get_google_results(domain):
             if(from_cache!=True):
                 google_selenium_screenshot(f"data/screen-data/google/{domain}_google.png")
 
-        if(from_cache!=True):
+        if(from_cache!=False):
+            print("From cache, no delay")
+        else:
             print(f"sleep {DELAY_GOOGLE}")
             time.sleep(DELAY_GOOGLE)
         return int(result_stats_text), titles, favicon_file
