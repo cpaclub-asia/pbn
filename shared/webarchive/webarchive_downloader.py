@@ -1,7 +1,7 @@
 import requests
 #from funcs.file_processor import is_html, is_img,is_root_path
 #from webarchive_scrapper.funcs import  is_root_path
-from shared.file_processor import is_html, is_img, is_root_path
+from shared.file_processor import is_html, is_img, is_root_path, is_system
 import re
 import os
 import tldextract
@@ -14,6 +14,8 @@ CACHE_DIR="data/cache/"
 CACHE_WA_DIR=CACHE_DIR+"webarchive/"
 
 
+import requests_cache
+requests_cache.install_cache('cache_webarchive_lists',use_cache_dir=True,cache_dir="data/cache/webarchive/lists")
 
 
 def webarchive_get_list(domain, collapse, additional):
@@ -94,17 +96,14 @@ def webarchive_get_list(domain, collapse, additional):
         # Form the URL for downloading data
         download_url = f"https://web.archive.org/web/{timestamp}/{original_url}"
 
-        # Determine the file type based on the URL
-        file_extension = os.path.splitext(clean_url)[1].lower()
-
         # Add the file to the appropriate list
         if is_root_path(original_url):
             index_files.append(download_url)
-        elif is_html(clean_url):
+        elif is_html(original_url):
             html_files.append(download_url)
-        elif original_url.endswith('sitemap.xml') or original_url.endswith('robots.txt') or original_url.endswith('favicon.ico') or original_url.endswith('ads.txt'):
+        elif is_system(original_url):
             system_files.append(download_url)
-        elif is_img(clean_url):
+        elif is_img(original_url):
             image_files.append(download_url)
         else:
             other_files.append(download_url)

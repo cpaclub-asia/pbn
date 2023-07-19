@@ -48,6 +48,11 @@ def is_css(file_name):
         return True
     return False
 
+def is_system(file_name):
+    if file_name.endswith('sitemap.xml') or file_name.endswith('robots.txt') or file_name.endswith('favicon.ico') or file_name.endswith('ads.txt'):
+        return True
+    return False
+
 def is_binary(file_name):
     file_extension = get_file_extension(file_name)
     if file_extension.lower() in ['.jpg', '.jpeg', '.png', '.gif','.pdf', '.bmp', '.ico']:
@@ -112,6 +117,8 @@ assert is_html('file') == True
 assert is_html('index.html?ver=123') == True
 assert is_html('index.html?ver=7.5') == True
 assert is_html('?p=123') == True
+assert is_html('http://www.site.com:80/folder/?p=123') == True
+assert is_html('http://www.site.com:80/folder/?p=123') == True
 
 # Тесты
 assert is_img('image.jpg') == True

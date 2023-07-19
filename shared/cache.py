@@ -8,7 +8,7 @@ def get_domain_tld(domain):
 
 def read_file_content(filename):
     try:
-        with open(filename, 'r') as file:
+        with open(filename, 'rb') as file:
             return 200,file.read()
     except FileNotFoundError:
         return -1, ""
@@ -16,9 +16,11 @@ def read_file_content(filename):
 def write_file_content(filename,content):
     directory = os.path.dirname(filename)
     os.makedirs(directory, exist_ok=True)
-    with open(filename, "w") as file:
+    with open(filename, "wb") as file:
         file.write(content)
 
+def try_get_cache_webarchive(url, cachedir)
+    
 
 def get_cache_path(domain):
     first_letter = domain[0]

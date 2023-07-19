@@ -1,11 +1,18 @@
 import traceback
 import os
 import requests
+
+
+
 from shared.file_processor import is_root_path, add_index_html, get_path, is_binary
 
 from urllib.parse import urlparse
 from webarchive_scrapper.shared import urls_files;
 from shared.inet import try_get_bin
+
+import requests_cache
+requests_cache.install_cache('cache_webarchive_content',use_cache_dir=True,cache_dir="data/cache/webarchive/comtent")
+
 
 def create_folder_structure(save_folder, file_list):
     for download_url in file_list:
