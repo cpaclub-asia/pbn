@@ -17,7 +17,7 @@ CACHE_WA_DIR=CACHE_DIR+"webarchive/"
 
 
 def webarchive_get_list(domain, collapse, additional):
-
+    print(f"Checking {domain}")
 
     # Form the URL for requesting data from the web archive
     if collapse:
@@ -43,7 +43,7 @@ def webarchive_get_list(domain, collapse, additional):
 
     response_text=""
 
-    if(from_cache!=False):
+    if(from_cache!=""):
         print("from cache")
         response_text=from_cache
     else:
@@ -51,13 +51,15 @@ def webarchive_get_list(domain, collapse, additional):
         print("Request URL:", url)
 
         # Send a GET request to retrieve data
-        response=try_get(url)
+        response_text=try_get(url)
 
         print("OK")
         # Parse the XML response
-        response_text = response.text.strip()
         if CACHE_FILE_NAME:
             write_file_content(CACHE_FILE_NAME,response_text)
+
+    if(response_text==""):
+        return [], [], [], [], []
 
     rows = response_text.split('\n')
 

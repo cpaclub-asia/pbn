@@ -26,7 +26,7 @@ for domain in domains:
     print([len(index_files),len(html_files),len(image_files),len(other_files)])
 
     print(f"Domain {domain} WA {wa_data_count[0]} ")
-    if wa_data_count[0] >= 1:
+    if wa_data_count[1] >= 1:
         r1=webarchive_selenium_page(domain,"20230101005413")
         time.sleep(1)
         r2=webarchive_selenium_page(domain,"20220101005413")
@@ -40,4 +40,4 @@ for domain in domains:
         append_domain_and_results_to_file_wa(DST_WA, domain,wa_data_count,data1)
     else:
         append_domain_and_results_to_file_wa(DST_NOWA, domain,wa_data_count,data1)
-        time.sleep(10)
+        time.sleep(1)

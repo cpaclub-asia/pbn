@@ -11,7 +11,7 @@ def read_file_content(filename):
         with open(filename, 'r') as file:
             return file.read()
     except FileNotFoundError:
-        return False
+        return ""
 
 def write_file_content(filename,content):
     directory = os.path.dirname(filename)

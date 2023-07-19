@@ -6,11 +6,11 @@ def try_get(url):
     while True:
         try:
             response = requests.get(url)
-            if response !="":
-                return response
+            if response.status_code == 200:
+                return response.text.strip() #response.content
         except Exception as e:
             print(f"ERROR!!!! WHILE GET WA")
             print(str(e))
             traceback.print_exc()
-        print("sleep 300")
-        time.sleep(300)
+        print("sleep 120")
+        time.sleep(120)
