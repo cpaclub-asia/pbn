@@ -15,9 +15,9 @@
 #python3 -m check_domains_lookup $SRC $DST1 $DST2
 
 
-INPUT_DIR=data/domains-data/list/cc-2023-06/nocom
-OUTPUT_DIR1=data/domains-data/noconnect/cc-2023-06/nocom
-OUTPUT_DIR2=data/domains-data/connect/cc-2023-06/nocom
+INPUT_DIR=data/domains-data/list/cc-2023-06/com
+OUTPUT_DIR1=data/domains-data/noconnect/cc-2023-06/com
+OUTPUT_DIR2=data/domains-data/connect/cc-2023-06/com
 CHECK_FULL=False
 NUM_THREADS=20
 #NUM_PROCESSES=$(nproc)

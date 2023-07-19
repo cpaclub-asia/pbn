@@ -19,7 +19,7 @@ from shared.cache import get_cache_path,write_file_content,read_file_content
 
 
 
-DELAY_GOOGLE=60
+DELAY_GOOGLE=40
 
 
 
@@ -49,7 +49,7 @@ def get_google_results(domain):
 
     response_text=""
 
-    if(from_cache!=""):
+    if(from_cache!="NOFILE"):
         print("from cache")
         response_text=from_cache
     else:
@@ -92,7 +92,7 @@ def get_google_results(domain):
             if(from_cache!=True):
                 google_selenium_screenshot(f"data/screen-data/google/{domain}_google.png")
 
-        if(from_cache!=False):
+        if(from_cache!="NOFILE"):
             print("From cache, no delay")
         else:
             print(f"sleep {DELAY_GOOGLE}")
