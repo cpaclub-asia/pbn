@@ -16,7 +16,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
 #chrome_options.add_argument("--headless")  # Запуск в фоновом режиме, без отображения окна браузера
-chrome_options = Options()
+
 #chrome_options.add_argument("user-data-dir=C:\\Path\\To\\Custom\\Profile")
 
 '''
@@ -111,12 +111,15 @@ for src in h.xpath('//@src'):
 
 '''
 
-driver = webdriver.Chrome(options=chrome_options)
-#wait = WebDriverWait(driver, 600)
-driver.implicitly_wait(600)
-
+driver = None
 
 domain_before=""
+
+def webarchive_selenium_init():
+    driver = webdriver.Chrome(options=chrome_options)
+    #wait = WebDriverWait(driver, 600)
+    driver.implicitly_wait(600)
+    chrome_options = Options()
 
 def webarchive_selenium_page(domain, timestamp):
     global domain_before

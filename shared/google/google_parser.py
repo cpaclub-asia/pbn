@@ -49,7 +49,7 @@ def get_google_results(domain):
 
     response_text=""
 
-    if(from_cache!=False):
+    if(from_cache!=""):
         print("from cache")
         response_text=from_cache
     else:
@@ -57,7 +57,8 @@ def get_google_results(domain):
         print("Ok")
         write_file_content(CACHE_FILE_NAME,response_text)
 
-    
+    print(response_text)
+
     soup = BeautifulSoup(response_text, 'html.parser')
     result_stats = soup.find(id="result-stats")
 
@@ -72,7 +73,7 @@ def get_google_results(domain):
 
         # Find all search result titles
         search_results = soup.find_all("h3")
-        print(search_results)
+        #print(search_results)
 
         #search_results = soup.find_all("h3", class_="LC20lb DKV0Md")
         #print(search_results)
@@ -96,6 +97,7 @@ def get_google_results(domain):
         else:
             print(f"sleep {DELAY_GOOGLE}")
             time.sleep(DELAY_GOOGLE)
+
         return int(result_stats_text), titles, favicon_file
 
 
