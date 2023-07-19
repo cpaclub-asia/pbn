@@ -27,14 +27,16 @@ for domain in domains:
 
     print(f"Domain {domain} WA {wa_data_count[0]} ")
     if wa_data_count[0] >= 1:
-        webarchive_selenium_page(domain,"20230101005413")
-        time.sleep(10)
-        webarchive_selenium_page(domain,"20220101005413")
-        time.sleep(10)
-        webarchive_selenium_page(domain,"20210101005413")
-        time.sleep(10)
-        webarchive_selenium_page(domain,"20200606005413")
-        time.sleep(30)
+        r1=webarchive_selenium_page(domain,"20230101005413")
+        time.sleep(1)
+        r2=webarchive_selenium_page(domain,"20220101005413")
+        time.sleep(1)
+        if r1=="sale" and r2=="sale":
+            continue
+        r3=webarchive_selenium_page(domain,"20210101005413")
+        time.sleep(1)
+        r4=webarchive_selenium_page(domain,"20200606005413")
+        time.sleep(1)
         append_domain_and_results_to_file_wa(DST_WA, domain,wa_data_count,data1)
     else:
         append_domain_and_results_to_file_wa(DST_NOWA, domain,wa_data_count,data1)

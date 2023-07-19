@@ -136,12 +136,18 @@ def webarchive_selenium_page(domain, timestamp):
     driver.get(query)
 
     
-    time.sleep(30)
+    time.sleep(20)
     response_text=""
     try:
         response_text=driver.page_source
     except:
         response_text=""
+
+    if "is available for sale" in response_text:
+        return "sale"
+
+    if "This domain is registered, but may still be available." in response_text:
+        return "sale"
 
     if not "Redirecting to..." in response_text and response_text!="":
         try:
