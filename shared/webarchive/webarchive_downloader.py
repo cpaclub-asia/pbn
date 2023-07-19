@@ -56,7 +56,7 @@ def webarchive_get_list(domain, collapse, additional):
 
         # Send a GET request to retrieve data
         response_text=try_get(url)
-        time.sleep(1)
+        #time.sleep(1)
         print("OK")
         # Parse the XML response
         if CACHE_FILE_NAME:
