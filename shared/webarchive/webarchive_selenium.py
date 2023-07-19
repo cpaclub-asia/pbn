@@ -135,9 +135,15 @@ def webarchive_selenium_page(domain, timestamp):
     #driver.execute_script(f"window.open('{query}')")
     driver.get(query)
 
-    time.sleep(20)
-    response_text=driver.page_source
-    if not "Redirecting to..." in response_text:
+    
+    time.sleep(30)
+    response_text=""
+    try:
+        response_text=driver.page_source
+    except:
+        response_text=""
+
+    if not "Redirecting to..." in response_text and response_text!="":
         try:
             driver.save_screenshot(f"data/screen-data/webarchive/{domain}_webarchive_{timestamp}.png")
         except:
