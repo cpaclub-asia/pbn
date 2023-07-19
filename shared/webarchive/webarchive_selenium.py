@@ -121,25 +121,28 @@ domain_before=""
 def webarchive_selenium_page(domain, timestamp):
     global domain_before
 
+    '''
     if domain_before != "":
         #Save results of previous domain
-        response_text=driver.page_source
-        if not "Redirecting to..." in response_text:
-            try:
-                driver.save_screenshot(f"data/screen-data/webarchive/{domain}_webarchive_{timestamp}.png")
-            except:
-                print("save screen failed")
     
     domain_before=domain
-        
+    '''    
 
     query = f"https://web.archive.org/web/{timestamp}/http://{domain}/"
     
     #driver.get(query)
-    def load_page():
-        #driver.execute_script(f"window.open('{query}')")
-        driver.get(query)
+    #def load_page():
+    #driver.execute_script(f"window.open('{query}')")
+    driver.get(query)
 
-    threading.Thread(target=load_page).start()
+    time.sleep(20)
+    response_text=driver.page_source
+    if not "Redirecting to..." in response_text:
+        try:
+            driver.save_screenshot(f"data/screen-data/webarchive/{domain}_webarchive_{timestamp}.png")
+        except:
+            print("save screen failed")
+
+    #threading.Thread(target=load_page).start()
 
     return
