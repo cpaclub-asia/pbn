@@ -21,12 +21,12 @@ for domain in domains:
     data1=data[domain]
 
 
-    index_files, system_files, html_files, image_files, other_files=webarchive_get_list(domain,True,"")
+    index_files, system_files, html_files, image_files, other_files=webarchive_get_list(domain,"urlkey","")
     wa_data_count=[len(index_files),len(html_files),len(image_files),len(other_files)]
     print([len(index_files),len(html_files),len(image_files),len(other_files)])
 
     print(f"Domain {domain} WA {wa_data_count[0]} ")
-    if wa_data_count[1] >= 1:
+    if wa_data_count[1] > 3:
         r1=webarchive_selenium_page(domain,"20230101005413")
         time.sleep(1)
         r2=webarchive_selenium_page(domain,"20220101005413")

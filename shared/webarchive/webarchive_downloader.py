@@ -20,13 +20,17 @@ def webarchive_get_list(domain, collapse, additional):
     print(f"Checking {domain}")
 
     # Form the URL for requesting data from the web archive
+    if collapse and collapse!="urlkey":
+        collapse="digest"        
+
     if collapse:
         # additional = "&from=YYYYMMDDHHMMSS&to=YYYYMMDDHHMMSS"
         # https://web.archive.org/cdx/search/cdx?url=noema.info/*&output=xml&fl=timestamp,original&collapse=digest
         # was collapse=urlkey
-        url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original&collapse=digest"
+        # digest
+        url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original&collapse={collapse}"
         url += "&filter=statuscode:200&sort=date"
-        CACHE_WA_DIR_C=CACHE_WA_DIR+"collapse/"
+        CACHE_WA_DIR_C=CACHE_WA_DIR+f"{collapse}/"
     else:
         url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original"
         CACHE_WA_DIR_C=CACHE_WA_DIR+"full/"
