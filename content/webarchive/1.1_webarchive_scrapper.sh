@@ -15,7 +15,8 @@ fi
 while IFS= read -r line; do
     # Извлечение имени домена до первого пробела или точки с запятой
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
-    CMD="python3 -m webarchive_scrapper -f data/webarch-data $DOMAIN"
+    PARAMS=$(echo "$line" | awk -F '[ ;]' '{print $2}')
+    CMD="python3 -m webarchive_scrapper -f data/webarch-data $DOMAIN $PARAMS"
     echo $CMD
     $CMD
     #nohup $CMD >> /dev/null  &

@@ -4,7 +4,7 @@
 file="data/nginx-data/domains.txt"
 #file=$1
 
-USER=google2
+USER=thaipats
 
 # Проверка наличия файла
 if [ ! -f "$file" ]; then
@@ -32,6 +32,7 @@ echo "" > data/nginx-data/main/includes_wordpress.conf
 while IFS= read -r line; do
     # Извлечение имени домена до первого пробела или точки с запятой
     DOMAIN=$(echo "$line" | awk -F '[ ;]' '{print $1}')
+    DOMAIN=$(echo "$DOMAIN" | tr '[:upper:]' '[:lower:]')
     echo "$DOMAIN"
     
     sed "s/{{DOMAIN}}/$DOMAIN/g" "templates/plain_static.conf" |  sed "s/{{USER}}/$USER/g" > data/nginx-data/plain/$DOMAIN.conf

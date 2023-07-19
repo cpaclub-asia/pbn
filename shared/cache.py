@@ -9,9 +9,9 @@ def get_domain_tld(domain):
 def read_file_content(filename):
     try:
         with open(filename, 'r') as file:
-            return file.read()
+            return 200,file.read()
     except FileNotFoundError:
-        return "NOFILE"
+        return -1, ""
 
 def write_file_content(filename,content):
     directory = os.path.dirname(filename)

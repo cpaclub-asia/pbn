@@ -30,24 +30,27 @@ def webarchive_get_list(domain, collapse, additional):
         # digest
         url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original&collapse={collapse}"
         url += "&filter=statuscode:200&sort=date"
-        CACHE_WA_DIR_C=CACHE_WA_DIR+f"{collapse}/"
+        CACHE_WA_DIR_C=CACHE_WA_DIR+f"{collapse}_{additional}/"        
     else:
         url = f"https://web.archive.org/cdx/search/cdx?url={domain}/*&output=xml&fl=timestamp,original"
-        CACHE_WA_DIR_C=CACHE_WA_DIR+"full/"
+        CACHE_WA_DIR_C=CACHE_WA_DIR+f"full_{additional}/"
+
+    print(CACHE_WA_DIR_C)
 
     CACHE_FILE_NAME=""
-    from_cache=""
+    code=0
+    from_cache="NOFILE"
     
-    if additional.strip():
-        url+="&"+additional
+    if additional:
+        url+="&"+additional.strip()
     else:
         CACHE_FILE_NAME=f"{CACHE_WA_DIR_C}/{get_cache_path(domain)}.index.html"
-        from_cache=read_file_content(CACHE_FILE_NAME)
+        code,from_cache=read_file_content(CACHE_FILE_NAME)
 
 
     response_text=""
 
-    if(from_cache!="NOFILE"):
+    if(code==200):
         print("from cache")
         response_text=from_cache
     else:
@@ -61,6 +64,7 @@ def webarchive_get_list(domain, collapse, additional):
         # Parse the XML response
         if CACHE_FILE_NAME:
             write_file_content(CACHE_FILE_NAME,response_text)
+    print(response_text)
 
     if(response_text==""):
         return [], [], [], [], []
@@ -81,7 +85,10 @@ def webarchive_get_list(domain, collapse, additional):
 
     # Process each URL address
     for row in rows:
-        timestamp, original_url = row.split(' ', 1)
+        parts=row.split(' ', 1)
+        if len(parts) < 2:
+            continue
+        timestamp, original_url = parts
         clean_url = re.sub(r'[\/:*?"<>|]', '_', original_url.strip())
 
         # Form the URL for downloading data
