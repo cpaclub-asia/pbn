@@ -1,8 +1,15 @@
 import traceback
 import time
 import requests
+import os
 
-def try_get(url):
+import requests_cache
+
+
+def try_get(url,cache):
+    cache_dir = os.path.abspath(f"data/cache/www/{cache}")
+    #requests_cache.install_cache(cache_dir,backend="filesystem", serializer='json', expire_after=None)
+    requests_cache.install_cache(cache_dir,backend="sqlite", expire_after=None)
     while True:
         try:
             response = requests.get(url)
@@ -16,7 +23,11 @@ def try_get(url):
         time.sleep(120)
 
 
-def try_get_bin(url):
+def try_get_bin(url,cache):
+    cache_dir = os.path.abspath(f"data/cache/www/{cache}")
+    #requests_cache.install_cache(cache_dir,backend="filesystem", serializer='json', expire_after=None)
+    requests_cache.install_cache(cache_dir,backend="sqlite", expire_after=None)
+
     while True:
         try:
             response = requests.get(url)
@@ -29,3 +40,4 @@ def try_get_bin(url):
             traceback.print_exc()
         print("sleep 120")
         time.sleep(120)
+

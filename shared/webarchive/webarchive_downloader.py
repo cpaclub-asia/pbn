@@ -14,9 +14,9 @@ CACHE_DIR="data/cache/"
 CACHE_WA_DIR=CACHE_DIR+"webarchive/"
 
 
-import requests_cache
-cache_dir = os.path.abspath("data/cache/webarchive/lists")
-requests_cache.install_cache('cache_webarchive_lists', use_cache_dir=True, cache_dir=cache_dir)
+#import requests_cache
+#cache_dir = os.path.abspath("data/cache/webarchive/lists")
+#requests_cache.install_cache('cache_webarchive_lists',backend="sqlite", expire_after=None, cache_dir=cache_dir)
 
 def webarchive_get_list(domain, collapse, additional):
     print(f"Checking {domain}")
@@ -72,7 +72,7 @@ def webarchive_get_list(domain, collapse, additional):
     '''
 
     #code,
-    response_text=try_get(url)
+    response_text=try_get(url,"webarchive_list")
     if(response_text==""):
         return [], [], [], [], []
 

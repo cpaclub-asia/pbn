@@ -10,9 +10,15 @@ from urllib.parse import urlparse
 from webarchive_scrapper.shared import urls_files;
 from shared.inet import try_get_bin
 
-import requests_cache
-cache_dir = os.path.abspath("data/cache/webarchive/content")
-requests_cache.install_cache('cache_webarchive_content', use_cache_dir=True, cache_dir=cache_dir)
+import pprint
+
+#import requests_cache
+#cache_dir = os.path.abspath("data/cache/webarchive/content")
+#requests_cache.install_cache(cache_dir,backend="filesystem", serializer='json', expire_after=None)
+
+# session = CachedSession(cache_dir)
+#cache = requests_cache.get_cache()
+#pprint.pprint(vars(cache.responses  ))
 
 
 def create_folder_structure(save_folder, file_list):
@@ -27,6 +33,9 @@ def create_folder_structure(save_folder, file_list):
             year_month = timestamp[:6]
 
             domain_url = download_url.split('/')[7]
+            domain_c_url = domain_url.split(':')[0]
+
+
             path_url_ni = os.path.join(*download_url.split('/')[8:])
             
             path_url = add_index_html(path_url_ni)
@@ -67,7 +76,11 @@ def create_folder_structure(save_folder, file_list):
             # Send a GET request to download data
 
             print(f"Downloading url: {download_url}")
-            code, content = try_get_bin(download_url)
+            
+            code, content = try_get_bin(download_url  ,f"webarchive_sites/{domain_c_url}")
+            #code=200
+            #content=session.get(download_url)
+
             if code==200:
               print("OK")
               with open(file_name, 'wb') as file:

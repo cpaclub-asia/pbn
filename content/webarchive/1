@@ -1,4 +1,9 @@
 python3 -m webarchive_scrapper -f data/webarch-data asficlub.com
+{'_lock': <unlocked _thread.RLock object owner=0 count=0 at 0x10d09b930>,
+ 'cache_dir': PosixPath('/Users/anton/proj/pbn/content/webarchive/cache_webarchive_content'),
+ 'extension': '.json',
+ 'is_binary': False,
+ 'serializer': <requests_cache.serializers.pipeline.SerializerPipeline object at 0x10d039910>}
 Checking asficlub.com
 data/cache/webarchive/digest_None/
 
@@ -5457,3 +5462,21 @@ path_url:index.html
 dir_url:
 file_path:data/webarch-data/asficlub.com/201409/
 Downloading url: https://web.archive.org/web/20140905070642/http://www.asficlub.com:80/
+OK
+An error occurred while processing file: https://web.archive.org/web/20140905070642/http://www.asficlub.com:80/
+a bytes-like object is required, not 'CachedResponse'
+path_url: index.html
+domain_url:www.asficlub.com:80
+path_url:index.html
+dir_url:
+file_path:data/webarch-data/asficlub.com/201411/
+Downloading url: https://web.archive.org/web/20141106051411/http://www.asficlub.com:80/
+OK
+An error occurred while processing file: https://web.archive.org/web/20141106051411/http://www.asficlub.com:80/
+a bytes-like object is required, not 'CachedResponse'
+path_url: index.html
+domain_url:www.asficlub.com:80
+path_url:index.html
+dir_url:
+file_path:data/webarch-data/asficlub.com/201501/
+Downloading url: https://web.archive.org/web/20150109122139/http://www.asficlub.com:80/
