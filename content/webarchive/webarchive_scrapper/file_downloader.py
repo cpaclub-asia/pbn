@@ -12,6 +12,12 @@ from shared.inet import try_get_bin
 
 import pprint
 
+import tldextract
+
+def get_second_level_domain(full_domain):
+    extracted = tldextract.extract(full_domain)
+    return f"{extracted.domain}.{extracted.suffix}"
+
 #import requests_cache
 #cache_dir = os.path.abspath("data/cache/webarchive/content")
 #requests_cache.install_cache(cache_dir,backend="filesystem", serializer='json', expire_after=None)
@@ -34,7 +40,7 @@ def create_folder_structure(save_folder, file_list):
 
             domain_url = download_url.split('/')[7]
             domain_c_url = domain_url.split(':')[0]
-
+            domain2=get_second_level_domain(domain_c_url)
 
             path_url_ni = os.path.join(*download_url.split('/')[8:])
             
@@ -77,7 +83,7 @@ def create_folder_structure(save_folder, file_list):
 
             print(f"Downloading url: {download_url}")
             
-            code, content = try_get_bin(download_url  ,f"webarchive_sites/{domain_c_url}")
+            code, content = try_get_bin(download_url  ,f"webarchive_sites/{domain2}")
             #code=200
             #content=session.get(download_url)
 
