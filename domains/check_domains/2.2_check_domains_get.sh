@@ -22,10 +22,10 @@ INPUT_DIR=data/domains-data/connect/cc-2023-06/com
 OUTPUT_DIR1=data/domains-data/offline/cc-2023-06/com
 OUTPUT_DIR2=data/domains-data/online/cc-2023-06/com
 CHECK_FULL=True
-NUM_THREADS=10
+NUM_THREADS=20
 
 #NUM_PROCESSES=$(nproc)
-NUM_PROCESSES=8
+NUM_PROCESSES=20
 
 
 
