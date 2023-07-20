@@ -6,7 +6,7 @@ import re
 import os
 import tldextract
 from shared.cache import get_cache_path,write_file_content,read_file_content
-from shared.inet import try_get
+from shared.inet import try_get,try_get_bin
 import traceback
 import time
 
@@ -15,8 +15,8 @@ CACHE_WA_DIR=CACHE_DIR+"webarchive/"
 
 
 import requests_cache
-requests_cache.install_cache('cache_webarchive_lists',use_cache_dir=True,cache_dir="data/cache/webarchive/lists")
-
+cache_dir = os.path.abspath("data/cache/webarchive/lists")
+requests_cache.install_cache('cache_webarchive_lists', use_cache_dir=True, cache_dir=cache_dir)
 
 def webarchive_get_list(domain, collapse, additional):
     print(f"Checking {domain}")
@@ -47,9 +47,10 @@ def webarchive_get_list(domain, collapse, additional):
         url+="&"+additional.strip()
     else:
         CACHE_FILE_NAME=f"{CACHE_WA_DIR_C}/{get_cache_path(domain)}.index.html"
-        code,from_cache=read_file_content(CACHE_FILE_NAME)
+        #code,from_cache=read_file_content(CACHE_FILE_NAME)
 
 
+    '''
     response_text=""
 
     if(code==200):
@@ -60,14 +61,18 @@ def webarchive_get_list(domain, collapse, additional):
         print("Request URL:", url)
 
         # Send a GET request to retrieve data
-        response_text=try_get(url)
+        code,response_text=try_get_bin(url)
         #time.sleep(1)
         print("OK")
         # Parse the XML response
         if CACHE_FILE_NAME:
             write_file_content(CACHE_FILE_NAME,response_text)
+        response_text=response_text.decode('utf-8')
     print(response_text)
+    '''
 
+    #code,
+    response_text=try_get(url)
     if(response_text==""):
         return [], [], [], [], []
 

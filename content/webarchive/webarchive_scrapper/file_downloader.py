@@ -11,7 +11,8 @@ from webarchive_scrapper.shared import urls_files;
 from shared.inet import try_get_bin
 
 import requests_cache
-requests_cache.install_cache('cache_webarchive_content',use_cache_dir=True,cache_dir="data/cache/webarchive/comtent")
+cache_dir = os.path.abspath("data/cache/webarchive/content")
+requests_cache.install_cache('cache_webarchive_content', use_cache_dir=True, cache_dir=cache_dir)
 
 
 def create_folder_structure(save_folder, file_list):

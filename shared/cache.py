@@ -19,8 +19,6 @@ def write_file_content(filename,content):
     with open(filename, "wb") as file:
         file.write(content)
 
-def try_get_cache_webarchive(url, cachedir)
-    
 
 def get_cache_path(domain):
     first_letter = domain[0]
