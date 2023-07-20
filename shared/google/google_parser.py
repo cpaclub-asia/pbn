@@ -19,7 +19,7 @@ from shared.cache import get_cache_path,write_file_content,read_file_content
 
 
 
-DELAY_GOOGLE=40
+DELAY_GOOGLE=60
 
 
 
