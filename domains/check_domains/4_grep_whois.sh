@@ -1,6 +1,7 @@
-SRC=data/domains-data/noconnect.whois/cc-2023-06/noconnect.whois.17072023
-SRC1=$SRC.csv
-DST1=$SRC.free.csv
+SRC=data/domains-data/noconnect.whois/cc-2023-06/nocom
+
+SRC1=$SRC/*
+DST1=$SRC.all.csv
 DST2=$SRC.expired.csv
 DST3=$SRC.soon.csv
 
