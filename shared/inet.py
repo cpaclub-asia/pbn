@@ -5,6 +5,9 @@ import os
 
 import requests_cache
 
+DELAY_ON_ERROR=120
+DELAY_ON_TIMEOUT=60
+GET_TIMEOUT=120
 
 def try_get(url,cache):
     cache_dir = os.path.abspath(f"data/cache/www/{cache}")
@@ -19,8 +22,8 @@ def try_get(url,cache):
             print(f"ERROR!!!! WHILE GET WA")
             print(str(e))
             traceback.print_exc()
-        print("sleep 120")
-        time.sleep(120)
+            print(f"sleep {DELAY_ON_ERROR}")
+            time.sleep(DELAY_ON_ERROR)
 
 
 def try_get_bin(url,cache):
@@ -30,14 +33,18 @@ def try_get_bin(url,cache):
 
     while True:
         try:
-            response = requests.get(url)
+            response = requests.get(url,timeout=GET_TIMEOUT)
             if response.status_code == 200:
                 return 200,response.content
             return 0,""
+        except requests.exceptions.Timeout:
+            print("Таймаут истек при выполнении запроса.")
+            print(f"sleep {DELAY_ON_TIMEOUT}")
+            time.sleep(DELAY_ON_TIMEOUT)
         except Exception as e:
             print(f"ERROR!!!! WHILE GET WA")
             print(str(e))
             traceback.print_exc()
-        print("sleep 120")
-        time.sleep(120)
+            print(f"sleep {DELAY_ON_ERROR}")
+            time.sleep(DELAY_ON_ERROR)
 
