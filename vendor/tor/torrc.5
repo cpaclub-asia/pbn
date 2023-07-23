@@ -1,3 +1,6 @@
+SocksPort 2055
+DataDirectory data/tor-data/5
+
 ## Configuration file for a typical Tor user
 ## Last updated 9 October 2013 for Tor 0.2.5.2-alpha.
 ## (may or may not work for much older or much newer versions of Tor.)
@@ -15,7 +18,7 @@
 ## Tor opens a socks proxy on port 9050 by default -- even if you don't
 ## configure one below. Set "SocksPort 0" if you plan to run Tor only
 ## as a relay, and not make any local application connections yourself.
-SocksPort 9055 # Default: Bind to localhost:9050 for local connections.
+#SocksPort 9051 # Default: Bind to localhost:9050 for local connections.
 #SocksPort 192.168.0.1:9100 # Bind to this address:port too.
 
 ## Entry policies to allow/deny SOCKS requests based on IP address.

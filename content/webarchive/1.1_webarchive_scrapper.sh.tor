@@ -4,7 +4,7 @@
 file="data/webarch-data/domains.txt"
 #file=$1
 
-NUM_PROCESSES=4
+NUM_PROCESSES=8
 
 
 # Проверка наличия файла
@@ -21,13 +21,13 @@ process_domain() {
 
   DOMAIN=$(echo "$LINE" | awk -F '[ ;]' '{print $1}')
   PARAMS=$(echo "$LINE" | awk -F '[ ;]' '{print $2}')
-  echo "$SLOT | $DOMAIN | $PARAMS" >> /data/logs/webarch.tor.log
+  echo "$SLOT | $DOMAIN | $PARAMS" >> data/logs/webarch.tor.log
 
-  PORT=905$SLOT
+  PORT=205$SLOT
 
   CMD="python3 -m webarchive_scrapper -f data/webarch-data $DOMAIN $PARAMS"
   echo $CMD
-  torsocks -P $PORT $CMD > /data/logs/webarch.tor.$PORT.log
+  torsocks -P $PORT $CMD > data/logs/webarch.tor.$DOMAIN.log
 }
 
 export -f process_domain
