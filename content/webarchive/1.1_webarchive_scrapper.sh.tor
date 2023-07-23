@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Путь к файлу с доменами
+file="data/webarch-data/domains.txt"
+#file=$1
+
+NUM_PROCESSES=4
+
+
+# Проверка наличия файла
+if [ ! -f "$file" ]; then
+    echo "Файл $file не найден."
+    exit 1
+fi
+
+
+process_domain() {
+
+  LINE=$1
+  SLOT=$2
+
+  DOMAIN=$(echo "$LINE" | awk -F '[ ;]' '{print $1}')
+  PARAMS=$(echo "$LINE" | awk -F '[ ;]' '{print $2}')
+  echo "$SLOT | $DOMAIN | $PARAMS" >> /data/logs/webarch.tor.log
+
+  PORT=905$SLOT
+
+  CMD="python3 -m webarchive_scrapper -f data/webarch-data $DOMAIN $PARAMS"
+  echo $CMD
+  torsocks -P $PORT $CMD > /data/logs/webarch.tor.$PORT.log
+}
+
+export -f process_domain
+
+#Если NUM_PROCESSES равно 1, выполняем скрипт через цикл
+if [ "$NUM_PROCESSES" -eq 1 ]; then
+
+# Чтение каждой строки из файла и выполнение команды CMD
+while IFS= read -r line; do
+    process_domain "$line" 1
+done < "$file"
+else
+  mapfile -t lines < "$file"
+  printf "%s\n" "${lines[@]}" | parallel  -j  "$NUM_PROCESSES" --eta  process_domain  {} {%}
+
+ # cat $file | parallel -j "$NUM_PROCESSES" --eta  process_domain {} {#}
+ #{#} {} {1..$NUM_PROCESSES}
+fi
