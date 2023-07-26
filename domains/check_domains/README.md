@@ -8,10 +8,6 @@
 -ADD правильно выдавать кешированнеые данные если слишком много запросов и не стирать невыданными данными
 -ADD почему нет Expired записей с sav.com
 
-### check_domains_txt_gconsole
-- ADD сть ли txt запись google console
-
-
 ### check_domains_webarchive
 - ADD csv отображение есть ли ads.txt
 
