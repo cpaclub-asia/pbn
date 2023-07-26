@@ -9,7 +9,9 @@ check_txt_records() {
 				#echo "TXT records for $domain:"
 				#echo "$txt_records"
 				if [[ $txt_records == *'text = "google-site-verification='* ]]; then
-				echo "Found Google Console TXT record"
+					echo "Found Google Console TXT record"
+				else
+					echo "TXT records for $domain not found."
 				fi
 		else
 				echo "TXT records for $domain not found."
