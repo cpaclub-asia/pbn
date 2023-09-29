@@ -1,5 +1,5 @@
 INDEX=$1
-cd data/cc-data.gz
+cd data/hdd/cc-data.gz
 mkdir $INDEX
 cd $INDEX
 wget -nc https://data.commoncrawl.org/cc-index/collections/$INDEX/indexes/cdx-00001.gz

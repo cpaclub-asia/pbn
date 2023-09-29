@@ -1,7 +1,7 @@
 #nohup 
 
-./download_cc.sh CC-MAIN-2023-14
-./download_cc.sh CC-MAIN-2023-23 
+./download_cc.sh CC-MAIN-2023-06
+#./download_cc.sh CC-MAIN-2023-23 
 #&
 #CC-MAIN-2023-06.
 
