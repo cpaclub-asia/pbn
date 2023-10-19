@@ -1,4 +1,4 @@
-SRC=data/domains-data/noconnect.whois/cc-2023-06/nocom
+SRC=data/shd/domains-data/noconnect.whois/cc-2023-06/com
 
 SRC1=$SRC/*
 DST1=$SRC.all.csv

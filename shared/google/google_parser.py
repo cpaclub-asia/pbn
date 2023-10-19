@@ -24,10 +24,10 @@ DELAY_GOOGLE=60
 
 
 
-CACHE_DIR="data/cache/"
+CACHE_DIR="data/shd/cache/"
 CACHE_GOOGLE_DIR=CACHE_DIR+"google/"
 
-SCREENS_DIR="data/screens/"
+SCREENS_DIR="data/shd/screens/"
 SCREENS_GOOGLE_DIR=CACHE_DIR+"google/"
 SCREENS_FAVICONS_DIR=CACHE_DIR+"favicons/"
 
@@ -45,18 +45,21 @@ def parse_cookies(cookies_text):
 
 def get_google_results(domain):
     CACHE_FILE_NAME=f"{CACHE_GOOGLE_DIR}/{get_cache_path(domain)}.google.html"
-    from_cache=read_file_content(CACHE_FILE_NAME)
-
+    from_cache_m=read_file_content(CACHE_FILE_NAME)
+    from_cache_status=from_cache_m[0]
+    from_cache_text=from_cache_m[1]
+    
     response_text=""
 
-    if(from_cache!="NOFILE"):
+    if(from_cache_status!=-1):
         print("from cache")
-        response_text=from_cache
+        response_text=from_cache_text
     else:
         response_text=google_selenium_page(domain)
         print("Ok")
         write_file_content(CACHE_FILE_NAME,response_text)
 
+    print(domain)
     print(response_text)
 
     soup = BeautifulSoup(response_text, 'html.parser')
@@ -70,6 +73,12 @@ def get_google_results(domain):
             result_stats_text = result_stats.text.replace(',', '').split()[0]
         if result_stats_text=="количество":
             result_stats_text = result_stats.text.replace(',', '').split()[0]
+        if result_stats_text=="รายการ":
+            result_stats_text = result_stats.text.replace(',', '').split()[0]
+        if result_stats_text=="ผลการค้นหา":
+            result_stats_text = result_stats.text.replace(',', '').split()[0]
+
+
 
         # Find all search result titles
         search_results = soup.find_all("h3")
@@ -92,7 +101,7 @@ def get_google_results(domain):
             if(from_cache!=True):
                 google_selenium_screenshot(f"data/screen-data/google/{domain}_google.png")
 
-        if(from_cache!="NOFILE"):
+        if(from_cache_status!=-1):
             print("From cache, no delay")
         else:
             print(f"sleep {DELAY_GOOGLE}")

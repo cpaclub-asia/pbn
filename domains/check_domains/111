@@ -1,0 +1,22 @@
+รายการ 
+ผลการค้นหา 
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/anton/proj/pbn/domains/check_domains/check_domains_google/__main__.py", line 21, in <module>
+    results, titles, favicon = get_google_results(domain)
+  File "/home/anton/proj/pbn/domains/check_domains/shared/google/google_parser.py", line 62, in get_google_results
+    soup = BeautifulSoup(response_text, 'html.parser')
+  File "/home/anton/.local/lib/python3.10/site-packages/bs4/__init__.py", line 328, in __init__
+    for (self.markup, self.original_encoding, self.declared_html_encoding,
+  File "/home/anton/.local/lib/python3.10/site-packages/bs4/builder/_htmlparser.py", line 361, in prepare_markup
+    dammit = UnicodeDammit(
+  File "/home/anton/.local/lib/python3.10/site-packages/bs4/dammit.py", line 601, in __init__
+    for encoding in self.detector.encodings:
+  File "/home/anton/.local/lib/python3.10/site-packages/bs4/dammit.py", line 434, in encodings
+    self.declared_encoding = self.find_declared_encoding(
+  File "/home/anton/.local/lib/python3.10/site-packages/bs4/dammit.py", line 511, in find_declared_encoding
+    declared_encoding_match = xml_re.search(markup, endpos=xml_endpos)
+TypeError: expected string or bytes-like object
